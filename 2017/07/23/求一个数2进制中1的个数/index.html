@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.suntangji.me">
-  <title>我的第一篇博客 | suntangji</title>
+  <title>求一个数2进制中1的个数 | suntangji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="hello,我是suntangji.这是我的第一篇博客。">
-<meta name="keywords" content="杂项">
+  <meta name="description" content="&amp;emsp;&amp;emsp;1.先求出一个数的二进制，然后在计算1的个数 2.用移位操作实现">
+<meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="我的第一篇博客">
-<meta property="og:url" content="http://www.suntangji.me/2017/07/17/我的第一篇博客/index.html">
+<meta property="og:title" content="求一个数2进制中1的个数">
+<meta property="og:url" content="http://www.suntangji.me/2017/07/23/求一个数2进制中1的个数/index.html">
 <meta property="og:site_name" content="suntangji">
-<meta property="og:description" content="hello,我是suntangji.这是我的第一篇博客。">
-<meta property="og:updated_time" content="2017-07-17T11:32:49.216Z">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;1.先求出一个数的二进制，然后在计算1的个数 2.用移位操作实现">
+<meta property="og:updated_time" content="2017-07-23T07:11:57.717Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的第一篇博客">
-<meta name="twitter:description" content="hello,我是suntangji.这是我的第一篇博客。">
+<meta name="twitter:title" content="求一个数2进制中1的个数">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;1.先求出一个数的二进制，然后在计算1的个数 2.用移位操作实现">
   
     <link rel="alternative" href="/atom.xml" title="suntangji" type="application/atom+xml">
   
@@ -139,25 +139,25 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-我的第一篇博客" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-求一个数2进制中1的个数" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      我的第一篇博客
+      求一个数2进制中1的个数
     </h1>
 	
   
 
         
-        <a href="/2017/07/17/我的第一篇博客/" class="archive-article-date">
+        <a href="/2017/07/23/求一个数2进制中1的个数/" class="archive-article-date">
 <span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
 		</span>
-  	<time datetime="2017-07-17T11:21:26.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-17</time>
+  	<time datetime="2017-07-23T06:19:24.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-07-23</time>
 </a>
 
         
@@ -165,8 +165,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>  hello,我是suntangji.这是我的第一篇博客。<br>  <a id="more"></a><br>  hello,我是suntangji.目前就读于西安工程大学，这是我的第一篇博客，我写博客的目的是记录自己在学习过程中遇到的坑，以及我觉得特别重要的知识点。我的目标是成为一个编程大牛，好多好多人使用我造的轮子（手动滑稽）。我学习编程的想法是先从基础开始学，然后渐渐深入。我会每天至少花费2小时来打代码，希望将来可以去Google工作（2333）。</p>
-
+        <p>&emsp;&emsp;1.先求出一个数的二进制，然后在计算1的个数 2.用移位操作实现<br><a id="more"></a><br>方法1:一个数除以2的余数就是2进制的最高位，把这个数除以2的结果继续循环，直到除以2的结果为0.循环结束后数组中1的个数，就是结果。<br>实现代码<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span>  <span class="title">count_one_bits</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="comment">// 返回 1的位数</span></div><div class="line">	<span class="keyword">int</span> bin[<span class="number">32</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> ( i = <span class="number">0</span>;; i++)</div><div class="line">	&#123;</div><div class="line">		bin[i] = value % <span class="number">2</span>;</div><div class="line">		<span class="keyword">if</span> (bin[i] == <span class="number">1</span>)</div><div class="line">			count++;</div><div class="line">		value /= <span class="number">2</span>;</div><div class="line">		</div><div class="line">		<span class="keyword">if</span> (value == <span class="number">0</span>)</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">		<span class="keyword">return</span> count;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> value;</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;value);</div><div class="line">	<span class="keyword">int</span> count =count_one_bits(value);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>, count);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>方法2:进行32次循环，把这个数&amp;1，把结果加到计数器，把这个数右移一位，直到退出循环。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span>  <span class="title">count_one_bits</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></div><div class="line">&#123;	</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> ( i = <span class="number">0</span>;i&lt;<span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		count += value &amp; <span class="number">1</span>;</div><div class="line">		value &gt;&gt;= <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">		<span class="keyword">return</span> count;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> value;</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;value);</div><div class="line">	<span class="keyword">int</span> count =count_one_bits(value);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>, count);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>方法3：不断清除这个数的二进制表示中最右边的1，同时累加计数器，直至这个数为0，代码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span>  <span class="title">count_one_bits</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (count =<span class="number">0</span> ; value; count++)</div><div class="line">	&#123;</div><div class="line">		value &amp;= value - <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> count;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> value;</div><div class="line">	scanf_s(<span class="string">"%d"</span>, &amp;value);</div><div class="line">	<span class="keyword">int</span> count = count_one_bits(value);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>, count);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
 
       
@@ -200,7 +202,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂项</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
         		</li>
       		
 		</ul>
@@ -213,7 +215,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/other/" class="article-tag-list-link color1">other</a>
+        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
         		</li>
       		
 		</ul>
@@ -268,7 +270,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://www.suntangji.me/2017/07/17/我的第一篇博客/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.suntangji.me/2017/07/23/求一个数2进制中1的个数/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -282,18 +284,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/21/输出100-200之间的素数/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          输出100~200之间的素数
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/07/17/test/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">test</div>
+    <a href="/2017/07/23/求10个整数的最大值/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">求10个整数的最大值</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -321,7 +314,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="我的第一篇博客" data-title="我的第一篇博客" data-url="http://www.suntangji.me/2017/07/17/我的第一篇博客/"></div>
+	<div class="ds-thread" data-thread-key="求一个数2进制中1的个数" data-title="求一个数2进制中1的个数" data-url="http://www.suntangji.me/2017/07/23/求一个数2进制中1的个数/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -344,8 +337,8 @@
   <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
 <script>
   var cloudTieConfig = {
-    url: "http://www.suntangji.me/2017/07/17/我的第一篇博客/", 
-    sourceId: "我的第一篇博客",
+    url: "http://www.suntangji.me/2017/07/23/求一个数2进制中1的个数/", 
+    sourceId: "求一个数2进制中1的个数",
     productKey: "true",
     target: "cloud-tie-wrapper"
   };
