@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>suntangji</title>
+  <title>c语言sizeof关键字 | suntangji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="suntangji">
-<meta property="og:url" content="https://www.suntangji.me/page/2/index.html">
+  <meta name="description" content="The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.">
+<meta name="keywords" content="随笔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c语言sizeof关键字">
+<meta property="og:url" content="https://www.suntangji.me/2017/07/28/c语言sizeof关键字/index.html">
 <meta property="og:site_name" content="suntangji">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.">
+<meta property="og:updated_time" content="2017-07-28T15:26:31.654Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="suntangji">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="c语言sizeof关键字">
+<meta name="twitter:description" content="The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.">
   
     <link rel="alternative" href="/atom.xml" title="suntangji" type="application/atom+xml">
   
@@ -149,23 +151,24 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-大小写字母转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-c语言sizeof关键字" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/大小写字母转换/">大小写字母转换</a>
+    <h1 class="article-title" itemprop="name">
+      c语言sizeof关键字
     </h1>
+	<span id="busuanzi_container_page_pv">
+		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+		</span>
   
 
         
-        <a href="/2017/07/23/大小写字母转换/" class="archive-article-date">
-  	<time datetime="2017-07-23T10:20:12.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
+        <a href="/2017/07/28/c语言sizeof关键字/" class="archive-article-date">
+  	<time datetime="2017-07-28T08:48:26.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-07-28</time>
 </a>
 
         
@@ -173,12 +176,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>&emsp;&emsp;输入一个字母，如果是大写，就转换为小写；如果是小写，就转换为大写。<br>
-        
-          <a class="article-more-a" href="/2017/07/23/大小写字母转换/#more">more >></a>
-        
+        <p>The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.<br><a id="more"></a><br>简言只，其作用就是返回一个对象或者类型所占的内存字节数。例如下面这段程序。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>));<span class="comment">//1</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));<span class="comment">//4</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">double</span>));<span class="comment">//8</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">float</span>));<span class="comment">//4</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, <span class="keyword">sizeof</span>(<span class="number">1</span>));<span class="comment">//4</span></div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当数组遇上sizeof。</p>
+<blockquote>
+<p>注意：sizeof的参数只有数组名时代表整个数组，其他情况不能代表整个数组。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">char</span> arr[] = <span class="string">"abcdef"</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof:%d\n"</span>, <span class="keyword">sizeof</span>(arr));<span class="comment">//7</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof *arr:%d\n"</span>, <span class="keyword">sizeof</span>(*arr));<span class="comment">//1</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof arr+1:%d\n"</span>, <span class="keyword">sizeof</span>(arr+<span class="number">1</span>));<span class="comment">//4 地址</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof &amp;arr:%d\n"</span>, <span class="keyword">sizeof</span>(&amp;arr));  <span class="comment">//4</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof &amp;arr+1:%d\n"</span>, <span class="keyword">sizeof</span>(&amp;arr+<span class="number">1</span>)); <span class="comment">//4</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof *&amp;arr:%d\n"</span>, <span class="keyword">sizeof</span>(*&amp;arr));  <span class="comment">//7 </span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof *&amp;arr+1:%d\n"</span>, <span class="keyword">sizeof</span>(*&amp;arr + <span class="number">1</span>));<span class="comment">//4</span></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"sizeof *(&amp;arr+1):%d\n"</span>, <span class="keyword">sizeof</span>(*(&amp;arr + <span class="number">1</span>)));<span class="comment">//7</span></div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>sizeof(arr)的结果为7。abcdef只有6个字符，但是却占用了7个字节，这是由于每个char类型的字符占用一个字节，但是字符串结束标志\0也要占用一个字节。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(<em>arr)的结果为1。arr代表数组的首地址，</em>arr代表数组的第一个元素，相当于arr[0],也就是a,a的类型为char所以占用1个字节。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(arr+1)的结果为4。arr代表数组的首地址,arr+1代表的是数组第二个元素的地址，每个地址占用4个字节，所以结果为4。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(&amp;arr)的结果为4，&amp;arr代表的是整个数组的地址，在数值上等于数组的首地址，但是意思不同。&amp;arr是一个地址，所以占用4个字节。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(&amp;arr+1)的结果为4。&amp;arr代表的是整个数组的地址，&amp;arr+1代表和数组arr同类型数组的地址，所以结果为4.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(*&amp;arr))的结果为7。这个表达式等价于sizeof(arr),所以结果为7.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(*&amp;arr + 1))的结果为4.它等价于sizeof(arr+1),所以结果为4.</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>sizeof(*(&amp;arr+1))的结果为7.它求得的是和数组arr同类型同大小的数组所占用的字节，这个数组可能不存在，sizeof并没有真正访问这块地址，而是判断这块地址存储的值类型。所以结果为7.</p>
+</blockquote>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -189,7 +247,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
         		</li>
       		
 		</ul>
@@ -210,16 +268,84 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/大小写字母转换/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/07/28/c语言sizeof关键字/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/07/28/用位运算实现加法和减法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          用位运算实现加法和减法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/28/字符串翻转/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">字符串翻转</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -239,732 +365,12 @@
 
 
 
-
-  
-    <article id="post-求一个数2进制中1的个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/求一个数2进制中1的个数/">求一个数2进制中1的个数</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/23/求一个数2进制中1的个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T06:19:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;1.先求出一个数的二进制，然后在计算1的个数 2.用移位操作实现<br>
-        
-          <a class="article-more-a" href="/2017/07/23/求一个数2进制中1的个数/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/求一个数2进制中1的个数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-求10个整数的最大值" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/求10个整数的最大值/">求10个整数的最大值</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/23/求10个整数的最大值/" class="archive-article-date">
-  	<time datetime="2017-07-23T06:18:59.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;用选择排序把10个数进行排序，然后输出最大值<br>
-        
-          <a class="article-more-a" href="/2017/07/23/求10个整数的最大值/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/求10个整数的最大值/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-交换2个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/交换2个数/">交换2个数</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/23/交换2个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:58:52.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;交换两个数，分别用创建第三个变量，和不创建第三个变量的方法，以及用位运算实现.<br>
-        
-          <a class="article-more-a" href="/2017/07/23/交换2个数/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/交换2个数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-判断1000-2000年之间的闰年" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/判断1000-2000年之间的闰年/">判断1000-2000年之间的闰年</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/23/判断1000-2000年之间的闰年/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:58:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;地球绕太阳转一周的实际时间是365天5时48分46秒。如果一年只有365天，那么每年就多出5个小时。4年多出的23小时15分4秒，差不多就等于1天。于是决定每四年增加1天。<br>
-        
-          <a class="article-more-a" href="/2017/07/23/判断1000-2000年之间的闰年/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/判断1000-2000年之间的闰年/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-99乘法表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/99乘法表/">99乘法表</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/23/99乘法表/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:57:10.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>分别使用双层循环，单层循环，goto语句输出99乘法表<br>
-        
-          <a class="article-more-a" href="/2017/07/23/99乘法表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/99乘法表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-输出100-200之间的素数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/21/输出100-200之间的素数/">输出100~200之间的素数</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/21/输出100-200之间的素数/" class="archive-article-date">
-  	<time datetime="2017-07-21T13:33:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-21</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> &emsp;&emsp;所谓素数是指除了1和它本身以外，不能被任何整数整除的数，例如17就是素数，因为它不能被2~16的任一整数整除。因此判断一个整数m是否是素数，只需把m被2~m-1之间的每一个整数去除，如果都不能被整除，那么m就是一个素数.<br>
-        
-          <a class="article-more-a" href="/2017/07/21/输出100-200之间的素数/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/21/输出100-200之间的素数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/17/我的第一篇博客/">我的第一篇博客</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/17/我的第一篇博客/" class="archive-article-date">
-  	<time datetime="2017-07-17T11:21:26.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-17</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  hello,我是suntangji.这是我的第一篇博客。<br>
-        
-          <a class="article-more-a" href="/2017/07/17/我的第一篇博客/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂项</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/other/" class="article-tag-list-link color1">other</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/17/我的第一篇博客/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-test" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/17/test/">test</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/17/test/" class="archive-article-date">
-  	<time datetime="2017-07-17T03:45:35.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-17</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>test the hexo blog<br>
-        
-          <a class="article-more-a" href="/2017/07/17/test/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">test</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/hello/" class="article-tag-list-link color1">hello</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/17/test/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1013,8 +419,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
