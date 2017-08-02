@@ -4,6 +4,66 @@
 
     
   <url>
+    <loc>https://www.suntangji.me/2017/08/02/%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F/</loc>
+    <lastmod>2017-08-02T15:01:38.545Z</lastmod>
+    <data>
+        <display>
+        <title>扫雷游戏</title>
+        <pubTime>2017-08-02T14:56:39.000Z</pubTime>
+        
+        <tag>项目</tag>
+         
+         
+           
+             
+              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.suntangji.me/2017/08/02/%E4%B8%89%E5%AD%90%E6%A3%8B%E6%B8%B8%E6%88%8F/</loc>
+    <lastmod>2017-08-02T14:54:10.610Z</lastmod>
+    <data>
+        <display>
+        <title>三子棋游戏</title>
+        <pubTime>2017-08-02T14:43:26.000Z</pubTime>
+        
+        <tag>项目</tag>
+         
+         
+           
+             
+              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.suntangji.me/2017/07/17/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2017-08-02T14:38:17.003Z</lastmod>
+    <data>
+        <display>
+        <title>我的第一篇博客</title>
+        <pubTime>2017-07-17T11:21:26.000Z</pubTime>
+        
+        <tag>随笔</tag>
+         
+         
+           
+             
+              <breadCrumb title="other" url="https://www.suntangji.me/categories/other/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.suntangji.me/2017/08/02/%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0%E5%BA%93%E5%87%BD%E6%95%B0strcpy/</loc>
     <lastmod>2017-08-02T08:11:55.168Z</lastmod>
     <data>
@@ -457,46 +517,6 @@
            
              
               <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.suntangji.me/2017/07/17/test/</loc>
-    <lastmod>2017-07-21T13:59:12.829Z</lastmod>
-    <data>
-        <display>
-        <title>test</title>
-        <pubTime>2017-07-17T03:45:35.000Z</pubTime>
-        
-        <tag>test</tag>
-         
-         
-           
-             
-              <breadCrumb title="hello" url="https://www.suntangji.me/categories/hello/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.suntangji.me/2017/07/17/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2017-07-17T11:32:49.216Z</lastmod>
-    <data>
-        <display>
-        <title>我的第一篇博客</title>
-        <pubTime>2017-07-17T11:21:26.000Z</pubTime>
-        
-        <tag>杂项</tag>
-         
-         
-           
-             
-              <breadCrumb title="other" url="https://www.suntangji.me/categories/other/"/>
           
         </display>
     </data>
