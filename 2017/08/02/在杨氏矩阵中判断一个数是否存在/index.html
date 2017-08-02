@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>求一个数的二进制从左到右翻转后的值 | suntangji</title>
+  <title>在杨氏矩阵中判断一个数是否存在 | suntangji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
+  <meta name="description" content="杨氏矩阵是一个二位数组，这个数组无论横向纵向都是递增的。">
 <meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="求一个数的二进制从左到右翻转后的值">
-<meta property="og:url" content="https://www.suntangji.me/2017/07/29/求一个数的二进制从左到右翻转后的值/index.html">
+<meta property="og:title" content="在杨氏矩阵中判断一个数是否存在">
+<meta property="og:url" content="https://www.suntangji.me/2017/08/02/在杨氏矩阵中判断一个数是否存在/index.html">
 <meta property="og:site_name" content="suntangji">
-<meta property="og:description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
-<meta property="og:updated_time" content="2017-07-29T04:48:55.490Z">
+<meta property="og:description" content="杨氏矩阵是一个二位数组，这个数组无论横向纵向都是递增的。">
+<meta property="og:updated_time" content="2017-08-02T07:28:04.093Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="求一个数的二进制从左到右翻转后的值">
-<meta name="twitter:description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
+<meta name="twitter:title" content="在杨氏矩阵中判断一个数是否存在">
+<meta name="twitter:description" content="杨氏矩阵是一个二位数组，这个数组无论横向纵向都是递增的。">
   
     <link rel="alternative" href="/atom.xml" title="suntangji" type="application/atom+xml">
   
@@ -151,14 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-求一个数的二进制从左到右翻转后的值" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-在杨氏矩阵中判断一个数是否存在" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      求一个数的二进制从左到右翻转后的值
+      在杨氏矩阵中判断一个数是否存在
     </h1>
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
@@ -166,9 +166,9 @@
   
 
         
-        <a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
+        <a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" class="archive-article-date">
+  	<time datetime="2017-08-02T07:12:19.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-08-02</time>
 </a>
 
         
@@ -176,7 +176,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在32位机器上25这个值包含下列各位：<br>00000000000000000000000000011001<br>翻转后：（2550136832）<br>10011000000000000000000000000000<br><a id="more"></a><br>&emsp;&emsp;首先要求一个数的二进制，然后把它存入数组中，n&amp;1就是这个数最低位的二进制，然后把n右移一位可以求出倒数第二位的二进制，不断进行循环，直到求出n的最高位的二进制。次时数组中存的就是这个数由低位到高位的二进制，只需把这个数转换为10进制即可。转换10进制，最低位乘以2的0次方，最高位乘以2的31次方就可求出10进制数。代码如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">reverse_bit</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> bin[<span class="number">32</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		bin[i] = value &amp; <span class="number">1</span>;</div><div class="line">		value &gt;&gt;= <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;<span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		tmp = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="built_in">pow</span>(<span class="number">2</span>, i) * bin[<span class="number">31</span>-i];</div><div class="line">		sum += tmp;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sum;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> n = <span class="number">25</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%u"</span>, reverse_bit(n));</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>杨氏矩阵是一个二位数组，这个数组无论横向纵向都是递增的。<br><a id="more"></a><br>比如数组</p>
+<blockquote>
+<p>1&emsp;4&emsp;7<br> 2&emsp;5&emsp;8<br> 3&emsp;6&emsp;9</p>
+</blockquote>
+<p> 要想时间复杂度小于o(n)就不能遍历整个数组，其实只需判断这个i行j列的数组的arr[i-1][j-1]是否等于要找的数，如果大于要找的数，说明要找的数一定在该数的左下方。如果小于要找的数，说明要找的数一定在该数的下方。<br> 实现代码如下<br> <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">find_it</span><span class="params">(<span class="keyword">int</span> arr[<span class="number">3</span>][<span class="number">3</span>], <span class="keyword">int</span> key)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> j = <span class="number">2</span>;</div><div class="line">	<span class="keyword">while</span> (i &lt; <span class="number">3</span> &amp;&amp; j &gt;= <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (key == arr[i][j])</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (key &gt; arr[i][j])</div><div class="line">		&#123;</div><div class="line">			i++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (key &lt; arr[i][j])</div><div class="line">		&#123;</div><div class="line">			j--;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> arr[<span class="number">3</span>][<span class="number">3</span>] = &#123; &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>&#125;,&#123;<span class="number">2</span>,<span class="number">5</span>,<span class="number">8</span>&#125;,&#123;<span class="number">3</span>,<span class="number">6</span>,<span class="number">9</span>&#125; &#125;;</div><div class="line">	<span class="keyword">int</span> sz = <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>][<span class="number">0</span>]);</div><div class="line">	<span class="keyword">int</span> key = <span class="number">5</span>;</div><div class="line">	<span class="keyword">int</span> t =find_it(arr, key);</div><div class="line">	<span class="keyword">if</span> (t == <span class="number">0</span>)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"no"</span>);</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(t ==<span class="number">1</span>)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"yes"</span>);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
 
@@ -279,7 +283,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/07/29/求一个数的二进制从左到右翻转后的值/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/08/02/在杨氏矩阵中判断一个数是否存在/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +297,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/29/字符数组初始化需要注意的问题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          字符数组初始化需要注意的问题
+          判断一个字符串是否是另一个字符串翻转后的结果
         
       </div>
     </a>
   
   
-    <a href="/2017/07/28/用位运算实现加法和减法/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">用位运算实现加法和减法</div>
+    <a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">将一个整形数组奇数排列在前偶数排列在后</div>
       <i class="icon-circle-right"></i>
     </a>
   

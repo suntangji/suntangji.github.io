@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>求一个数的二进制从左到右翻转后的值 | suntangji</title>
+  <title>判断一个字符串是否是另一个字符串翻转后的结果 | suntangji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
+  <meta name="description" content="字符串abcdef向左翻转一位的结果为fabcde,向右翻转翻转一位的结果为bcdefa.向左翻转两位的结果为efabcd,向右翻转两位的结果为cdefab。要判断一个字符串是否是另一个字符串翻转后的结果，必须遍历向左翻转和向右翻转0-len(arr)-1位的所有情况。我定义了一个翻转函数reverse，返回值为空，参数为两个指针，第一个是翻转的起始地址，第二个是翻转的结束地址。要想实现向左翻转n">
 <meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="求一个数的二进制从左到右翻转后的值">
-<meta property="og:url" content="https://www.suntangji.me/2017/07/29/求一个数的二进制从左到右翻转后的值/index.html">
+<meta property="og:title" content="判断一个字符串是否是另一个字符串翻转后的结果">
+<meta property="og:url" content="https://www.suntangji.me/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/index.html">
 <meta property="og:site_name" content="suntangji">
-<meta property="og:description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
-<meta property="og:updated_time" content="2017-07-29T04:48:55.490Z">
+<meta property="og:description" content="字符串abcdef向左翻转一位的结果为fabcde,向右翻转翻转一位的结果为bcdefa.向左翻转两位的结果为efabcd,向右翻转两位的结果为cdefab。要判断一个字符串是否是另一个字符串翻转后的结果，必须遍历向左翻转和向右翻转0-len(arr)-1位的所有情况。我定义了一个翻转函数reverse，返回值为空，参数为两个指针，第一个是翻转的起始地址，第二个是翻转的结束地址。要想实现向左翻转n">
+<meta property="og:updated_time" content="2017-08-02T07:44:32.462Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="求一个数的二进制从左到右翻转后的值">
-<meta name="twitter:description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
+<meta name="twitter:title" content="判断一个字符串是否是另一个字符串翻转后的结果">
+<meta name="twitter:description" content="字符串abcdef向左翻转一位的结果为fabcde,向右翻转翻转一位的结果为bcdefa.向左翻转两位的结果为efabcd,向右翻转两位的结果为cdefab。要判断一个字符串是否是另一个字符串翻转后的结果，必须遍历向左翻转和向右翻转0-len(arr)-1位的所有情况。我定义了一个翻转函数reverse，返回值为空，参数为两个指针，第一个是翻转的起始地址，第二个是翻转的结束地址。要想实现向左翻转n">
   
     <link rel="alternative" href="/atom.xml" title="suntangji" type="application/atom+xml">
   
@@ -151,14 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-求一个数的二进制从左到右翻转后的值" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-判断一个字符串是否是另一个字符串翻转后的结果" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      求一个数的二进制从左到右翻转后的值
+      判断一个字符串是否是另一个字符串翻转后的结果
     </h1>
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
@@ -166,9 +166,9 @@
   
 
         
-        <a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
+        <a href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" class="archive-article-date">
+  	<time datetime="2017-08-02T07:31:44.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-08-02</time>
 </a>
 
         
@@ -176,7 +176,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在32位机器上25这个值包含下列各位：<br>00000000000000000000000000011001<br>翻转后：（2550136832）<br>10011000000000000000000000000000<br><a id="more"></a><br>&emsp;&emsp;首先要求一个数的二进制，然后把它存入数组中，n&amp;1就是这个数最低位的二进制，然后把n右移一位可以求出倒数第二位的二进制，不断进行循环，直到求出n的最高位的二进制。次时数组中存的就是这个数由低位到高位的二进制，只需把这个数转换为10进制即可。转换10进制，最低位乘以2的0次方，最高位乘以2的31次方就可求出10进制数。代码如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">reverse_bit</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> bin[<span class="number">32</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		bin[i] = value &amp; <span class="number">1</span>;</div><div class="line">		value &gt;&gt;= <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;<span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		tmp = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="built_in">pow</span>(<span class="number">2</span>, i) * bin[<span class="number">31</span>-i];</div><div class="line">		sum += tmp;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sum;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> n = <span class="number">25</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%u"</span>, reverse_bit(n));</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>字符串abcdef向左翻转一位的结果为fabcde,向右翻转翻转一位的结果为bcdefa.向左翻转两位的结果为efabcd,向右翻转两位的结果为cdefab。要判断一个字符串是否是另一个字符串翻转后的结果，必须遍历向左翻转和向右翻转0-len(arr)-1位的所有情况。<br>我定义了一个翻转函数reverse，返回值为空，参数为两个指针，第一个是翻转的起始地址，第二个是翻转的结束地址。要想实现向左翻转n位的效果，先对字符串整体翻转，然后把第n位，到len(arr)-1位进行翻转就得到了向左翻转的结果。要实现向右翻转，也是对整体翻转，然后把第0位到第n位进行翻转就得到了向右翻转的结果。<br>为了节约空间，我没有开辟其他数组，所以每次翻转后，还需要把字符串恢复为原始的abcdef。<br>实现代码如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">char</span>* begin, <span class="keyword">char</span>* end)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">	<span class="comment">//char* p = begin;</span></div><div class="line">	<span class="keyword">while</span> (begin&lt; end)</div><div class="line">	&#123;</div><div class="line">		tmp = *begin;</div><div class="line">		*begin = *end;</div><div class="line">		*end = tmp;</div><div class="line">		begin++;</div><div class="line">		end--;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">cmp_reverse</span><span class="params">(<span class="keyword">char</span> arr[], <span class="keyword">char</span> arr2[],<span class="keyword">int</span> len,<span class="keyword">char</span> * begin)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">if</span> (<span class="built_in">strcmp</span>(arr, arr2) == <span class="number">0</span>)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++)</div><div class="line">	&#123;</div><div class="line">		reverse(begin, begin + len<span class="number">-1</span>);</div><div class="line">		reverse(begin+i, begin + len<span class="number">-1</span>);</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(arr, arr2) == <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			reverse(begin + i, begin + len - <span class="number">1</span>);</div><div class="line">			reverse( begin, begin + len - <span class="number">1</span>);</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++)</div><div class="line">	&#123;</div><div class="line">		reverse(begin, begin + len - <span class="number">1</span>);</div><div class="line">		reverse(begin , begin+ len <span class="number">-1</span> -i);</div><div class="line">		reverse(begin + len - i, begin + len - <span class="number">1</span>);</div><div class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(arr, arr2) == <span class="number">0</span>)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">		&#123;</div><div class="line">			reverse(begin + len - i, begin + len - <span class="number">1</span>);</div><div class="line">			reverse(begin, begin + len - <span class="number">1</span> - i);</div><div class="line">			reverse(begin, begin + len <span class="number">-1</span>);</div><div class="line">			</div><div class="line"></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">char</span> arr[] = <span class="string">"abcdef"</span>;</div><div class="line">	<span class="keyword">char</span> arr2[] = <span class="string">"cdefab"</span>;</div><div class="line">	<span class="keyword">int</span> len = <span class="built_in">strlen</span>(arr);</div><div class="line">	<span class="keyword">char</span> * begin = arr;</div><div class="line">	<span class="comment">//char * end = &amp;arr[len - 1];</span></div><div class="line">	<span class="comment">//char * p = end;</span></div><div class="line">	<span class="keyword">if</span> (cmp_reverse(arr,arr2,len,begin) == <span class="number">1</span>)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"y"</span>);</div><div class="line">	<span class="keyword">else</span></div><div class="line">		<span class="built_in">printf</span>(<span class="string">"n"</span>);</div><div class="line">		</div><div class="line">	</div><div class="line">	<span class="comment">//printf("%s", arr);</span></div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
 
@@ -279,7 +279,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/07/29/求一个数的二进制从左到右翻转后的值/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +293,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/29/字符数组初始化需要注意的问题/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          字符数组初始化需要注意的问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/07/28/用位运算实现加法和减法/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">用位运算实现加法和减法</div>
+    <a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在杨氏矩阵中判断一个数是否存在</div>
       <i class="icon-circle-right"></i>
     </a>
   

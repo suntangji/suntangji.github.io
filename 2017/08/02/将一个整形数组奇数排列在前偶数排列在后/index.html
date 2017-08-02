@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>求一个数的二进制从左到右翻转后的值 | suntangji</title>
+  <title>将一个整形数组奇数排列在前偶数排列在后 | suntangji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
+  <meta name="description" content="一个整形数组，把奇数排列在前，偶数排列在后，例如 arr[]={1,2,3,4,5,6},排列后arr={1,3,5,2,4,6}.">
 <meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="求一个数的二进制从左到右翻转后的值">
-<meta property="og:url" content="https://www.suntangji.me/2017/07/29/求一个数的二进制从左到右翻转后的值/index.html">
+<meta property="og:title" content="将一个整形数组奇数排列在前偶数排列在后">
+<meta property="og:url" content="https://www.suntangji.me/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/index.html">
 <meta property="og:site_name" content="suntangji">
-<meta property="og:description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
-<meta property="og:updated_time" content="2017-07-29T04:48:55.490Z">
+<meta property="og:description" content="一个整形数组，把奇数排列在前，偶数排列在后，例如 arr[]={1,2,3,4,5,6},排列后arr={1,3,5,2,4,6}.">
+<meta property="og:updated_time" content="2017-08-02T07:09:53.051Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="求一个数的二进制从左到右翻转后的值">
-<meta name="twitter:description" content="在32位机器上25这个值包含下列各位：00000000000000000000000000011001翻转后：（2550136832）10011000000000000000000000000000">
+<meta name="twitter:title" content="将一个整形数组奇数排列在前偶数排列在后">
+<meta name="twitter:description" content="一个整形数组，把奇数排列在前，偶数排列在后，例如 arr[]={1,2,3,4,5,6},排列后arr={1,3,5,2,4,6}.">
   
     <link rel="alternative" href="/atom.xml" title="suntangji" type="application/atom+xml">
   
@@ -151,14 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-求一个数的二进制从左到右翻转后的值" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-将一个整形数组奇数排列在前偶数排列在后" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      求一个数的二进制从左到右翻转后的值
+      将一个整形数组奇数排列在前偶数排列在后
     </h1>
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
@@ -166,9 +166,9 @@
   
 
         
-        <a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
+        <a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" class="archive-article-date">
+  	<time datetime="2017-08-02T06:55:00.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-08-02</time>
 </a>
 
         
@@ -176,7 +176,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在32位机器上25这个值包含下列各位：<br>00000000000000000000000000011001<br>翻转后：（2550136832）<br>10011000000000000000000000000000<br><a id="more"></a><br>&emsp;&emsp;首先要求一个数的二进制，然后把它存入数组中，n&amp;1就是这个数最低位的二进制，然后把n右移一位可以求出倒数第二位的二进制，不断进行循环，直到求出n的最高位的二进制。次时数组中存的就是这个数由低位到高位的二进制，只需把这个数转换为10进制即可。转换10进制，最低位乘以2的0次方，最高位乘以2的31次方就可求出10进制数。代码如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">int</span> <span class="title">reverse_bit</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> value)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> bin[<span class="number">32</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		bin[i] = value &amp; <span class="number">1</span>;</div><div class="line">		value &gt;&gt;= <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;<span class="number">32</span>; i++)</div><div class="line">	&#123;</div><div class="line">		tmp = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)<span class="built_in">pow</span>(<span class="number">2</span>, i) * bin[<span class="number">31</span>-i];</div><div class="line">		sum += tmp;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> sum;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> n = <span class="number">25</span>;</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%u"</span>, reverse_bit(n));</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+        <p>一个整形数组，把奇数排列在前，偶数排列在后，例如 arr[]={1,2,3,4,5,6},排列后arr={1,3,5,2,4,6}.<br><a id="more"></a><br>方法一，定义两个指针p1,p2.p1指向数组的首地址，p2指向数组的最后一位数字的地址。如果p1指向的内容不是偶数，把p1加一，如果p2指向的内容不是奇数，把p2加一 ，如果p1指向了偶数并且p2指向了奇数，把p1和p2所指向的内容交换，直到P1大于p2.<br>代码如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a[] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">1</span>&#125;;</div><div class="line">	<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(a) / <span class="keyword">sizeof</span>(a[<span class="number">0</span>]);</div><div class="line">	<span class="keyword">int</span> *p1 = a;</div><div class="line">	<span class="keyword">int</span> *p2 = &amp;a[len - <span class="number">1</span>];</div><div class="line">	<span class="keyword">int</span> tmp = <span class="number">0</span>;</div><div class="line">	<span class="keyword">while</span> (p1 &lt; p2)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">while</span> (p1&lt;p2)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (*p1 % <span class="number">2</span> == <span class="number">0</span>)</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			p1++;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">while</span>(p1&lt;p2)</div><div class="line">		&#123;</div><div class="line">			<span class="keyword">if</span> (*p2 % <span class="number">2</span> == <span class="number">1</span>)</div><div class="line">				<span class="keyword">break</span>;</div><div class="line">			p2--;</div><div class="line">		&#125;</div><div class="line">		tmp = *p2;</div><div class="line">		*p2 = *p1;</div><div class="line">		*p1 = tmp;		</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;len;i++)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, a[i]);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>方法二，另外定义两个数组，一个数组存取数组arr中的奇数，另一个数组存取数组arr中的偶数。然后分别输出两个数组。<br>代码如下<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> arr[] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span> ,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>&#125;;</div><div class="line">	<span class="keyword">int</span> len = <span class="keyword">sizeof</span>(arr) / <span class="keyword">sizeof</span>(arr[<span class="number">0</span>]);</div><div class="line">	<span class="keyword">int</span> odd[<span class="number">9</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">int</span> even[<span class="number">9</span>] = &#123; <span class="number">0</span> &#125;;</div><div class="line">	<span class="keyword">int</span> count_odd = <span class="number">0</span>;</div><div class="line">	<span class="keyword">int</span> count_even = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">if</span> (arr[i] % <span class="number">2</span> == <span class="number">1</span>)</div><div class="line">		&#123;</div><div class="line">			odd[count_odd++] = arr[i];</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span></div><div class="line">			even[count_even++] = arr[i];</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count_odd; i++)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, odd[i]);</div><div class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count_even; i++)</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>, even[i]);</div><div class="line"></div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
 
@@ -279,7 +280,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/07/29/求一个数的二进制从左到右翻转后的值/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +294,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/07/29/字符数组初始化需要注意的问题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          字符数组初始化需要注意的问题
+          在杨氏矩阵中判断一个数是否存在
         
       </div>
     </a>
   
   
-    <a href="/2017/07/28/用位运算实现加法和减法/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">用位运算实现加法和减法</div>
+    <a href="/2017/07/29/字符数组初始化需要注意的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">字符数组初始化需要注意的问题</div>
       <i class="icon-circle-right"></i>
     </a>
   
