@@ -4,46 +4,6 @@
 
     
   <url>
-    <loc>https://www.suntangji.me/2017/08/02/%E6%89%AB%E9%9B%B7%E6%B8%B8%E6%88%8F/</loc>
-    <lastmod>2017-08-02T15:01:38.545Z</lastmod>
-    <data>
-        <display>
-        <title>扫雷游戏</title>
-        <pubTime>2017-08-02T14:56:39.000Z</pubTime>
-        
-        <tag>项目</tag>
-         
-         
-           
-             
-              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.suntangji.me/2017/08/02/%E4%B8%89%E5%AD%90%E6%A3%8B%E6%B8%B8%E6%88%8F/</loc>
-    <lastmod>2017-08-02T14:54:10.610Z</lastmod>
-    <data>
-        <display>
-        <title>三子棋游戏</title>
-        <pubTime>2017-08-02T14:43:26.000Z</pubTime>
-        
-        <tag>项目</tag>
-         
-         
-           
-             
-              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://www.suntangji.me/2017/07/17/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2017-08-02T14:38:17.003Z</lastmod>
     <data>
@@ -344,26 +304,6 @@
 
     
   <url>
-    <loc>https://www.suntangji.me/2017/07/23/%E6%B0%B4%E4%BB%99%E8%8A%B1%E6%95%B0/</loc>
-    <lastmod>2017-07-23T13:33:24.613Z</lastmod>
-    <data>
-        <display>
-        <title>水仙花数</title>
-        <pubTime>2017-07-23T13:05:31.000Z</pubTime>
-        
-        <tag>学习笔记</tag>
-         
-         
-           
-             
-              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://www.suntangji.me/2017/07/23/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2017-07-23T10:42:33.884Z</lastmod>
     <data>
@@ -424,52 +364,12 @@
 
     
   <url>
-    <loc>https://www.suntangji.me/2017/07/23/%E6%B1%8210%E4%B8%AA%E6%95%B4%E6%95%B0%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC/</loc>
-    <lastmod>2017-07-23T06:23:30.232Z</lastmod>
-    <data>
-        <display>
-        <title>求10个整数的最大值</title>
-        <pubTime>2017-07-23T06:18:59.000Z</pubTime>
-        
-        <tag>学习笔记</tag>
-         
-         
-           
-             
-              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://www.suntangji.me/2017/07/23/%E4%BA%A4%E6%8D%A22%E4%B8%AA%E6%95%B0/</loc>
     <lastmod>2017-07-23T06:16:59.951Z</lastmod>
     <data>
         <display>
         <title>交换2个数</title>
         <pubTime>2017-07-23T04:58:52.000Z</pubTime>
-        
-        <tag>学习笔记</tag>
-         
-         
-           
-             
-              <breadCrumb title="c" url="https://www.suntangji.me/categories/c/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.suntangji.me/2017/07/23/%E5%88%A4%E6%96%AD1000-2000%E5%B9%B4%E4%B9%8B%E9%97%B4%E7%9A%84%E9%97%B0%E5%B9%B4/</loc>
-    <lastmod>2017-07-23T06:08:42.843Z</lastmod>
-    <data>
-        <display>
-        <title>判断1000-2000年之间的闰年</title>
-        <pubTime>2017-07-23T04:58:07.000Z</pubTime>
         
         <tag>学习笔记</tag>
          
