@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>suntangji</title>
+  <title>c语言可变参数列表 | suntangji</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="suntangji">
-<meta property="og:url" content="https://www.suntangji.me/index.html">
+  <meta name="description" content="在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。">
+<meta name="keywords" content="随笔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c语言可变参数列表">
+<meta property="og:url" content="https://www.suntangji.me/2017/08/08/c语言可变参数列表/index.html">
 <meta property="og:site_name" content="suntangji">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。">
+<meta property="og:updated_time" content="2017-08-08T13:11:08.162Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="suntangji">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="c语言可变参数列表">
+<meta name="twitter:description" content="在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。">
   
     <link rel="alternative" href="/atom.xml" title="suntangji" type="application/atom+xml">
   
@@ -149,17 +151,18 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-c语言可变参数列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-c语言可变参数列表" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/08/c语言可变参数列表/">c语言可变参数列表</a>
+    <h1 class="article-title" itemprop="name">
+      c语言可变参数列表
     </h1>
+	<span id="busuanzi_container_page_pv">
+		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+		</span>
   
 
         
@@ -173,12 +176,67 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。<br>
-        
-          <a class="article-more-a" href="/2017/08/08/c语言可变参数列表/#more">more >></a>
-        
+        <p>在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。<br><a id="more"></a><br>在C语言中，C标准函式库的stdarg.h标头档定义了提供可变参数函数使用的宏。要创建一个可变参数函数，必须把省略号（…）放到参数列表后面。函数内部必须定义一个va_list变数。然后使用宏va_start、va_arg和va_end来读取。例如：</p>
+<blockquote>
+<p>以下代码运行在vs2015开发环境下，可能和标准c语言有些差异</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdarg.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Max</span><span class="params">(<span class="keyword">int</span> n,...)</span></span></div><div class="line">&#123;</div><div class="line">	va_list arg;</div><div class="line">	__crt_va_start(arg, n);</div><div class="line">	<span class="keyword">int</span> max = __crt_va_arg(arg, <span class="keyword">int</span>);</div><div class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; n; i++)</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">int</span> tmp = __crt_va_arg(arg, <span class="keyword">int</span>);</div><div class="line">		<span class="keyword">if</span> (tmp &gt; max)</div><div class="line">			max = tmp;</div><div class="line">		<span class="comment">//__crt_va_arg(arg, int);</span></div><div class="line">	&#125;</div><div class="line">	__crt_va_end(arg);</div><div class="line">	<span class="keyword">return</span> max;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> ret = Max(<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">9</span>);</div><div class="line">	<span class="built_in">printf</span>(<span class="string">"%d"</span>, ret);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这是一段计算n个数最大值的程序，其中函数Max是可变参数函数，该函数的第一个参数是除了它本身其他参数的个数。<br>这段代码中va_list是一个类型重定义，它的定义是</p>
+<blockquote>
+<p>typedef char* va_list;</p>
+</blockquote>
+<p>__crt_va_start是一个宏定义，他的定义是</p>
+<blockquote>
+<p> #define <strong>crt_va_start(ap, x) </strong>crt_va_start_a(ap, x)</p>
+</blockquote>
+<p>而__crt_va_start_a又是一个宏定义，它的内容为</p>
+<blockquote>
+<p> #define __crt_va_start_a(ap, v) ((void)(ap = (va_list)_ADDRESSOF(v) + _INTSIZEOF(v)))</p>
+</blockquote>
+<p>这个宏定义中又包含两个宏定义，其中宏_ADDRESSOF(v)的内容为</p>
+<blockquote>
+<p> #define _ADDRESSOF(v) (&amp;(v))</p>
+</blockquote>
+<p>另一个宏定义_INTSIZEOF(v)的内容为</p>
+<blockquote>
+<p>  #define _INTSIZEOF(n)          ((sizeof(n) + sizeof(int) - 1) &amp; ~(sizeof(int) - 1))</p>
+</blockquote>
+<p>这段宏定义的作用是如果n占1-4个字节，则返回4.占用5-8个字节则返回8.现在可以推断出宏__crt_va_start的功能就是用v的地址去初始化ap.</p>
+<p>宏 __crt_va_arg(ap, t)的内容</p>
+<blockquote>
+<p> #define __crt_va_arg(ap, t)     (<em>(t</em>)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t)))</p>
+</blockquote>
+<p>  该宏的作用是把ap 加上一个t类型大小的空间，然后又减去t类型大小的空间,这么做的用意是获取下一个参数的地址，返回当前参数的地址。</p>
+<p>宏 __crt_va_end(ap)的定义为</p>
+<blockquote>
+<p> #define __crt_va_end(ap)        ((void)(ap = (va_list)0))</p>
+</blockquote>
+<p>该定义的内容为把指针va_list置空。</p>
+<p>根据函数<a href="https://www.suntangji.me/2017/08/05/运行时堆栈/">栈帧</a>原理,可以知道函数的参数是由右向左分别入栈的，最左边的参数一定是所有参数中最低的地址，由于第一个参数就是除了它本身其他参数的数量，那就可以根据第一个参数的地址找到其他参数的地址，进而找到其他参数。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -210,16 +268,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/08/c语言可变参数列表/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/08/08/c语言可变参数列表/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/05/运行时堆栈/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">栈帧</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -239,822 +356,12 @@
 
 
 
-
-  
-    <article id="post-运行时堆栈" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/05/运行时堆栈/">栈帧</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/05/运行时堆栈/" class="archive-article-date">
-  	<time datetime="2017-08-05T12:13:34.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。<br>
-        
-          <a class="article-more-a" href="/2017/08/05/运行时堆栈/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/05/运行时堆栈/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-模拟实现库函数strcpy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/模拟实现库函数strcpy/">模拟实现库函数strcpy</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/02/模拟实现库函数strcpy/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:53:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>自己动手实现库函数strcpy的功能<br>
-        
-          <a class="article-more-a" href="/2017/08/02/模拟实现库函数strcpy/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/模拟实现库函数strcpy/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-判断一个字符串是否是另一个字符串翻转后的结果" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/">判断一个字符串是否是另一个字符串翻转后的结果</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:31:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>字符串abcdef向左翻转一位的结果为fabcde,向右翻转翻转一位的结果为bcdefa.向左翻转两位的结果为efabcd,向右翻转两位的结果为cdefab。<br>
-        
-          <a class="article-more-a" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在杨氏矩阵中判断一个数是否存在" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/">在杨氏矩阵中判断一个数是否存在</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:12:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>杨氏矩阵是一个二位数组，这个数组无论横向纵向都是递增的。<br>
-        
-          <a class="article-more-a" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-将一个整形数组奇数排列在前偶数排列在后" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">将一个整形数组奇数排列在前偶数排列在后</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" class="archive-article-date">
-  	<time datetime="2017-08-02T06:55:00.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个整形数组，把奇数排列在前，偶数排列在后，例如 arr[]={1,2,3,4,5,6},排列后arr={1,3,5,2,4,6}.<br>
-        
-          <a class="article-more-a" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-字符数组初始化需要注意的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/29/字符数组初始化需要注意的问题/">字符数组初始化需要注意的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/29/字符数组初始化需要注意的问题/" class="archive-article-date">
-  	<time datetime="2017-07-29T07:37:23.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>字符数组用不同的方式初始化，结果可能不同<br>
-        
-          <a class="article-more-a" href="/2017/07/29/字符数组初始化需要注意的问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/29/字符数组初始化需要注意的问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-求一个数的二进制从左到右翻转后的值" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/29/求一个数的二进制从左到右翻转后的值/">求一个数的二进制从左到右翻转后的值</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在32位机器上25这个值包含下列各位：<br>00000000000000000000000000011001<br>翻转后：（2550136832）<br>10011000000000000000000000000000<br>
-        
-          <a class="article-more-a" href="/2017/07/29/求一个数的二进制从左到右翻转后的值/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/29/求一个数的二进制从左到右翻转后的值/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-用位运算实现加法和减法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/用位运算实现加法和减法/">用位运算实现加法和减法</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/28/用位运算实现加法和减法/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:49:33.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;用位运算实现加法和减法<br>
-        
-          <a class="article-more-a" href="/2017/07/28/用位运算实现加法和减法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/28/用位运算实现加法和减法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言sizeof关键字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/c语言sizeof关键字/">c语言sizeof关键字</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/28/c语言sizeof关键字/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:48:26.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.<br>
-        
-          <a class="article-more-a" href="/2017/07/28/c语言sizeof关键字/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/28/c语言sizeof关键字/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1103,8 +410,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
