@@ -6,23 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>栈帧 | 孙堂吉的博客</title>
+  <title>c语言实现文件拷贝命令 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。">
+  <meta name="description" content="主要知识：main函数参数、文件读写">
 <meta name="keywords" content="随笔">
 <meta property="og:type" content="article">
-<meta property="og:title" content="栈帧">
-<meta property="og:url" content="https://www.suntangji.me/2017/08/05/运行时堆栈/index.html">
+<meta property="og:title" content="c语言实现文件拷贝命令">
+<meta property="og:url" content="https://www.suntangji.me/2017/09/22/c语言实现文件拷贝命令/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。">
-<meta property="og:image" content="https://www.suntangji.me/image/栈帧/stack.png">
-<meta property="og:image" content="https://www.suntangji.me/image/栈帧/done.png">
-<meta property="og:image" content="https://www.suntangji.me/image/栈帧/add.png">
-<meta property="og:updated_time" content="2017-08-05T14:16:00.524Z">
+<meta property="og:description" content="主要知识：main函数参数、文件读写">
+<meta property="og:updated_time" content="2017-09-22T09:49:04.462Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="栈帧">
-<meta name="twitter:description" content="每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。">
-<meta name="twitter:image" content="https://www.suntangji.me/image/栈帧/stack.png">
+<meta name="twitter:title" content="c语言实现文件拷贝命令">
+<meta name="twitter:description" content="主要知识：main函数参数、文件读写">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -155,14 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-运行时堆栈" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-c语言实现文件拷贝命令" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      栈帧
+      c语言实现文件拷贝命令
     </h1>
 	<span id="busuanzi_container_page_pv">
 		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
@@ -170,9 +166,9 @@
   
 
         
-        <a href="/2017/08/05/运行时堆栈/" class="archive-article-date">
-  	<time datetime="2017-08-05T12:13:34.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-05</time>
+        <a href="/2017/09/22/c语言实现文件拷贝命令/" class="archive-article-date">
+  	<time datetime="2017-09-22T09:47:04.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-09-22</time>
 </a>
 
         
@@ -180,24 +176,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。<br><a id="more"></a><br>用一个简单函数Add来理解栈帧，它的功能是求两个数的和。</p>
-<blockquote>
-<p>以下代码运行在Microsoft Visual Studio 2015 X86平台下。</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> ret = <span class="number">0</span>;</div><div class="line">	ret = i + j;</div><div class="line">	<span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> a = <span class="number">10</span>;</div><div class="line">	<span class="keyword">int</span> b = <span class="number">20</span>;</div><div class="line">	<span class="keyword">int</span> ret = Add(a, b);</div><div class="line">	system(<span class="string">"pause"</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在main函数处添加断点，开始调试。打开函数调用堆栈看到调用堆栈如图所示。</p>
-<p><img src="/image/栈帧/stack.png" alt=""></p>
-<p>由此可知，main函数也是被其他函数调用。转到反汇编查看main函数的汇编代码<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> main()</div><div class="line">&#123;</div><div class="line">000E16E0 <span class="number">55</span>                   <span class="keyword">push</span>        <span class="built_in">ebp</span>  </div><div class="line">000E16E1 8B EC                <span class="keyword">mov</span>         <span class="built_in">ebp</span>,<span class="built_in">esp</span>  </div><div class="line">000E16E3 <span class="number">81</span> EC E4 <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    <span class="keyword">sub</span>         <span class="built_in">esp</span>,<span class="number">0E4h</span>  </div><div class="line">000E16E9 <span class="number">53</span>                   <span class="keyword">push</span>        <span class="built_in">ebx</span>  </div><div class="line">000E16EA <span class="number">56</span>                   <span class="keyword">push</span>        <span class="built_in">esi</span>  </div><div class="line">000E16EB <span class="number">57</span>                   <span class="keyword">push</span>        <span class="built_in">edi</span>  </div><div class="line">000E16EC <span class="number">8D</span> BD 1C FF FF FF    <span class="keyword">lea</span>         <span class="built_in">edi</span>,[<span class="built_in">ebp</span>-<span class="number">0E4h</span>]  </div><div class="line">000E16F2 B9 <span class="number">39</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>       <span class="keyword">mov</span>         <span class="built_in">ecx</span>,<span class="number">39h</span>  </div><div class="line">000E16F7 B8 CC CC CC CC       <span class="keyword">mov</span>         <span class="built_in">eax</span>,<span class="number">0CCCCCCCCh</span>  </div><div class="line">000E16FC F3 AB                <span class="keyword">rep</span> stos    <span class="built_in">dword</span> <span class="built_in">ptr</span> <span class="built_in">es</span>:[<span class="built_in">edi</span>]  </div><div class="line">	<span class="keyword">int</span> a = <span class="number">10</span><span class="comment">;</span></div><div class="line">000E16FE C7 <span class="number">45</span> F8 0A <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="keyword">mov</span>         <span class="built_in">dword</span> <span class="built_in">ptr</span> [a],<span class="number">0Ah</span>  </div><div class="line">	<span class="keyword">int</span> b = <span class="number">20</span><span class="comment">;</span></div><div class="line">000E1705 C7 <span class="number">45</span> EC <span class="number">14</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="keyword">mov</span>         <span class="built_in">dword</span> <span class="built_in">ptr</span> [b],<span class="number">14h</span>  </div><div class="line">	<span class="keyword">int</span> <span class="keyword">ret</span> = <span class="keyword">Add</span>(a, b)<span class="comment">;</span></div><div class="line">000E170C 8B <span class="number">45</span> EC             <span class="keyword">mov</span>         <span class="built_in">eax</span>,<span class="built_in">dword</span> <span class="built_in">ptr</span> [b]  </div><div class="line">000E170F <span class="number">50</span>                   <span class="keyword">push</span>        <span class="built_in">eax</span>  </div><div class="line">000E1710 8B <span class="number">4D</span> F8             <span class="keyword">mov</span>         <span class="built_in">ecx</span>,<span class="built_in">dword</span> <span class="built_in">ptr</span> [a]  </div><div class="line">000E1713 <span class="number">51</span>                   <span class="keyword">push</span>        <span class="built_in">ecx</span>  </div><div class="line">000E1714 E8 DC F9 FF FF       <span class="keyword">call</span>        _<span class="keyword">Add</span> (<span class="number">0E10F5h</span>)  </div><div class="line">000E1719 <span class="number">83</span> C4 <span class="number">08</span>             <span class="keyword">add</span>         <span class="built_in">esp</span>,<span class="number">8</span>  </div><div class="line">000E171C <span class="number">89</span> <span class="number">45</span> E0             <span class="keyword">mov</span>         <span class="built_in">dword</span> <span class="built_in">ptr</span> [<span class="keyword">ret</span>],<span class="built_in">eax</span>  </div><div class="line">	system(<span class="string">"pause"</span>)<span class="comment">;</span></div><div class="line">000E171F 8B F4                <span class="keyword">mov</span>         <span class="built_in">esi</span>,<span class="built_in">esp</span>  </div><div class="line">000E1721 <span class="number">68</span> <span class="number">30</span> 6B 0E <span class="number">00</span>       <span class="keyword">push</span>        offset string <span class="string">"pause"</span> (<span class="number">0E6B30h</span>)  </div><div class="line">000E1726 FF <span class="number">15</span> <span class="number">60</span> <span class="number">91</span> 0E <span class="number">00</span>    <span class="keyword">call</span>        <span class="built_in">dword</span> <span class="built_in">ptr</span> [__imp__system (<span class="number">0E9160h</span>)]  </div><div class="line">000E172C <span class="number">83</span> C4 <span class="number">04</span>             <span class="keyword">add</span>         <span class="built_in">esp</span>,<span class="number">4</span>  </div><div class="line">000E172F 3B F4                <span class="keyword">cmp</span>         <span class="built_in">esi</span>,<span class="built_in">esp</span>  </div><div class="line">000E1731 E8 <span class="built_in">DD</span> F9 FF FF       <span class="keyword">call</span>        __RTC_CheckEsp (<span class="number">0E1113h</span>)  </div><div class="line">	return <span class="number">0</span><span class="comment">;</span></div><div class="line">000E1736 <span class="number">33</span> C0                <span class="keyword">xor</span>         <span class="built_in">eax</span>,<span class="built_in">eax</span>  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>Add函数的汇编代码如下<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">000E1690 <span class="number">55</span>                   <span class="keyword">push</span>        <span class="built_in">ebp</span>  </div><div class="line">000E1691 8B EC                <span class="keyword">mov</span>         <span class="built_in">ebp</span>,<span class="built_in">esp</span>  </div><div class="line">000E1693 <span class="number">81</span> EC CC <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>    <span class="keyword">sub</span>         <span class="built_in">esp</span>,<span class="number">0CCh</span>  </div><div class="line">000E1699 <span class="number">53</span>                   <span class="keyword">push</span>        <span class="built_in">ebx</span>  </div><div class="line">000E169A <span class="number">56</span>                   <span class="keyword">push</span>        <span class="built_in">esi</span>  </div><div class="line">000E169B <span class="number">57</span>                   <span class="keyword">push</span>        <span class="built_in">edi</span>  </div><div class="line">000E169C <span class="number">8D</span> BD <span class="number">34</span> FF FF FF    <span class="keyword">lea</span>         <span class="built_in">edi</span>,[<span class="built_in">ebp</span>-<span class="number">0CCh</span>]  </div><div class="line">000E16A2 B9 <span class="number">33</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span>       <span class="keyword">mov</span>         <span class="built_in">ecx</span>,<span class="number">33h</span>  </div><div class="line">000E16A7 B8 CC CC CC CC       <span class="keyword">mov</span>         <span class="built_in">eax</span>,<span class="number">0CCCCCCCCh</span>  </div><div class="line">000E16AC F3 AB                <span class="keyword">rep</span> stos    <span class="built_in">dword</span> <span class="built_in">ptr</span> <span class="built_in">es</span>:[<span class="built_in">edi</span>]  </div><div class="line">	<span class="keyword">int</span> <span class="keyword">ret</span> = <span class="number">0</span><span class="comment">;</span></div><div class="line">000E16AE C7 <span class="number">45</span> F8 <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="keyword">mov</span>         <span class="built_in">dword</span> <span class="built_in">ptr</span> [<span class="keyword">ret</span>],<span class="number">0</span>  </div><div class="line">	<span class="keyword">ret</span> = i + j<span class="comment">;</span></div><div class="line">000E16B5 8B <span class="number">45</span> <span class="number">08</span>             <span class="keyword">mov</span>         <span class="built_in">eax</span>,<span class="built_in">dword</span> <span class="built_in">ptr</span> [i]  </div><div class="line">000E16B8 <span class="number">03</span> <span class="number">45</span> 0C             <span class="keyword">add</span>         <span class="built_in">eax</span>,<span class="built_in">dword</span> <span class="built_in">ptr</span> [j]  </div><div class="line">000E16BB <span class="number">89</span> <span class="number">45</span> F8             <span class="keyword">mov</span>         <span class="built_in">dword</span> <span class="built_in">ptr</span> [<span class="keyword">ret</span>],<span class="built_in">eax</span>  </div><div class="line">	return <span class="keyword">ret</span><span class="comment">;</span></div><div class="line">000E16BE 8B <span class="number">45</span> F8             <span class="keyword">mov</span>         <span class="built_in">eax</span>,<span class="built_in">dword</span> <span class="built_in">ptr</span> [<span class="keyword">ret</span>]  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>涉及的特殊寄存器有如下特点（ 在x86的环境下 ）：</p>
-<blockquote>
-<p>ESP 寄存器为 Stack Pointer ，它始终指向栈顶的位置。<br>EIP 寄存器为返回地址，它是调用函数在执行完 Call 指令后的下一条指令的地址。<br>EBP 寄存器为 Frame Pointer（亦称 Base Pointer），它被用作在当前的栈帧中寻址所有的函数参数以及局部变量。</p>
-</blockquote>
-<p>根据汇编代码，画出函数的栈帧图如下图</p>
-<p><div align="center"><br><img align="center" src="/image/栈帧/done.png" style="zoom:50%"><br></div><br>在执行Add函数之前，main函数把寄存器ebp入栈，把一段栈空间初始化为0xcccccccc,然后分别把ebx、esi、edi入栈，把函数的参数存入寄存器eax、ecx并入栈，也需要把Add函数的下一条指令地址存入寄存器eip,然后把eip入栈。做完这些工作才开始正式调用Add函数。</p>
-<p>当Add函数执行完毕，执行了这样一段汇编代码<br><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">000E16C1 5F                   <span class="keyword">pop</span>         <span class="built_in">edi</span>  </div><div class="line">000E16C2 5E                   <span class="keyword">pop</span>         <span class="built_in">esi</span>  </div><div class="line">000E16C3 5B                   <span class="keyword">pop</span>         <span class="built_in">ebx</span>  </div><div class="line">000E16C4 8B E5                <span class="keyword">mov</span>         <span class="built_in">esp</span>,<span class="built_in">ebp</span>  </div><div class="line">000E16C6 <span class="number">5D</span>                   <span class="keyword">pop</span>         <span class="built_in">ebp</span>  </div><div class="line">000E16C7 C3                   <span class="keyword">ret</span></div></pre></td></tr></table></figure></p>
-<p>这段代码的意思是，Add函数执行完毕寄存器edi、esi、ebx需要出栈，esp指向ebp然后ebp出栈。由于esp始终执行栈顶，所以此时esp应指向寄存器eip也就是Add函数下一条指令的地址。此时Add函数申请的栈空间已经释放，栈帧图如下图。</p>
-<p><div align="center"><br><img align="center" src="/image/栈帧/add.png" style="zoom:50%"><br></div><br>此时返回main函数，Add函数的栈空间已释放，一次函数调用结束。</p>
+        <p>主要知识：main函数参数、文件读写<br><a id="more"></a><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></div><div class="line">&#123;</div><div class="line">    FILE *fpread = <span class="literal">NULL</span>;</div><div class="line">    FILE *fpwrite = <span class="literal">NULL</span>;</div><div class="line">    <span class="keyword">int</span> ch = <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (argc != <span class="number">3</span>)</div><div class="line">    &#123;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"请输入 cp 被拷贝的文件名 拷贝后的文件名\n"</span>);</div><div class="line">        <span class="comment">//getchar();</span></div><div class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</div><div class="line">    &#125;</div><div class="line">    fpread = fopen(argv[<span class="number">1</span>], <span class="string">"r"</span>);</div><div class="line">    <span class="keyword">if</span> (fpread == <span class="literal">NULL</span>)</div><div class="line">    &#123;</div><div class="line">        perror(<span class="string">"opne file error for read"</span>);</div><div class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</div><div class="line">    &#125;</div><div class="line">    fpwrite = fopen(argv[<span class="number">2</span>], <span class="string">"w"</span>);</div><div class="line">    <span class="keyword">if</span> (fpwrite == <span class="literal">NULL</span>)</div><div class="line">    &#123;</div><div class="line">        fclose(fpread);</div><div class="line">        perror(<span class="string">"opne file error for write"</span>);</div><div class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</div><div class="line">    &#125;</div><div class="line">    ch = fgetc(fpread);</div><div class="line">    <span class="keyword">while</span> ( ch!= EOF)</div><div class="line">    &#123;</div><div class="line">        fputc(ch, fpwrite);</div><div class="line">        ch = fgetc(fpread);</div><div class="line">    &#125;</div><div class="line">    fclose(fpread);</div><div class="line">    fclose(fpwrite);</div><div class="line">&#125;</div><div class="line">`</div></pre></td></tr></table></figure></p>
 
       
 
@@ -245,7 +224,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
+        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
         		</li>
       		
 		</ul>
@@ -300,7 +279,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/08/05/运行时堆栈/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/09/22/c语言实现文件拷贝命令/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -314,18 +293,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/08/08/c语言可变参数列表/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/09/22/c语言实现动态顺序表/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          c语言可变参数列表
+          c语言实现动态顺序表
         
       </div>
     </a>
   
   
-    <a href="/2017/08/02/模拟实现库函数strcpy/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">模拟实现库函数strcpy</div>
+    <a href="/2017/09/22/把c语言注释转换为cpp注释/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">把c语言注释转换为cpp注释</div>
       <i class="icon-circle-right"></i>
     </a>
   
