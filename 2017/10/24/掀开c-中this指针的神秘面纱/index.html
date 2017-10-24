@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Tag: 学习笔记 | 孙堂吉的博客</title>
+  <title>掀开c++中this指针的神秘面纱 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/tags/学习笔记/index.html">
+  <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="掀开c++中this指针的神秘面纱">
+<meta property="og:url" content="https://www.suntangji.me/2017/10/24/掀开c-中this指针的神秘面纱/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。">
+<meta property="og:updated_time" content="2017-10-24T12:34:12.885Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="掀开c++中this指针的神秘面纱">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,38 +151,84 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-掀开c-中this指针的神秘面纱" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      掀开c++中this指针的神秘面纱
+    </h1>
+	<span id="busuanzi_container_page_pv">
+		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+		</span>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
+
+        
+        <a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
   	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2017-10-24</time>
 </a>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开c++中this指针的神秘面纱</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。<br><a id="more"></a><br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Date</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">SetDate</span><span class="params">(<span class="keyword">int</span> year,<span class="keyword">int</span> month,<span class="keyword">int</span> day)</span></span></div><div class="line">	&#123;</div><div class="line">		_year = year;</div><div class="line">		_month = month;</div><div class="line">		_day = day;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _year;</div><div class="line">	<span class="keyword">int</span> _month;</div><div class="line">	<span class="keyword">int</span> _day;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	Date d1,d2;</div><div class="line">	d1.SetDate(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">22</span>);</div><div class="line">	d2.SetDate(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">23</span>);</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>以上代码是一个日期类，创建了2个对象d1和d2，都调用了成员函数SetDate()。成员函数是如何知道哪个对象要调用它呢？如果用c语言去实现以上功能，代码如下。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS</span></div><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Date</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">int</span> _year;</div><div class="line">	<span class="keyword">int</span> _month;</div><div class="line">	<span class="keyword">int</span> _day;</div><div class="line">&#125;Date,*pdate;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">SetDate</span><span class="params">(pdate <span class="keyword">this</span>,<span class="keyword">int</span> year,<span class="keyword">int</span> month,<span class="keyword">int</span> day)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">this</span>-&gt;_year = year;</div><div class="line">	<span class="keyword">this</span>-&gt;_month = month;</div><div class="line">	<span class="keyword">this</span>-&gt;_day = day;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	Date d1, d2;</div><div class="line">	SetDate(&amp;d1, <span class="number">2017</span>, <span class="number">10</span>, <span class="number">22</span>);</div><div class="line">	SetDate(&amp;d2, <span class="number">2017</span>, <span class="number">10</span>, <span class="number">23</span>);</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>创建了Date类型的变量d1,d2后，要想调用SetDate()函数去设置日期，参数除了年月日之外，还必须要传一个当前对象的地址才可以。而在cpp中，我们并没有显式的去传一个当前对象的地址，而是用当前对象加上成员选择符去调用成员函数，那编译器会不会帮我们隐式的传了当前对象的地址呢？<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">d1.setdate(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">22</span>);</div><div class="line"><span class="number">00</span>C7177E  push        <span class="number">16</span>h  </div><div class="line"><span class="number">00</span>C71780  push        <span class="number">0</span>Ah  </div><div class="line"><span class="number">00</span>C71782  push        <span class="number">7E1</span>h  </div><div class="line"><span class="number">00</span>C71787  lea         ecx,[d1]  </div><div class="line"><span class="number">00</span>C7178A  call        date::setdate (<span class="number">0</span>C7101Eh)</div></pre></td></tr></table></figure></p>
+<p>以上代码是SetDate()函数的汇编代码，显而易见，该函数除了的参数除了我们显式定义的参数，编译器还使用ecx寄存器传递了实例d1的地址。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setdate</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span></div><div class="line">	&#123;</div><div class="line"><span class="number">00</span>C71700  push        ebp  </div><div class="line"><span class="number">00</span>C71701  mov         ebp,esp  </div><div class="line"><span class="number">00</span>C71703  sub         esp,<span class="number">0</span>CCh  </div><div class="line"><span class="number">00</span>C71709  push        ebx  </div><div class="line"><span class="number">00</span>C7170A  push        esi  </div><div class="line"><span class="number">00</span>C7170B  push        edi  </div><div class="line"><span class="number">00</span>C7170C  push        ecx  </div><div class="line"><span class="number">00</span>C7170D  lea         edi,[ebp<span class="number">-0</span>CCh]  </div><div class="line"><span class="number">00</span>C71713  mov         ecx,<span class="number">33</span>h  </div><div class="line"><span class="number">00</span>C71718  mov         eax,<span class="number">0</span>CCCCCCCCh  </div><div class="line"><span class="number">00</span>C7171D  rep stos    dword ptr es:[edi]  </div><div class="line"><span class="number">00</span>C7171F  pop         ecx  </div><div class="line"><span class="number">00</span>C71720  mov         dword ptr [<span class="keyword">this</span>],ecx  </div><div class="line">		_year = year;</div><div class="line"><span class="number">00</span>C71723  mov         eax,dword ptr [<span class="keyword">this</span>]  </div><div class="line"><span class="number">00</span>C71726  mov         ecx,dword ptr [year]  </div><div class="line"><span class="number">00</span>C71729  mov         dword ptr [eax],ecx  </div><div class="line">		_month = month;</div><div class="line"><span class="number">00</span>C7172B  mov         eax,dword ptr [<span class="keyword">this</span>]  </div><div class="line"><span class="number">00</span>C7172E  mov         ecx,dword ptr [month]  </div><div class="line"><span class="number">00</span>C71731  mov         dword ptr [eax+<span class="number">4</span>],ecx  </div><div class="line">		_day = day;</div><div class="line"><span class="number">00</span>C71734  mov         eax,dword ptr [<span class="keyword">this</span>]  </div><div class="line"><span class="number">00</span>C71737  mov         ecx,dword ptr [day]  </div><div class="line"><span class="number">00</span>C7173A  mov         dword ptr [eax+<span class="number">8</span>],ecx  </div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>进入SetDate()函数内部，根据汇编代码可知，ecx寄存器把它的内容交给了this指针，这就可以解释不同实例为什么可以调用同一个成员函数。</p>
+<h2 id="this指针是什么类型呢？"><a href="#this指针是什么类型呢？" class="headerlink" title="this指针是什么类型呢？"></a>this指针是什么类型呢？</h2><p>类类型*const,我们无法改变this指针的指向，所以是const.</p>
+<h2 id="为什么叫this指针，而不是引用？"><a href="#为什么叫this指针，而不是引用？" class="headerlink" title="为什么叫this指针，而不是引用？"></a>为什么叫this指针，而不是引用？</h2><p>首先应该明确的是指针和引用在底层的实现是相同的，之所以叫this指针，是因为最开始将C++称作带类的C，而引用则是在C++1.0版才加入使用的，因此叫做this指针。</p>
+<h2 id="this指针可不可能指向NULL？"><a href="#this指针可不可能指向NULL？" class="headerlink" title="this指针可不可能指向NULL？"></a>this指针可不可能指向NULL？</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">date</span></span></div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">setdate</span><span class="params">(<span class="keyword">int</span> year, <span class="keyword">int</span> month, <span class="keyword">int</span> day)</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">	<span class="comment">//	_year = year;</span></div><div class="line">	<span class="comment">//	_month = month;</span></div><div class="line">	<span class="comment">//	_day = day;</span></div><div class="line">		</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _year;</div><div class="line">	<span class="keyword">int</span> _month;</div><div class="line">	<span class="keyword">int</span> _day;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	date d1, d2;</div><div class="line">	date *p = &amp;d1;</div><div class="line">	d1.setdate(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">22</span>);</div><div class="line">	p-&gt;setdate(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">22</span>);</div><div class="line">	p = <span class="literal">NULL</span>;</div><div class="line">	p-&gt;setdate(<span class="number">2017</span>, <span class="number">10</span>, <span class="number">22</span>);</div><div class="line"></div><div class="line">	<span class="comment">//d2.setdate(2017, 10, 23);</span></div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码的运行结果为</p>
+<blockquote>
+<p>00AFFD20<br>00AFFD20<br>00000000</p>
+</blockquote>
+<p>根据运行结果可知，this指针是可能为空的。只是无法在成员函数内部置空，this为空时不能调用成员变量。</p>
+<h2 id="成员函数调用约定"><a href="#成员函数调用约定" class="headerlink" title="成员函数调用约定"></a>成员函数调用约定</h2><p>当函数参数确定时，使用_thiscalll 调用约定</p>
+<ul>
+<li>_thiscall只能够用在类的成员函数上。</li>
+<li>参数从右向左压栈。this指针通过ecx寄存器传递给被调用者</li>
+<li>函数自己清理堆栈</li>
+</ul>
+<p>当函数参数不确定时，使用_cdecl调用约定</p>
+<ul>
+<li>参数从右向左压栈，this指针在所有参数被压栈后压入堆栈。</li>
+<li>调用者清理堆栈</li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -193,7 +241,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -206,488 +254,101 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/10/24/掀开c-中this指针的神秘面纱/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/模拟实现库函数strcpy/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:53:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/22/c语言扫雷游戏/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">c语言扫雷游戏</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/模拟实现库函数strcpy/">模拟实现库函数strcpy</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:31:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/">判断一个字符串是否是另一个字符串翻转后的结果</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:12:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/">在杨氏矩阵中判断一个数是否存在</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" class="archive-article-date">
-  	<time datetime="2017-08-02T06:55:00.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">将一个整形数组奇数排列在前偶数排列在后</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/29/求一个数的二进制从左到右翻转后的值/">求一个数的二进制从左到右翻转后的值</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/用位运算实现加法和减法/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:49:33.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/用位运算实现加法和减法/">用位运算实现加法和减法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/字符串翻转/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:46:28.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/字符串翻转/">字符串翻转</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/跳水比赛名次问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:40.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/跳水比赛名次问题/">跳水比赛名次问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/谋杀案问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:22.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/谋杀案问题/">谋杀案问题</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/学习笔记/page/2/">2</a><a class="extend next" rel="next" href="/tags/学习笔记/page/2/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -737,9 +398,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
