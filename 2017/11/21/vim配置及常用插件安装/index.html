@@ -6,17 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives: 2017 | 孙堂吉的博客</title>
+  <title>vim配置及常见插件安装 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/2017/index.html">
+  <meta name="description" content="前言作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.">
+<meta name="keywords" content="随笔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim配置及常见插件安装">
+<meta property="og:url" content="https://www.suntangji.me/2017/11/21/vim配置及常用插件安装/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="前言作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.">
+<meta property="og:image" content="http://img.blog.csdn.net/20171120110228097?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzk1MjY1MDM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-11-21T13:44:48.851Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="vim配置及常见插件安装">
+<meta name="twitter:description" content="前言作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20171120110228097?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzk1MjY1MDM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,38 +153,110 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-vim配置及常用插件安装" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      vim配置及常见插件安装
+    </h1>
+	<span id="busuanzi_container_page_pv">
+		本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+		</span>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/21/vim配置及常用插件安装/" class="archive-article-date">
+
+        
+        <a href="/2017/11/21/vim配置及常用插件安装/" class="archive-article-date">
   	<time datetime="2017-11-21T13:30:04.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2017-11-21</time>
 </a>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/21/vim配置及常用插件安装/">vim配置及常见插件安装</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.<br><a id="more"></a></p>
+<h4 id="引用知乎大佬刘尚奇的言论"><a href="#引用知乎大佬刘尚奇的言论" class="headerlink" title="引用知乎大佬刘尚奇的言论"></a>引用知乎大佬<a href="https://www.zhihu.com/question/21376577/answer/32617207" target="_blank" rel="external">刘尚奇</a>的言论</h4><blockquote>
+<p>中国范围，08年以前Vim和Emacs认知度较低，两基友相爱相杀，流行度不相上下；此后Vim一跃领先，在11年后以压倒性优势成为最流行的editor；Emacs份额也稳中有升，并在12年后迎来更广的认知度和流行度；Sublime Text的趋势跟Worldwide相似但略有delay，流行度在13年超越Emacs；TextMate一直作为小众的存在，从Sublime Text诞生起就被超越。</p>
+</blockquote>
+<p>可以看出vim仍是目前的主流编辑器，它流行的一个主要原因就是可扩展。配上各种插件就可以实现非常炫酷的功能。</p>
+<h3 id="本人的环境"><a href="#本人的环境" class="headerlink" title="本人的环境"></a>本人的环境</h3><p>系统：Centos7.0<br>vim版本：8.0</p>
+<h3 id="插件列表"><a href="#插件列表" class="headerlink" title="插件列表"></a>插件列表</h3><ul>
+<li>Vundle<br>管理vim插件的插件 ，其特色在于使用git来管理插件,更新方便。</li>
+<li>Nerdtree<br>树形目录插件，可以方便查看目录</li>
+<li>DoxygenToolkit<br>用它可以很方便地添加 Doxygen 风格的注释，可以节省大量时间和精力，提高写代码的效率。</li>
+<li>Taglist<br>TagList插件是一款基于ctags，在vim代码窗口旁以分割窗口形式显示当前的代码结构概览，增加代码浏览的便利程度的vim插件。</li>
+<li>nerdcommenter<br>快速注释插件，可以很方便的注释代码</li>
+<li>vim-airline<br>状态栏美化插件</li>
+<li>YouCompleteMe<br>代码自动补全插件</li>
+</ul>
+<h3 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h3><p><img src="http://img.blog.csdn.net/20171120110228097?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzk1MjY1MDM=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<h3 id="1-安装-升级Vim"><a href="#1-安装-升级Vim" class="headerlink" title="1. 安装/升级Vim"></a>1. 安装/升级Vim</h3><p>基本所有的操作系统都会内置vim,但是YouCompleteMe插件要求vim版本7.4以上，所以我升级到了vim8.0，centos的包管理工具没有8.0的版本，需要进行手动编译安装。若vim版本大于7.4可忽略本步。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">sudo yum install ncurses-devel </div><div class="line">wget https://github.com/vim/vim/archive/master.zip</div><div class="line">unzip master.zip</div><div class="line"><span class="built_in">cd</span> vim-master</div><div class="line"><span class="built_in">cd</span> src/</div><div class="line">./configure </div><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/bin:<span class="variable">$PATH</span></div><div class="line">vim --version</div></pre></td></tr></table></figure></p>
+<h3 id="2-安装Vundle"><a href="#2-安装Vundle" class="headerlink" title="2. 安装Vundle"></a>2. 安装Vundle</h3><p>若没有安装git<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y git</div></pre></td></tr></table></figure></p>
+<p>下载vundle<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir ~/.vim/bundle</div><div class="line">git <span class="built_in">clone</span> https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim</div></pre></td></tr></table></figure></p>
+<p>打开配置文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.vimrc</div></pre></td></tr></table></figure></p>
+<p>添加以下代码<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> nocompatible              <span class="comment">" 去除VI一致性,必须要添加</span></div><div class="line"><span class="keyword">filetype</span> off                  <span class="comment">" 必须要添加</span></div><div class="line"></div><div class="line"><span class="comment">" 设置包括vundle和初始化相关的runtime path</span></div><div class="line"><span class="keyword">set</span> rtp+=~/.<span class="keyword">vim</span>/bundle/Vundle.<span class="keyword">vim</span></div><div class="line"><span class="keyword">call</span> vundle#begin()</div><div class="line"><span class="comment">" 另一种选择, 指定一个vundle安装插件的路径</span></div><div class="line"><span class="comment">"call vundle#begin('~/some/path/here')</span></div><div class="line"></div><div class="line"><span class="comment">" 让vundle管理插件版本,必须</span></div><div class="line">Plugin <span class="string">'VundleVim/Vundle.vim'</span></div><div class="line"></div><div class="line"><span class="comment">" 以下范例用来支持不同格式的插件安装.</span></div><div class="line"><span class="comment">" 请将安装插件的命令放在vundle#begin和vundle#end之间.</span></div><div class="line"><span class="comment">" Github上的插件</span></div><div class="line"><span class="comment">" 格式为 Plugin '用户名/插件仓库名'</span></div><div class="line">Plugin <span class="string">'tpope/vim-fugitive'</span></div><div class="line"><span class="comment">" 来自 http://vim-scripts.org/vim/scripts.html 的插件</span></div><div class="line"><span class="comment">" Plugin '插件名称' 实际上是 Plugin 'vim-scripts/插件仓库名' 只是此处的用户名可以省略</span></div><div class="line">Plugin <span class="string">'L9'</span></div><div class="line"><span class="comment">" 由Git支持但不再github上的插件仓库 Plugin 'git clone 后面的地址'</span></div><div class="line">Plugin <span class="string">'git://git.wincent.com/command-t.git'</span></div><div class="line"><span class="comment">" 本地的Git仓库(例如自己的插件) Plugin 'file:///+本地插件仓库绝对路径'</span></div><div class="line">Plugin <span class="string">'file:///home/gmarik/path/to/plugin'</span></div><div class="line"><span class="comment">" 插件在仓库的子目录中.</span></div><div class="line"><span class="comment">" 正确指定路径用以设置runtimepath. 以下范例插件在sparkup/vim目录下</span></div><div class="line">Plugin <span class="string">'rstacruz/sparkup'</span>, &#123;<span class="string">'rtp'</span>: <span class="string">'vim/'</span>&#125;</div><div class="line"><span class="comment">" 安装L9，如果已经安装过这个插件，可利用以下格式避免命名冲突</span></div><div class="line">Plugin <span class="string">'ascenator/L9'</span>, &#123;<span class="string">'name'</span>: <span class="string">'newL9'</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">" 你的所有插件需要在下面这行之前</span></div><div class="line"><span class="keyword">call</span> vundle#end()            <span class="comment">" 必须</span></div><div class="line"><span class="keyword">filetype</span> plugin <span class="built_in">indent</span> <span class="keyword">on</span>    <span class="comment">" 必须 加载vim自带和插件相应的语法和文件类型相关脚本</span></div><div class="line"><span class="comment">" 忽视插件改变缩进,可以使用以下替代:</span></div><div class="line"><span class="comment">"filetype plugin on</span></div></pre></td></tr></table></figure></p>
+<p>用vim打开一个新的文件，执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<p>显式Done后安装完毕</p>
+<h3 id="3-安装-Nerdtree"><a href="#3-安装-Nerdtree" class="headerlink" title="3. 安装 Nerdtree"></a>3. 安装 Nerdtree</h3><p>打开vim的配置文件<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.vimrc</div></pre></td></tr></table></figure></p>
+<p>添加代码Plugin ‘scrooloose/nerdtree’在这行之前<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">" 你的所有插件需要在下面这行之前</span></div><div class="line"><span class="keyword">call</span> vundle#end()            <span class="comment">" 必须</span></div></pre></td></tr></table></figure></p>
+<p>添加后<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Plugin <span class="string">'scrooloose/nerdtree'</span></div><div class="line"><span class="comment">" 你的所有插件需要在下面这行之前</span></div><div class="line"><span class="keyword">call</span> vundle#end()            <span class="comment">" 必须</span></div></pre></td></tr></table></figure></p>
+<p>在vim中执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<p>在配置文件中添加以下代码<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">map</span> <span class="symbol">&lt;leader&gt;</span>t :NERDTreeToggle<span class="symbol">&lt;CR&gt;</span></div><div class="line"><span class="comment">"map &lt;C-n&gt; :NERDTreeToggle&lt;CR&gt;</span></div><div class="line"><span class="comment">" 显示行号</span></div><div class="line"><span class="keyword">let</span> NERDTreeShowLineNumbers=<span class="number">1</span></div><div class="line"><span class="keyword">let</span> NERDTreeAutoCenter=<span class="number">1</span></div><div class="line"><span class="comment">" 是否显示隐藏文件</span></div><div class="line"><span class="keyword">let</span> NERDTreeShowHidden=<span class="number">1</span></div><div class="line"><span class="comment">" 设置宽度</span></div><div class="line"><span class="keyword">let</span> NERDTreeWinSize=<span class="number">30</span></div><div class="line"><span class="comment">" 在终端启动vim时，共享NERDTree</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:nerdtree_tabs_open_on_console_startup</span>=<span class="number">1</span></div><div class="line"><span class="comment">" 忽略一下文件的显示</span></div><div class="line"><span class="keyword">let</span> NERDTreeIgnore=[<span class="string">'\.pyc'</span>,<span class="string">'\~$'</span>,<span class="string">'\.swp'</span>]</div><div class="line"><span class="comment">" 显示书签列表</span></div><div class="line"><span class="keyword">let</span> NERDTreeShowBookmarks=<span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment">" vim不指定具体文件打开是，自动使用nerdtree</span></div><div class="line"><span class="comment">" autocmd StdinReadPre * let s:std_in=1</span></div><div class="line"><span class="string">"autocmd VimEnter * if argc() == 0 &amp;&amp; !exists("</span><span class="variable">s:std_in</span><span class="comment">") | NERDTree |endif</span></div><div class="line"><span class="comment">" 当vim打开一个目录时，nerdtree自动使用</span></div><div class="line"><span class="comment">" autocmd StdinReadPre * let s:std_in=1</span></div><div class="line"><span class="comment">" autocmd VimEnter * if argc() == 1 &amp;&amp; isdirectory(argv()[0]) &amp;&amp;</span></div><div class="line"><span class="string">"!exists("</span><span class="variable">s:std_in</span><span class="comment">") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif</span></div><div class="line"></div><div class="line"><span class="comment">" 当vim中没有其他文件，值剩下nerdtree的时候，自动关闭窗口</span></div><div class="line"><span class="keyword">autocmd</span> bufenter * <span class="keyword">if</span> (<span class="built_in">winnr</span>(<span class="string">"$"</span>) == <span class="number">1</span> &amp;&amp; <span class="built_in">exists</span>(<span class="string">"b:NERDTree"</span>) &amp;&amp; <span class="variable">b:NERDTree</span>.isTabTree()) | q | <span class="keyword">endif</span></div></pre></td></tr></table></figure></p>
+<h3 id="4-安装DoxygenToolkit"><a href="#4-安装DoxygenToolkit" class="headerlink" title="4. 安装DoxygenToolkit"></a>4. 安装DoxygenToolkit</h3><p>在vim配置文件中call vundle#end() 之前添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Plugin <span class="string">'DoxygenToolkit.vim'</span></div></pre></td></tr></table></figure></p>
+<p>在call vundle#end() 之后添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_briefTag_funcName</span> = <span class="string">"yes"</span></div><div class="line"><span class="comment">" for C++ style, change the '@' to '\'</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_commentType</span> = <span class="string">"C++"</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_briefTag_pre</span> = <span class="string">"\\brief "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_templateParamTag_pre</span> = <span class="string">"\\tparam "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_paramTag_pre</span> = <span class="string">"\\param "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_returnTag</span> = <span class="string">"\\return "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_throwTag_pre</span> = <span class="string">"\\throw "</span> <span class="comment">" @exception is also valid</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_fileTag</span> = <span class="string">"\\file "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_dateTag</span> = <span class="string">"\\date "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_authorTag</span> = <span class="string">"\\author "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_versionTag</span> = <span class="string">"\\version "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_blockTag</span> = <span class="string">"\\name "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_classTag</span> = <span class="string">"\\class "</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:DoxygenToolkit_authorName</span> = <span class="string">"suntangji, suntangj2016i@gmail.com"</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:doxygen_enhanced_color</span> = <span class="number">1</span></div><div class="line"><span class="comment">"let g:load_doxygen_syntax = 1</span></div><div class="line"><span class="keyword">nmap</span> <span class="symbol">&lt;F4&gt;</span> :DoxAuthor<span class="symbol">&lt;cr&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在vim中执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<h3 id="5-安装Taglist"><a href="#5-安装Taglist" class="headerlink" title="5. 安装Taglist"></a>5. 安装Taglist</h3><p>taglist依赖ctags,需要进行安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y ctags</div></pre></td></tr></table></figure></p>
+<p>在vim配置文件中call vundle#end() 之前添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Plugin <span class="string">'taglist.vim'</span></div></pre></td></tr></table></figure></p>
+<p>在call vundle#end() 之后添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> Tlist_Ctags_Cmd=<span class="string">'ctags'</span></div><div class="line"><span class="keyword">let</span> Tlist_Show_One_File=<span class="number">1</span>           <span class="comment">"不同时显示多个文件的tag，只显示当前文件的</span></div><div class="line"><span class="keyword">let</span> Tlist_WinWidt =<span class="number">28</span>               <span class="comment">"设置taglist的宽度</span></div><div class="line"><span class="keyword">let</span> Tlist_Exit_OnlyWindow=<span class="number">1</span>         <span class="comment">"如果taglist窗口是最后一个窗口，则退出vim</span></div><div class="line"><span class="keyword">let</span> Tlist_Use_Right_Window=<span class="number">1</span>        <span class="comment">"在右侧窗口中显示taglist窗口</span></div><div class="line"><span class="comment">"let Tlist_Use_Left_Windo =1</span></div><div class="line"><span class="keyword">map</span> <span class="symbol">&lt;leader&gt;</span><span class="keyword">l</span> :Tlist<span class="symbol">&lt;CR&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在vim中执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<h3 id="6-安装nerdcommenter"><a href="#6-安装nerdcommenter" class="headerlink" title="6. 安装nerdcommenter"></a>6. 安装nerdcommenter</h3><p>在vim配置文件中call vundle#end() 之前添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Plugin <span class="string">'scrooloose/nerdcommenter'</span></div></pre></td></tr></table></figure></p>
+<p>在vim中执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<h3 id="7-安装vim-airline"><a href="#7-安装vim-airline" class="headerlink" title="7. 安装vim-airline"></a>7. 安装vim-airline</h3><p>在vim配置文件中call vundle#end() 之前添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Plugin <span class="string">'bling/vim-airline'</span></div><div class="line">Plugin <span class="string">'vim-airline/vim-airline-themes'</span></div></pre></td></tr></table></figure></p>
+<p>在call vundle#end() 之后添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="variable">g:airline_theme</span>=<span class="string">"luna"</span></div><div class="line"><span class="string">"这个是安装字体后 必须设置此项"</span></div><div class="line"><span class="string">"let g:airline_theme="</span>kolor<span class="comment">"</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline_powerline_fonts</span> = <span class="number">1</span> </div><div class="line"><span class="keyword">set</span> laststatus=<span class="number">2</span>  <span class="comment">"永远显示状态栏</span></div><div class="line"><span class="keyword">set</span> t_Co=<span class="number">256</span>      <span class="comment">"在windows中用xshell连接打开vim可以显示色彩</span></div><div class="line"><span class="string">"打开tabline功能,方便查看Buffer和切换，这个功能比较不错"</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline</span>#extensions#tabline#enabled = <span class="number">1</span> </div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline</span>#extensions#tabline#buffer_nr_show = <span class="number">1</span> </div><div class="line"></div><div class="line"><span class="string">"设置切换Buffer快捷键"</span></div><div class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;C-N&gt;</span> :<span class="keyword">bn</span><span class="symbol">&lt;CR&gt;</span></div><div class="line"><span class="keyword">nnoremap</span> <span class="symbol">&lt;C-P&gt;</span> :<span class="keyword">bp</span><span class="symbol">&lt;CR&gt;</span></div><div class="line"></div><div class="line"><span class="string">" 关闭状态显示空白符号计数,这个对我用处不大"</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline</span>#extensions#whitespace#enabled = <span class="number">0</span> </div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline</span>#extensions#whitespace#symbol = <span class="string">'!'</span></div><div class="line"><span class="comment">" unicode symbols</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline_left_sep</span> = <span class="string">'»'</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline_left_sep</span> = <span class="string">'▶'</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline_right_sep</span> = <span class="string">'«'</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:airline_right_sep</span> = <span class="string">'◀'</span></div></pre></td></tr></table></figure></p>
+<p>在vim中执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<p>初次安装以后打开Vim，若发现状态栏会出现乱码，这时有两种解决方案，一种是安装<a href="https://github.com/powerline/fonts" target="_blank" rel="external">powerline</a>字体或者<a href="https://github.com/ryanoasis/nerd-fonts" target="_blank" rel="external">Nerd Fonts</a>实现字体显示，另一种是用unicode字符替代，对于第一种方案，字体的安装请参考github相应主页上的说明</p>
+<h3 id="8-安装YouCompleteMe"><a href="#8-安装YouCompleteMe" class="headerlink" title="8. 安装YouCompleteMe"></a>8. 安装YouCompleteMe</h3><p>该插件需要手动编译<br>首先安装依赖<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install -y python-dev python3-dev gcc cmake</div></pre></td></tr></table></figure></p>
+<h4 id="方式一-通过Vundle下载源码（不推荐）"><a href="#方式一-通过Vundle下载源码（不推荐）" class="headerlink" title="方式一 通过Vundle下载源码（不推荐）"></a>方式一 通过Vundle下载源码（不推荐）</h4><p>该方式下载时间较长，不会进行仓库完备性检查<br>在vim配置文件中call vundle#end() 之前添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Plugin <span class="string">'Valloric/YouCompleteMe'</span></div></pre></td></tr></table></figure></p>
+<p>在vim中执行<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:PluginInstall</div></pre></td></tr></table></figure></p>
+<h4 id="方式二-通过git-下载源码"><a href="#方式二-通过git-下载源码" class="headerlink" title="方式二 通过git 下载源码"></a>方式二 通过git 下载源码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/Valloric/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe</div><div class="line">git submodule update --init --recursive</div></pre></td></tr></table></figure>
+<p>进行编译<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> ~/.vim/bundle/YouCompleteMe</div><div class="line">sudo ./install.py --clang-completer</div></pre></td></tr></table></figure></p>
+<p>安装完成后将.yum_extra_conf.py复制一份到 ~/<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py ~/</div></pre></td></tr></table></figure></p>
+<p>打开.yum_extra_conf.py，在flags中添加以下代码<br><figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">'-isystem'</span>,</div><div class="line"><span class="string">'/usr/include'</span>,</div><div class="line"><span class="string">'-isystem'</span>,</div><div class="line"><span class="string">'/usr/include/c++/'</span>,</div><div class="line"><span class="string">'-isystem'</span>,</div><div class="line"><span class="string">'/usr/include/i386-linux-gnu/c++'</span></div></pre></td></tr></table></figure></p>
+<p>把flags中‘home/xxx’更改为’home/你的用户名’<br>打开配置文件.vimrc添加<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> <span class="variable">g:ycm_global_ycm_extra_conf</span>=<span class="string">'~/.ycm_extra_conf.py'</span>  <span class="comment">"设置全局配置文件的路径</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:ycm_seed_identifiers_with_syntax</span>=<span class="number">1</span>    <span class="comment">" 语法关键字补全</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:ycm_confirm_extra_conf</span>=<span class="number">0</span>  <span class="comment">" 打开vim时不再询问是否加载ycm_extra_conf.py配置</span></div><div class="line"><span class="keyword">let</span> <span class="variable">g:ycm_key_invoke_completion</span> = <span class="string">'&lt;C-a&gt;'</span> <span class="comment">" ctrl + a 触发补全</span></div><div class="line"><span class="keyword">set</span> completeopt=longest,<span class="keyword">menu</span>    <span class="comment">"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)</span></div></pre></td></tr></table></figure></p>
+<p>至此，大功告成！</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -193,7 +269,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -206,488 +282,101 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/11/21/vim配置及常用插件安装/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/24/掀开c-中this指针的神秘面纱/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">掀开c++中this指针的神秘面纱</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开c++中this指针的神秘面纱</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c++/" class="article-tag-list-link color4">c++</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言扫雷游戏/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:59:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
 
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言扫雷游戏/">c语言扫雷游戏</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言实现动态顺序表/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:54:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言实现动态顺序表/">c语言实现动态顺序表</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言实现文件拷贝命令/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:47:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言实现文件拷贝命令/">c语言实现文件拷贝命令</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/把c语言注释转换为cpp注释/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:15:48.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/把c语言注释转换为cpp注释/">把c语言注释转换为cpp注释</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/通讯录c语言实现/" class="archive-article-date">
-  	<time datetime="2017-09-22T08:48:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/通讯录c语言实现/">通讯录c语言实现</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/02/c语言动态内存开辟/" class="archive-article-date">
-  	<time datetime="2017-09-02T11:49:37.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/02/c语言动态内存开辟/">c语言动态内存开辟</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/02/c语言中的整形提升/" class="archive-article-date">
-  	<time datetime="2017-09-02T02:40:52.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/02/c语言中的整形提升/">c语言中的整形提升</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/08/c语言可变参数列表/" class="archive-article-date">
-  	<time datetime="2017-08-08T12:17:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/08/c语言可变参数列表/">c语言可变参数列表</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2017/page/2/">2</a><a class="page-number" href="/archives/2017/page/3/">3</a><a class="page-number" href="/archives/2017/page/4/">4</a><a class="extend next" rel="next" href="/archives/2017/page/2/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -737,8 +426,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
