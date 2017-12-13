@@ -4,7 +4,7 @@
 
 # Site
 title: 孙堂吉的博客
-subtitle: 牧马少年，思念那梦中的草原
+subtitle: 枯萎的花篮，不敢承受这鲜红的叶
 description: suntangji 
 author: 孙堂吉
 language: 
@@ -95,7 +95,8 @@ deploy:
   # type: baidu_url_submitter  
   type: git
   repository: 
-            github: https://github.com/suntangji/suntangji.github.io.git
-            coding: git@git.coding.net:suntangji/suntangji.coding.me.git
+  #github: https://github.com/suntangji/suntangji.github.io.git
+            github: git@github.com:suntangji/suntangji.github.io.git
+            coding: git@git.coding.net:suntangji/suntangji.coding.me.git 
   branch: master
   #bucket: www.suntangji.me
