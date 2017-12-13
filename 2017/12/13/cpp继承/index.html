@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>c++继承 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/page/3/index.html">
+  <meta name="description" content="浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++继承">
+<meta property="og:url" content="https://www.suntangji.me/2017/12/13/cpp继承/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局">
+<meta property="og:updated_time" content="2017-12-13T10:23:17.185Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="c++继承">
+<meta name="twitter:description" content="浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,24 +151,25 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-c语言sizeof关键字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-cpp继承" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/c语言sizeof关键字/">c语言sizeof关键字</a>
+    <h1 class="article-title" itemprop="name">
+      c++继承
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
         
-        <a href="/2017/07/28/c语言sizeof关键字/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:48:26.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
+        <a href="/2017/12/13/cpp继承/" class="archive-article-date">
+  	<time datetime="2017-12-13T10:15:19.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-12-13</time>
 </a>
 
         
@@ -174,103 +177,92 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.<br>
-        
-          <a class="article-more-a" href="/2017/07/28/c语言sizeof关键字/#more">more >></a>
-        
+        <p>浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局<br><a id="more"></a></p>
+<h3 id="什么是继承"><a href="#什么是继承" class="headerlink" title="什么是继承"></a>什么是继承</h3><p>继承(inheritance)机制是面向对象程序设计使代码可以复用的最重要的手段，它允许程序员在保持原有类特性的基础上进行扩展，增加功能。</p>
+<h3 id="继承的语法"><a href="#继承的语法" class="headerlink" title="继承的语法"></a>继承的语法</h3><p>在代码中和原来一样给出该类的名字，但在类的左括号前面，加上一个冒号和基类的名字（多重继承基类名用逗号分开）</p>
+<h3 id="继承的关系"><a href="#继承的关系" class="headerlink" title="继承的关系"></a>继承的关系</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">继承方式</th>
+<th style="text-align:center">基类的public成员</th>
+<th style="text-align:center">基类的protect成员</th>
+<th style="text-align:center">基类的private成员</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">public</td>
+<td style="text-align:center">仍为public成员</td>
+<td style="text-align:center">仍为protected成员</td>
+<td style="text-align:center">不可见</td>
+</tr>
+<tr>
+<td style="text-align:center">protected</td>
+<td style="text-align:center">变为protected成员</td>
+<td style="text-align:center">仍为protected成员</td>
+<td style="text-align:center">不可见</td>
+</tr>
+<tr>
+<td style="text-align:center">private(默认)</td>
+<td style="text-align:center">变为private成员</td>
+<td style="text-align:center">变为private成员</td>
+<td style="text-align:center">不可见</td>
+</tr>
+</tbody>
+</table>
+<h4 id="对私有继承成员公有化"><a href="#对私有继承成员公有化" class="headerlink" title="对私有继承成员公有化"></a>对私有继承成员公有化</h4><p>当私有继承时所有的public成员都变成了private，如果希望它们中任何一个是可视的，只需要用派生类的public部分生命他们的名字即可。</p>
+<h3 id="c语言实现继承"><a href="#c语言实现继承" class="headerlink" title="c语言实现继承"></a>c语言实现继承</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// \file inherit.c</span></div><div class="line"><span class="comment">/// \brief</span></div><div class="line"><span class="comment">/// \author suntangji, suntangj2016i@gmail.com</span></div><div class="line"><span class="comment">/// \version 1.0</span></div><div class="line"><span class="comment">/// \date 2017-11-24</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;malloc.h&gt;</span></span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Base</span> &#123;</span></div><div class="line">    <span class="keyword">int</span> b;</div><div class="line">    <span class="keyword">void</span> (*pfb)();</div><div class="line">    <span class="comment">/*c语言不支持结构体内部定义函数，所以使用函数指针 */</span></div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Derived</span> &#123;</span></div><div class="line">    <span class="keyword">int</span> d;</div><div class="line">    <span class="keyword">void</span> (*pfd)();</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Base</span>* <span class="title">base</span>;</span></div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">FunBase</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Base::FunBase"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">FunDerived</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Derived::FunDerived"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function">struct Base* <span class="title">NewBase</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Base</span>* <span class="title">pb</span> = (<span class="title">struct</span> <span class="title">Base</span>*)(<span class="title">malloc</span>(<span class="title">sizeof</span>(<span class="title">struct</span> <span class="title">Base</span>)));</span></div><div class="line">    pb-&gt;b = <span class="number">0</span>;</div><div class="line">    pb-&gt;pfb = FunBase;</div><div class="line">    <span class="keyword">return</span> pb;</div><div class="line">&#125;</div><div class="line"><span class="function">struct Derived* <span class="title">NewDerived</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Derived</span>* <span class="title">pd</span> = (<span class="title">struct</span> <span class="title">Derived</span>*)(<span class="title">malloc</span>(<span class="title">sizeof</span>(<span class="title">struct</span> <span class="title">Derived</span>)));</span></div><div class="line">    pd-&gt;d = <span class="number">0</span>;</div><div class="line">    pd-&gt;pfd = FunDerived;</div><div class="line">    pd-&gt;base = NewBase(); </div><div class="line">    <span class="keyword">return</span> pd;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Base</span> * <span class="title">b</span> = <span class="title">NewBase</span>();</span></div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Derived</span> * <span class="title">d</span> = <span class="title">NewDerived</span>();</span></div><div class="line">    b-&gt;pfb();</div><div class="line">    d-&gt;pfd();</div><div class="line">    d-&gt;base-&gt;pfb();</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="C语言实现的缺陷"><a href="#C语言实现的缺陷" class="headerlink" title="C语言实现的缺陷"></a>C语言实现的缺陷</h4><ul>
+<li>没有继承关系</li>
+<li>没有构造函数和析构函数容易造成内存泄露</li>
+<li>函数调用比较麻烦</li>
+</ul>
+<h3 id="构造函数的调用顺序"><a href="#构造函数的调用顺序" class="headerlink" title="构造函数的调用顺序"></a>构造函数的调用顺序</h3><p>先调用派生类的构造函数，在派生类构造函数参数列表中调用基类的构造函数，然后在构造派生类自己的成员。</p>
+<h3 id="析构函数的调用顺序"><a href="#析构函数的调用顺序" class="headerlink" title="析构函数的调用顺序"></a>析构函数的调用顺序</h3><p>先调用派生类的析构函数，再调用基类的析构函数。</p>
+<h3 id="同名隐藏与重写"><a href="#同名隐藏与重写" class="headerlink" title="同名隐藏与重写"></a>同名隐藏与重写</h3><p>当基类的成员函数不是虚函数时，派生类和它有同名的函数时（函数原型可以不同）会隐藏基类的函数。当基类的成员函数是虚函数时，派生类有和基类同名的函数（函数原型需要相同）会发生重写。</p>
+<h3 id="向上类型转换"><a href="#向上类型转换" class="headerlink" title="向上类型转换"></a>向上类型转换</h3><ul>
+<li>派生类对象可以赋值给基类对象</li>
+<li>基类对象不可以赋值给派生类对象</li>
+<li>基类对象的指针/引用可以指向派生类对象，但不能访问派生类对象可以访问基类对象</li>
+<li>派生类对象的指针/引用不可以指向基类对象(强制类型转换后可以)<h3 id="非自动继承的函数"><a href="#非自动继承的函数" class="headerlink" title="非自动继承的函数"></a>非自动继承的函数</h3></li>
+<li>构造函数</li>
+<li>析构函数</li>
+<li>赋值运算符重载</li>
+</ul>
+<h3 id="单继承的对象模型"><a href="#单继承的对象模型" class="headerlink" title="单继承的对象模型"></a>单继承的对象模型</h3><p>基类的成员在上(低地址)，派生类的成员在下(高地址)</p>
+<h3 id="多继承的对象模型"><a href="#多继承的对象模型" class="headerlink" title="多继承的对象模型"></a>多继承的对象模型</h3><p>最先继承的基类在上(低地址)，其次继承的基类在下(高地址)，派生类的成员在最下(低地址)</p>
+<h3 id="菱形继承的对象模型"><a href="#菱形继承的对象模型" class="headerlink" title="菱形继承的对象模型"></a>菱形继承的对象模型</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Base() &#123;</div><div class="line">		_b = <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C1</span>:</span><span class="keyword">public</span> Base&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	C1() &#123;</div><div class="line">		_c1= <span class="number">2</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _c1;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C2</span> :</span><span class="keyword">public</span> Base&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	C2() &#123;</div><div class="line">		_c2 = <span class="number">3</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _c2;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span><span class="keyword">public</span> C1,<span class="keyword">public</span> C2&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Derived() &#123;</div><div class="line">		_d = <span class="number">4</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _d;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这段代码在内存中存储是1   2   1   3   4<br>可以看出仍然是派生类的成员在下，基类的成员在上，只是基类又是其他基类的派生类。菱形继承对最上层的基类继承了2次，既造成了二义性又浪费了空间。</p>
+<h3 id="虚拟继承"><a href="#虚拟继承" class="headerlink" title="虚拟继承"></a>虚拟继承</h3><p>虚拟继承可以解决菱形继承二义性的问题<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Base() &#123;</div><div class="line">		_b = <span class="number">1</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _b;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C1</span>:</span><span class="keyword">virtual</span> <span class="keyword">public</span> Base&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	C1() &#123;</div><div class="line">		_c1= <span class="number">2</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _c1;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C2</span> :</span><span class="keyword">virtual</span> <span class="keyword">public</span> Base&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	C2() &#123;</div><div class="line">		_c2 = <span class="number">3</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _c2;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span><span class="keyword">public</span> C1,<span class="keyword">public</span> C2&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	Derived() &#123;</div><div class="line">		_d = <span class="number">4</span>;</div><div class="line">	&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">	<span class="keyword">int</span> _d;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>对象d的内存布局</p>
+<blockquote>
+<p> 0x0115FD44  e8 8b db 00<br>0x0115FD48  02 00 00 00<br>0x0115FD4C   f0 8b db 00<br>0x0115FD50   03 00 00 00<br>0x0115FD54   04 00 00 00<br>0x0115FD58   01 00 00 00  </p>
+</blockquote>
+<p>虚拟继承解决了菱形继承的二义性问题，因为菱形继承不再保存两份基类的变量,在对象内存的最高地址保存虚拟继承的基类成员，原来保存成员的地方保存了一个虚基类表格地址，该地址存储了2个变量，分别是相对自己的偏移量0和相对别虚拟继承的基类成员的偏移量。有了这两个偏移量就可以找到唯一一个基类成员，继而解决了菱形继承的二义性问题。</p>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/28/c语言sizeof关键字/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-字符串翻转" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/字符串翻转/">字符串翻转</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/28/字符串翻转/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:46:28.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>有一个字符数组的内容为:”student a am i”,请你将数组的内容改为”i am a student”.<br>
-        
-          <a class="article-more-a" href="/2017/07/28/字符串翻转/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -294,7 +286,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
+        			<a href="/categories/c++/" class="article-tag-list-link color4">c++</a>
         		</li>
       		
 		</ul>
@@ -302,16 +294,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/28/字符串翻转/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/12/13/cpp继承/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/09/cpp学习总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">cpp学习总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -331,740 +382,12 @@
 
 
 
-
-  
-    <article id="post-c语言static关键字" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/c语言static关键字/">c语言static关键字</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/28/c语言static关键字/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:45:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c语言static关键字的用法<br>
-        
-          <a class="article-more-a" href="/2017/07/28/c语言static关键字/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/28/c语言static关键字/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-三字母词" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/三字母词/">三字母词</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/24/三字母词/" class="archive-article-date">
-  	<time datetime="2017-07-24T15:24:40.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;在ANSIC标准中，定义了9个三字母词(trigraph)，三字母词就是几个字符的序列，合起来表示另一个字符。<br>
-        
-          <a class="article-more-a" href="/2017/07/24/三字母词/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/24/三字母词/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-跳水比赛名次问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/跳水比赛名次问题/">跳水比赛名次问题</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/24/跳水比赛名次问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:40.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;5位运动员参加了10米台跳水比赛，有人让他们预测比赛结果<br>
-        
-          <a class="article-more-a" href="/2017/07/24/跳水比赛名次问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/24/跳水比赛名次问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-谋杀案问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/24/谋杀案问题/">谋杀案问题</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/24/谋杀案问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:22.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;日本某地发生了一件谋杀案，警察通过排查确定杀人凶手必为4个嫌疑犯的一个。以下为4个嫌疑犯的供词。<br>
-        
-          <a class="article-more-a" href="/2017/07/24/谋杀案问题/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/24/谋杀案问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-输出菱形" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/输出菱形/">输出菱形</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/23/输出菱形/" class="archive-article-date">
-  	<time datetime="2017-07-23T13:05:47.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;第一种方法输出若干个空格形成菱形，第二种方法半径为r的圆的四条互相垂直的切线形成的图形是菱形。<br>
-        
-          <a class="article-more-a" href="/2017/07/23/输出菱形/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/输出菱形/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-二分查找算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/二分查找算法/">二分查找算法</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/23/二分查找算法/" class="archive-article-date">
-  	<time datetime="2017-07-23T10:20:54.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;一个有序的数列，使用折半查找效率更高。<br>
-        
-          <a class="article-more-a" href="/2017/07/23/二分查找算法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/二分查找算法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-大小写字母转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/大小写字母转换/">大小写字母转换</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/23/大小写字母转换/" class="archive-article-date">
-  	<time datetime="2017-07-23T10:20:12.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;输入一个字母，如果是大写，就转换为小写；如果是小写，就转换为大写。<br>
-        
-          <a class="article-more-a" href="/2017/07/23/大小写字母转换/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/大小写字母转换/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-求一个数2进制中1的个数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/求一个数2进制中1的个数/">求一个数2进制中1的个数</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/23/求一个数2进制中1的个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T06:19:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;1.先求出一个数的二进制，然后在计算1的个数 2.用移位操作实现<br>
-        
-          <a class="article-more-a" href="/2017/07/23/求一个数2进制中1的个数/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/求一个数2进制中1的个数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1113,8 +436,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
