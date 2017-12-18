@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives | 孙堂吉的博客</title>
+  <title>linux的进程控制块task_struct | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/index.html">
+  <meta name="description" content="Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。">
+<meta name="keywords" content="随笔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux的进程控制块task_struct">
+<meta property="og:url" content="https://www.suntangji.me/2017/12/18/linux的进程控制块task-struct/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。">
+<meta property="og:updated_time" content="2017-12-18T15:58:21.139Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="linux的进程控制块task_struct">
+<meta name="twitter:description" content="Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,39 +151,459 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-linux的进程控制块task-struct" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      linux的进程控制块task_struct
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/18/linux的进程控制块task-struct/" class="archive-article-date">
+
+
+        
+        <a href="/2017/12/18/linux的进程控制块task-struct/" class="archive-article-date">
   	<time datetime="2017-12-18T15:06:21.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2017-12-18</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。<br><a id="more"></a></p>
+<h3 id="按功能可做如下划分"><a href="#按功能可做如下划分" class="headerlink" title="按功能可做如下划分"></a>按功能可做如下划分</h3><ul>
+<li>进程状态（State）</li>
+<li>进程调度信息（Scheduling Information）</li>
+<li>各种标识符（Identifiers）</li>
+<li>进程通信有关信息（IPC，Inter_Process Communication）</li>
+<li>时间和定时器信息（Times and Timers）</li>
+<li>进程链接信息（Links）</li>
+<li>文件系统信息（File System）</li>
+<li>虚拟内存信息（Virtual Memory）</li>
+<li>页面管理信息（page）</li>
+<li>对称多处理器（SMP）信息</li>
+<li>和处理器相关的环境（上下文）信息（Processor Specific Context）</li>
+<li>其他信息</li>
+</ul>
+<h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p>进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。Linux 中的进程主要有如下状态</p>
+<table>
+<thead>
+<tr>
+<th>内核表示</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TASK_RUNNING</td>
+<td>可运行</td>
+</tr>
+<tr>
+<td>TASK_INTERRUPTIBLE</td>
+<td>可中断的等待状态</td>
+</tr>
+<tr>
+<td>TASK_UNINTERRUPTIBLE</td>
+<td>不可中断的等待状态</td>
+</tr>
+<tr>
+<td>TASK_ZOMBIE</td>
+<td>僵死</td>
+</tr>
+<tr>
+<td>TASK_STOPPED</td>
+<td>暂停</td>
+</tr>
+<tr>
+<td>TASK_SWAPPING</td>
+<td>换入/换出</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>可运行状态<br>处于这种状态的进程，要么正在运行、要么正准备运行。正在运行的进程就是当前进程（由current 所指向的进程），而准备运行的进程只要得到CPU 就可以立即投入运行，CPU 是这些进程唯一等待的系统资源。系统中有一个运行队列（run_queue），用来容纳所有处于可运行状态的进程，调度程序执行时，从中选择一个进程投入运行。在后面我们讨论进程调度的时候，可以看到运行队列的作用。当前运行进程一直处于该队列中，也就是说，current总是指向运行队列中的某个元素，只是具体指向谁由调度程序决定。</li>
+<li>等待状态<br>处于该状态的进程正在等待某个事件（Event）或某个资源，它肯定位于系统中的某个等待队列（wait_queue）中。Linux 中处于等待状态的进程分为两种：可中断的等待状态和不可中断的等待状态。处于可中断等待态的进程可以被信号唤醒，如果收到信号，该进程就从等待状态进入可运行状态，并且加入到运行队列中，等待被调度；而处于不可中断等待态的进程是因为硬件环境不能满足而等待，例如等待特定的系统资源，它任何情况下都不能被打断，只能用特定的方式来唤醒它，例如唤醒函数wake_up（）等。</li>
+<li>暂停状态<br>此时的进程暂时停止运行来接受某种特殊处理。通常当进程接收到SIGSTOP、SIGTSTP、SIGTTIN 或 SIGTTOU 信号后就处于这种状态。例如，正接受调试的进程就处于这种状态。</li>
+<li>僵死状态<br>进程虽然已经终止，但由于某种原因，父进程还没有执行wait()系统调用，终止进程的信息也还没有回收。顾名思义，处于该状态的进程就是死进程，这种进程实际上是系统中的垃圾，必须进行相应处理以释放其占用的资源。<h4 id="进程调度信息"><a href="#进程调度信息" class="headerlink" title="进程调度信息"></a>进程调度信息</h4>调度程序利用这部分信息决定系统中哪个进程最应该运行，并结合进程的状态信息保证系统运转的公平和高效。这一部分信息通常包括进程的类别（普通进程还是实时进程）、进程的优先级等。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>域名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>need_resched</td>
+<td>调度标志</td>
+</tr>
+<tr>
+<td>Nice</td>
+<td>静态优先级</td>
+</tr>
+<tr>
+<td>Counter</td>
+<td>动态优先级</td>
+</tr>
+<tr>
+<td>Policy</td>
+<td>调度策略</td>
+</tr>
+<tr>
+<td>rt_priority</td>
+<td>实时优先级</td>
+</tr>
+</tbody>
+</table>
+<h5 id="进程的调度策略"><a href="#进程的调度策略" class="headerlink" title="进程的调度策略"></a>进程的调度策略</h5><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>解释</th>
+<th>适用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCHED_OTHER</td>
+<td>其他调度</td>
+<td>普通进程</td>
+</tr>
+<tr>
+<td>SCHED_FIFO</td>
+<td>先来先服务调度</td>
+<td>实时进程 </td>
+</tr>
+<tr>
+<td>SCHED_RR</td>
+<td>时间片轮转调度</td>
+<td>实时进程</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>只有root 用户能通过sched_setscheduler()系统调用来改变调度策略。</p>
+</blockquote>
+<h4 id="标识符（Identifiers）"><a href="#标识符（Identifiers）" class="headerlink" title="标识符（Identifiers）"></a>标识符（Identifiers）</h4><p>每个进程有进程标识符、用户标识符、组标识符，不管对内核还是普通用户来说，怎么用一种简单的方式识别不同的进程呢？这就引入了进程标识符（PID，process identifier），每个进程都有一个唯一的标识符，内核通过这个标识符来识别不同的进程，同时，进程标识符PID 也是内核提供给用户程序的接口，用户程序通过PID 对进程发号施令。PID 是32 位的无符号整数，它被顺序编号：新创建进程的PID通常是前一个进程的PID 加1。然而，为了与16 位硬件平台的传统Linux 系统保持兼容，在Linux 上允许的最大PID 号是32767，当内核在系统中创建第32768 个进程时，就必须重新开始使用已闲置的PID 号。</p>
+<table>
+<thead>
+<tr>
+<th>域名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pid</td>
+<td>进程标识符</td>
+</tr>
+<tr>
+<td>Uid、gid</td>
+<td>用户标识符、组标识符</td>
+</tr>
+<tr>
+<td>Euid、egid</td>
+<td>有效用户标识符、有效组标识符</td>
+</tr>
+<tr>
+<td>Suid、sgid</td>
+<td>备份用户标识符、备份组标识符</td>
+</tr>
+<tr>
+<td>Fsuid、fsgid</td>
+<td>文件系统用户标识符、文件系统组标识符</td>
+</tr>
+</tbody>
+</table>
+<h4 id="进程通信有关信息（IPC，Inter-Process-Communication）"><a href="#进程通信有关信息（IPC，Inter-Process-Communication）" class="headerlink" title="进程通信有关信息（IPC，Inter_Process Communication）"></a>进程通信有关信息（IPC，Inter_Process Communication）</h4><p>为了使进程能在同一项任务上协调工作，进程之间必须能进行通信即交流数据。Linux 支持多种不同形式的通信机制。它支持典型的UNIX 通信机制（IPC Mechanisms）：信号（Signals）、管道（Pipes），也支持System V 通信机制：共享内存（Shared Memory）、信号量和消息队列（Message Queues）</p>
+<table>
+<thead>
+<tr>
+<th>域名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spinlock_t sigmask_lock</td>
+<td>信号掩码的自旋锁</td>
+</tr>
+<tr>
+<td>Long blocked</td>
+<td>信号掩码</td>
+</tr>
+<tr>
+<td>Struct signal *sig</td>
+<td>信号处理函数</td>
+</tr>
+<tr>
+<td>Struct sem_undo *semundo</td>
+<td>为避免死锁而在信号量上设置的取消操作</td>
+</tr>
+<tr>
+<td>Struct sem_queue *semsleeping</td>
+<td>与信号量操作相关的等待队列</td>
+</tr>
+</tbody>
+</table>
+<h4 id="进程链接信息（Links）"><a href="#进程链接信息（Links）" class="headerlink" title="进程链接信息（Links）"></a>进程链接信息（Links）</h4><p>程序创建的进程具有父/子关系。因为一个进程能创建几个子进程，而子进程之间有兄弟关系，在task_struct 结构中有几个域来表示这种关系。<br>在Linux 系统中，除了初始化进程init，其他进程都有一个父进程（Parent Process）或称为双亲进程。可以通过fork（）或clone()系统调用来创建子进程，除了进程标识符（PID）等必要的信息外，子进程的task_struct 结构中的绝大部分的信息都是从父进程中拷贝，或说“克隆”过来的。系统有必要记录这种“亲属”关系，使进程之间的协作更加方便，例如父进程给子进程发送杀死（kill）信号、父子进程通信等，就可以用这种关系很方便地实现。<br>每个进程的task_struct 结构有许多指针，通过这些指针，系统中所有进程的task_struct结构就构成了一棵进程树，这棵进程树的根就是初始化进程init 的task_struct结构（init 进程是Linux 内核建立起来后人为创建的一个进程，是所有进程的祖先进程）。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>英文解释</th>
+<th>中文解释 [指向哪个进程]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p_opptr Original</td>
+<td>parent</td>
+<td>祖先</td>
+</tr>
+<tr>
+<td>p_pptr</td>
+<td>Parent</td>
+<td>父进程</td>
+</tr>
+<tr>
+<td>p_cptr</td>
+<td>Child</td>
+<td>子进程</td>
+</tr>
+<tr>
+<td>p_ysptr Younger</td>
+<td>sibling</td>
+<td>弟进程</td>
+</tr>
+<tr>
+<td>p_osptr Older</td>
+<td>sibling</td>
+<td>兄进程</td>
+</tr>
+<tr>
+<td>Pidhash_next、Pidhash_pprev</td>
+<td></td>
+<td>进程在哈希表中的链接</td>
+</tr>
+<tr>
+<td>Next_task、 prev_task</td>
+<td></td>
+<td>进程在双向循环链表中的链接</td>
+</tr>
+<tr>
+<td>Run_list</td>
+<td></td>
+<td>运行队列的链表</td>
+</tr>
+</tbody>
+</table>
+<h4 id="时间和定时器信息（Times-and-Timers）"><a href="#时间和定时器信息（Times-and-Timers）" class="headerlink" title="时间和定时器信息（Times and Timers）"></a>时间和定时器信息（Times and Timers）</h4><p>一个进程从创建到终止叫做该进程的生存期（lifetime）。进程在其生存期内使用CPU的时间，内核都要进行记录，以便进行统计、计费等有关操作。进程耗费CPU 的时间由两部分组成：一是在用户模式（或称为用户态）下耗费的时间、一是在系统模式（或称为系统态）下耗费的时间。每个时钟滴答，也就是每个时钟中断，内核都要更新当前进程耗费CPU 的时间信息。</p>
+<h5 id="与时间有关的域"><a href="#与时间有关的域" class="headerlink" title="与时间有关的域"></a>与时间有关的域</h5><table>
+<thead>
+<tr>
+<th>域名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start_time</td>
+<td>进程创建时间</td>
+</tr>
+<tr>
+<td>Per_cpu_utime</td>
+<td>进程在某个CPU 上运行时在用户态下耗费的时间</td>
+</tr>
+<tr>
+<td>Per_cpu_stime</td>
+<td>进程在某个CPU 上运行时在系统态下耗费的时间</td>
+</tr>
+<tr>
+<td>Counter</td>
+<td>进程剩余的时间片</td>
+</tr>
+</tbody>
+</table>
+<h5 id="进程的所有定时器"><a href="#进程的所有定时器" class="headerlink" title="进程的所有定时器"></a>进程的所有定时器</h5><table>
+<thead>
+<tr>
+<th>定时器类型</th>
+<th>解释</th>
+<th>什么时候更新</th>
+<th>用来表示此种定时器的域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ITIMER_REAL</td>
+<td>实时定时器</td>
+<td>实时更新，即不论该进程是否运行</td>
+<td>it_real_value it_real_incr real_timer</td>
+</tr>
+<tr>
+<td>ITIMER_VIRTUAL</td>
+<td>虚拟定时器</td>
+<td>只在进程运行于用户态时更新</td>
+<td>it_virt_value it_virt_incr </td>
+</tr>
+<tr>
+<td>ITIMER_PROF</td>
+<td>概况定时器</td>
+<td>进程运行于用户态和系统态时更新</td>
+<td>it_prof_value it_prof_incr</td>
+</tr>
+</tbody>
+</table>
+<p>进程有3 种类型的定时器：实时定时器、虚拟定时器和概况定时器。这3 种定时器的特征共有3 个：到期时间、定时间隔和要触发的事件。到期时间就是定时器到什么时候完成定时操作，从而触发相应的事件；定时间隔就是两次定时操作的时间间隔，它决定了定时操作是否继续进行，如果定时间隔大于0，则在定时器到期时，该定时器的到期时间被重新赋值，使定时操作继续进行下去，直到进程结束或停止使用定时器，只不过对不同的定时器，到期时间的重新赋值操作是不同的</p>
+<h4 id="文件系统信息（File-System）"><a href="#文件系统信息（File-System）" class="headerlink" title="文件系统信息（File System）"></a>文件系统信息（File System）</h4><p>进程可以打开或关闭文件，文件属于系统资源，Linux 内核要对进程使用文件的情况进行记录。task_struct 结构中有两个数据结构用于描述进程与文件相关的信息。其中，fs_struct 中描述了两个VFS 索引节点（VFS inode），这两个索引节点叫做root 和pwd，分别指向进程的可执行映像所对应的根目录（Home Directory）和当前目录或工作目录。file_struct 结构用来记录了进程打开的文件的描述符（Descriptor）。</p>
+<table>
+<thead>
+<tr>
+<th>定义形式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sruct fs_struct *fs</td>
+<td>进程的可执行映像所在的文件系统</td>
+</tr>
+<tr>
+<td>Struct files_struct *files</td>
+<td>进程打开的文件</td>
+</tr>
+</tbody>
+</table>
+<p>在文件系统中，每个VFS 索引节点唯一描述一个文件或目录，同时该节点也是向更低层的文件系统提供的统一的接口。</p>
+<h4 id="虚拟内存信息（Virtual-Memory）"><a href="#虚拟内存信息（Virtual-Memory）" class="headerlink" title="虚拟内存信息（Virtual Memory）"></a>虚拟内存信息（Virtual Memory）</h4><p>除了内核线程（Kernel Thread），每个进程都拥有自己的地址空间（也叫虚拟空间），用mm_struct 来描述。另外Linux 2.4 还引入了另外一个域active_mm，这是为内核线程而引入的。因为内核线程没有自己的地址空间，为了让内核线程与普通进程具有统一的上下文切换方式，当内核线程进行上下文切换时，让切换进来的线程的active_mm 指向刚被调度出去的进程的active_mm（如果进程的mm 域不为空，则其active_mm 域与mm 域相同）</p>
+<table>
+<thead>
+<tr>
+<th>定义形式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Struct mm_struct *mm</td>
+<td>描述进程的地址空间</td>
+</tr>
+<tr>
+<td>Struct mm_struct *active_mm</td>
+<td>内核线程所借用的地址空间</td>
+</tr>
+</tbody>
+</table>
+<h4 id="页面管理信息"><a href="#页面管理信息" class="headerlink" title="页面管理信息"></a>页面管理信息</h4><p>当物理内存不足时，Linux 内存管理子系统需要把内存中的部分页面交换到外存，其交换是以页为单位的。</p>
+<table>
+<thead>
+<tr>
+<th>定义形式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Int swappable</td>
+<td>进程占用的内存页面是否可换出</td>
+</tr>
+<tr>
+<td>Unsigned long min_flat,maj_flt,nswap</td>
+<td>进程累计的次（minor）缺页次数、主(major)次数及累计换出、换入页面数</td>
+</tr>
+<tr>
+<td>Unsigned long cmin_flat,cmaj_flt,cnswap</td>
+<td>本进程作为祖先进程，其所有层次子进程的累计的次（minor）缺页次数、主(major)次数及累计换出、换入页面数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="对称多处理机（SMP）信息"><a href="#对称多处理机（SMP）信息" class="headerlink" title="对称多处理机（SMP）信息"></a>对称多处理机（SMP）信息</h4><table>
+<thead>
+<tr>
+<th>定义形式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Int has_cpu</td>
+<td>进程当前是否拥有CPU</td>
+</tr>
+<tr>
+<td>Int processor</td>
+<td>进程当前正在使用的CPU</td>
+</tr>
+<tr>
+<td>Int lock_depth</td>
+<td>上下文切换时内核锁的深度</td>
+</tr>
+</tbody>
+</table>
+<h4 id="和处理器相关的环境（上下文）信息（Processor-Specific-Context）"><a href="#和处理器相关的环境（上下文）信息（Processor-Specific-Context）" class="headerlink" title="和处理器相关的环境（上下文）信息（Processor Specific Context）"></a>和处理器相关的环境（上下文）信息（Processor Specific Context）</h4><p>这里要特别注意标题：和“处理器”相关的环境信息。进程作为一个执行环境的综合，当系统调度某个进程执行，即为该进程建立完整的环境时，处理器（Processor）的寄存器、堆栈等是必不可少的。因为不同的处理器对内部寄存器和堆栈的定义不尽相同，所以叫做“和处理器相关的环境”，也叫做“处理机状态”。当进程暂时停止运行时，处理机状态必须保存在进程的task_struct 结构中，当进程被调度重新运行时再从中恢复这些环境，也就是恢复这些寄存器和堆栈的值</p>
+<table>
+<thead>
+<tr>
+<th>定义形式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Struct thread_struct *tss</td>
+<td>任务切换状态</td>
+</tr>
+</tbody>
+</table>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><ol>
+<li>struct wait_queue *wait_chldexit<br>在进程结束时,或发出系统调用wait4 时，为了等待子进程的结束，而将自己（父进程）睡眠在该等待队列上，设置状态标志为TASK_INTERRUPTIBLE，并且把控制权转给调度程序。</li>
+<li>Struct rlimit rlim[RLIM_NLIMITS]<br>每一个进程可以通过系统调用setlimit 和getlimit 来限制它资源的使用。</li>
+<li>Int exit_code exit_signal<br>程序的返回代码以及程序异常终止产生的信号，这些数据由父进程（子进程完成后）轮<br>流查询。</li>
+<li>Char comm[16]<br>这个域存储进程执行的程序的名字，这个名字用在调试中。</li>
+<li>Unsigned long personality<br>Linux 可以运行X86 平台上其他UNIX 操作系统生成的符合iBCS2 标准的程序,personality 进一步描述进程执行的程序属于何种UNIX 平台的“个性”信息。通常有PER_Linux,PER_Linux_32BIT,PER_Linux_EM86,PER_SVR4,PER_SVR3,PER_SCOSVR3,PER_WYSEV386,PER_ISCR4,PER_BSD,PER_XENIX 和PER_MASK 等，参见include／Linux/personality.h&gt;。</li>
+<li>int did_exec:1<br>按POSIX 要求设计的布尔量，区分进程正在执行老程序代码，还是用系统调用execve（）装入一个新的程序。</li>
+<li>struct linux_binfmt *binfmt<br>指向进程所属的全局执行文件格式结构，共有a.out、script、elf、java 等4 种。</li>
+</ol>
+<h4 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h4><ul>
+<li>深入分析Linux内核源代码</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/18/linux的进程控制块task-struct/">linux的进程控制块task_struct</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,7 +616,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -207,497 +629,101 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/12/18/linux的进程控制块task-struct/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-unix">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/18/proc结构体和user结构体/" class="archive-article-date">
-  	<time datetime="2017-12-18T09:38:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/18/proc结构体和user结构体/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">UNIX v6的进程控制块proc结构体和user结构体</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/18/proc结构体和user结构体/">UNIX v6的进程控制块proc结构体和user结构体</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/13/cpp继承/" class="archive-article-date">
-  	<time datetime="2017-12-13T10:15:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/13/cpp继承/">c++继承</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/09/cpp学习总结/" class="archive-article-date">
-  	<time datetime="2017-12-09T11:03:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-09</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/cpp学习总结/">cpp学习总结</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/21/vim配置及常用插件安装/" class="archive-article-date">
-  	<time datetime="2017-11-21T13:30:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-11-21</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/21/vim配置及常用插件安装/">vim配置及常见插件安装</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开c++中this指针的神秘面纱</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言扫雷游戏/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:59:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言扫雷游戏/">c语言扫雷游戏</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言实现动态顺序表/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:54:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言实现动态顺序表/">c语言实现动态顺序表</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言实现文件拷贝命令/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:47:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言实现文件拷贝命令/">c语言实现文件拷贝命令</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/把c语言注释转换为cpp注释/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:15:48.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/把c语言注释转换为cpp注释/">把c语言注释转换为cpp注释</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -747,8 +773,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
