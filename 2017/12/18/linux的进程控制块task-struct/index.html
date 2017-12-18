@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://www.suntangji.me/2017/12/18/linux的进程控制块task-struct/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
 <meta property="og:description" content="Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。">
-<meta property="og:updated_time" content="2017-12-18T15:58:21.139Z">
+<meta property="og:updated_time" content="2017-12-18T16:20:36.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux的进程控制块task_struct">
 <meta name="twitter:description" content="Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。">
@@ -572,8 +572,9 @@
 <li>int did_exec:1<br>按POSIX 要求设计的布尔量，区分进程正在执行老程序代码，还是用系统调用execve（）装入一个新的程序。</li>
 <li>struct linux_binfmt *binfmt<br>指向进程所属的全局执行文件格式结构，共有a.out、script、elf、java 等4 种。</li>
 </ol>
-<h4 id="参考书籍"><a href="#参考书籍" class="headerlink" title="参考书籍"></a>参考书籍</h4><ul>
-<li>深入分析Linux内核源代码</li>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li>《深入分析Linux内核源代码》陈莉君</li>
+<li><a href="http://elixir.free-electrons.com/linux/latest/source/include/linux/sched.h#L519" target="_blank" rel="external">task_struct源码</a></li>
 </ul>
 
       
