@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives: 2017 | 孙堂吉的博客</title>
+  <title>linux进程状态 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/2017/page/4/index.html">
+  <meta name="description" content="进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux进程状态">
+<meta property="og:url" content="https://www.suntangji.me/2017/12/28/linux进程状态/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。">
+<meta property="og:updated_time" content="2017-12-29T02:56:56.427Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="linux进程状态">
+<meta name="twitter:description" content="进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,39 +151,141 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-linux进程状态" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux进程状态
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
+  
+
+
+        
+        <a href="/2017/12/28/linux进程状态/" class="archive-article-date">
+  	<time datetime="2017-12-28T14:15:09.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2017-12-28</time>
+</a>
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。<br><a id="more"></a></p>
+<h4 id="进程状态"><a href="#进程状态" class="headerlink" title="进程状态"></a>进程状态</h4><p>Linux 中的进程主要有如下状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#define TASK_RUNNING        0</span></div><div class="line"><span class="comment">#define TASK_INTERRUPTIBLE    1</span></div><div class="line"><span class="comment">#define TASK_UNINTERRUPTIBLE    2</span></div><div class="line"><span class="comment">#define TASK_STOPPED        4</span></div><div class="line"><span class="comment">#define TASK_TRACED        8</span></div><div class="line"><span class="comment">#define EXIT_ZOMBIE        16</span></div><div class="line"><span class="comment">#define EXIT_DEAD        32</span></div></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>内核表示</th>
+<th>含义</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TASK_RUNNING</td>
+<td>可运行</td>
+<td>R</td>
+</tr>
+<tr>
+<td>TASK_INTERRUPTIBLE</td>
+<td>可中断的等待状态</td>
+<td>S</td>
+</tr>
+<tr>
+<td>TASK_UNINTERRUPTIBLE</td>
+<td>不可中断的等待状态</td>
+<td>D</td>
+</tr>
+<tr>
+<td>TASK_STOPPED</td>
+<td>暂停</td>
+<td>T</td>
+</tr>
+<tr>
+<td>TASK_TRACED</td>
+<td>不能通过信号唤醒的暂停</td>
+<td>t</td>
+</tr>
+<tr>
+<td>EXIT_ZOMBIE</td>
+<td>僵死</td>
+<td>Z</td>
+</tr>
+<tr>
+<td>EXIT_DEAD</td>
+<td>退出</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>可运行状态<br>处于这种状态的进程，要么正在运行、要么正准备运行。正在运行的进程就是当前进程（由current 所指向的进程），而准备运行的进程只要得到CPU 就可以立即投入运行，CPU 是这些进程唯一等待的系统资源。系统中有一个运行队列（run_queue），用来容纳所有处于可运行状态的进程，调度程序执行时，从中选择一个进程投入运行。</li>
+<li>等待状态<br>处于该状态的进程正在等待某个事件（Event）或某个资源，它肯定位于系统中的某个等待队列（wait_queue）中。Linux 中处于等待状态的进程分为两种：可中断的等待状态和不可中断的等待状态。处于可中断等待态的进程可以被信号唤醒，如果收到信号，该进程就从等待状态进入可运行状态，并且加入到运行队列中，等待被调度；而处于不可中断等待态的进程是因为硬件环境不能满足而等待，例如等待特定的系统资源，它任何情况下都不能被打断，只能用特定的方式来唤醒它，例如唤醒函数wake_up（）等。</li>
+<li>暂停状态<br>此时的进程暂时停止运行来接受某种特殊处理。通常当进程接收到SIGSTOP、SIGTSTP、SIGTTIN 或 SIGTTOU 信号后就处于这种状态。例如，正接受调试的进程就处于这种状态。</li>
+<li>僵死状态<br>进程虽然已经终止，但由于某种原因，父进程还没有执行wait()系统调用，终止进程的信息也还没有回收。顾名思义，处于该状态的进程就是死进程，这种进程实际上是系统中的垃圾，必须进行相应处理以释放其占用的资源。</li>
+</ol>
+<h4 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h4><p>使用kill命令给进程发送信号可以改变进程状态，可以使用kill -l命令查看可以发送的状态。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP</div><div class="line"> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1</div><div class="line">11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</div><div class="line">16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP</div><div class="line">21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ</div><div class="line">26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR</div><div class="line">31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3</div><div class="line">38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8</div><div class="line">43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13</div><div class="line">48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12</div><div class="line">53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7</div><div class="line">58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2</div><div class="line">63) SIGRTMAX-1	64) SIGRTMAX</div></pre></td></tr></table></figure></p>
+<p>例如kill-9 pid 就可以杀掉当前执行的进程。</p>
+<h4 id="R状态"><a href="#R状态" class="headerlink" title="R状态"></a>R状态</h4><p>先看下面的一段程序<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;                                                        </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">     <span class="keyword">while</span>(<span class="number">1</span>)&#123;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>编译运行以上代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gcc test.c -o <span class="built_in">test</span></div><div class="line">./<span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p>查看进程状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ps aux|grep <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">text     127655 96.8  0.0   4164   344 pts/0    R+   17:14   0:20 ./<span class="built_in">test</span></div><div class="line">text     127657  0.0  0.0 112660   972 pts/2    R+   17:15   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<p>可以看到进程处于R状态</p>
+<h4 id="T状态"><a href="#T状态" class="headerlink" title="T状态"></a>T状态</h4><p>可以使用kill -19 127655命令使进程处于T状态。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">text     127655 91.2  0.0   4164   344 pts/0    T    17:14   0:45 ./<span class="built_in">test</span></div><div class="line">text     127668  0.0  0.0 112660   968 pts/2    S+   17:15   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p>使用kill-18 127655 可以使进程恢复R状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[text@localhost ~]$ ps aux|grep <span class="built_in">test</span></div><div class="line">text     127655  9.4  0.0   4164   344 pts/0    R    17:14   0:48 ./<span class="built_in">test</span></div><div class="line">text     127759  0.0  0.0 112660   972 pts/2    R+   17:23   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>t状态</p>
+</blockquote>
+<p>生成带有调试信息的程序,并进行调试<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">gcc -g test.c -o <span class="built_in">test</span></div><div class="line">gdb <span class="built_in">test</span></div><div class="line">l</div><div class="line">b 4</div><div class="line">r</div></pre></td></tr></table></figure></p>
+<p>此时查看进程状态是t状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[text@localhost process]$ ps aux|grep <span class="built_in">test</span></div><div class="line">text     127851  0.0  1.0 172544 20520 pts/2    S+   17:29   0:00 gdb <span class="built_in">test</span></div><div class="line">text     127895  0.0  0.0   4164   356 pts/2    t    17:31   0:00 /home/text/code/linux/process/<span class="built_in">test</span></div><div class="line">text     127900  0.0  0.0 112660   972 pts/0    S+   17:31   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<h4 id="S状态"><a href="#S状态" class="headerlink" title="S状态"></a>S状态</h4><p>更改程序源代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;                                                        </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">     <span class="keyword">while</span>(<span class="number">1</span>)&#123;</div><div class="line">     sleep(<span class="number">1</span>);</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>再次查看进程状态为S状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[text@localhost process]$ ps aux|grep <span class="built_in">test</span></div><div class="line">text     128048  0.0  0.0   4164   344 pts/0    S+   17:36   0:00 ./<span class="built_in">test</span></div><div class="line">text     128050  0.0  0.0 112660   976 pts/2    S+   17:37   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<h4 id="D状态"><a href="#D状态" class="headerlink" title="D状态"></a>D状态</h4><p>使用vfork函数可以使父进程进入D状态，更改源代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;                                        </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(!vfork())</div><div class="line">        sleep(<span class="number">100</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译运行并查看进程状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[text@localhost process]$ ps aux|grep <span class="built_in">test</span></div><div class="line">text     128559  0.0  0.0   4164   348 pts/0    D+   17:49   0:00 ./<span class="built_in">test</span></div><div class="line">text     128560  0.0  0.0   4164   348 pts/0    S+   17:49   0:00 ./<span class="built_in">test</span></div><div class="line">text     128562  0.0  0.0 112660   976 pts/2    S+   17:49   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<h4 id="Z状态"><a href="#Z状态" class="headerlink" title="Z状态"></a>Z状态</h4><p>更改源代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;        </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">pid_t</span> ret = fork();</div><div class="line">     <span class="keyword">if</span>(ret&gt;<span class="number">0</span>) &#123;</div><div class="line">         <span class="built_in">printf</span>(<span class="string">"father[%d]\n"</span>,getpid());</div><div class="line">         <span class="keyword">while</span>(<span class="number">1</span>)</div><div class="line">             sleep(<span class="number">1</span>);</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123;</div><div class="line">         <span class="built_in">printf</span>(<span class="string">"child[%d]\n"</span>,getpid());</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>编译运行查看进程状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">text     128762  0.0  0.0   4168   348 pts/0    S+   17:58   0:00 ./<span class="built_in">test</span></div><div class="line">text     128763  0.0  0.0      0     0 pts/0    Z+   17:58   0:00 [<span class="built_in">test</span>] &lt;defunct&gt;</div><div class="line">text     128765  0.0  0.0 112660   976 pts/2    S+   17:58   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p>可以看到子进程已处于Z状态，执行kill -9 128763,再次查看进程状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">text     128762  0.0  0.0   4168   348 pts/0    S+   17:58   0:00 ./<span class="built_in">test</span></div><div class="line">text     128763  0.0  0.0      0     0 pts/0    Z+   17:58   0:00 [<span class="built_in">test</span>] &lt;defunct&gt;</div><div class="line">text     128767  0.0  0.0 112660   972 pts/2    S+   17:58   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p>可以看到僵尸进程并没有被杀死，执行kill -9 128762去杀死他的父进程，再次查看进程状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[text@localhost process]$ ps aux|grep <span class="built_in">test</span></div><div class="line">text     128769  0.0  0.0 112660   976 pts/2    S+   17:59   0:00 grep --color=auto <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p>由此可知要杀死僵尸进程必须杀死他的父进程。杀死他的父进程后，僵尸进程变成了孤儿进程，由1号进程回收。僵尸进程是由于子进程已经结束，父进程没有读取子进程的状态，子进程的进程描述符仍然保存在系统中，所以变成了僵死状态。<br>僵尸进程危害，由于进程号是有限的，当产生了大量僵尸进程，会造成无法创建新进程。为了避免僵尸进程，可以使用信号处理机制，子进程退出时向父进程发送SIGCHILD信号，父进程处理SIGCHILD信号。在信号处理函数中调用wait进行处理僵尸进程。或者fork()两次来避免。</p>
+<h4 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h4><p>更改源代码<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;                                                                         </span></span></div><div class="line"> <span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"> <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">pid_t</span> ret = fork();</div><div class="line">     <span class="keyword">if</span>(ret&gt;<span class="number">0</span>) &#123;</div><div class="line">         <span class="built_in">printf</span>(<span class="string">"father[%d,%d]\n"</span>,getpid(),getppid());</div><div class="line">		 sleep(<span class="number">1</span>);</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">else</span> <span class="keyword">if</span>(ret == <span class="number">0</span>)&#123;</div><div class="line">         <span class="built_in">printf</span>(<span class="string">"child[%d,%d]\n"</span>,getpid(),getppid());</div><div class="line">         sleep(<span class="number">2</span>);<span class="comment">//保证父进程先退出</span></div><div class="line">         <span class="built_in">printf</span>(<span class="string">"child[%d,%d]\n"</span>,getpid(),getppid());</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>程序运行结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">father[2704,2553]</div><div class="line">child[2705,2704]</div><div class="line">[text@localhost process]$ child[2705,1]</div></pre></td></tr></table></figure></p>
+<p>由于父进程先退出，子进程没有结束，子进程变成了孤儿进程，在子进程成为孤儿进程进程之前，他的父进程是创建他的进程，一旦创建他的进程先退出，子进程会被1号进程init领养，由一号进程结束孤儿进程。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/二分查找算法/" class="archive-article-date">
-  	<time datetime="2017-07-23T10:20:54.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/二分查找算法/">二分查找算法</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,298 +298,114 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
+        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2017/12/28/linux进程状态/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/大小写字母转换/" class="archive-article-date">
-  	<time datetime="2017-07-23T10:20:12.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/18/linux的进程控制块task-struct/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux的进程控制块task_struct</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/大小写字母转换/">大小写字母转换</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/求一个数2进制中1的个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T06:19:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/求一个数2进制中1的个数/">求一个数2进制中1的个数</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/交换2个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:58:52.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/交换2个数/">交换2个数</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/99乘法表/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:57:10.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/99乘法表/">99乘法表</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/21/输出100-200之间的素数/" class="archive-article-date">
-  	<time datetime="2017-07-21T13:33:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-21</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/输出100-200之间的素数/">输出100~200之间的素数</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2017/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/2017/">1</a><a class="page-number" href="/archives/2017/page/2/">2</a><a class="page-number" href="/archives/2017/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
+  
+
   
 
 
@@ -535,8 +455,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
