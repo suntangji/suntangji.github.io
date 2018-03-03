@@ -4,7 +4,7 @@ date: 2017-11-21 21:30:04
 tags: 随笔
 category: linux
 ---
-### 前言
+
 作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.
 <!--more-->
 #### 引用知乎大佬[刘尚奇](https://www.zhihu.com/question/21376577/answer/32617207)的言论

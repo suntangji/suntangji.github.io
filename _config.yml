@@ -81,8 +81,8 @@ jsonContent:
       link: false
       permalink: false
       excerpt: false
-      categories: false
-      tags: true
+      categories: true 
+      tags: true 
 
 # 自动生成sitemap
 sitemap: 

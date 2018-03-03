@@ -2,7 +2,7 @@
 title: c++继承
 date: 2017-12-13 18:15:19
 tags: 学习笔记
-category: c++
+category: cpp
 ---
 浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局
 <!--more-->

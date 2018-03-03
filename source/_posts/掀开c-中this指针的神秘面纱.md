@@ -2,7 +2,7 @@
 title: 掀开c++中this指针的神秘面纱
 date: 2017-10-24 20:27:55
 tags: 学习笔记
-category: c++
+category: cpp
 ---
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。
 <!--more-->
