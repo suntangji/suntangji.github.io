@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives | 孙堂吉的博客</title>
+  <title>Git/Github入门指南 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/page/3/index.html">
+  <meta name="description" content="学会使用Git/Github的正确姿势">
+<meta name="keywords" content="随笔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git&#x2F;Github入门指南">
+<meta property="og:url" content="https://www.suntangji.me/2018/03/17/Git-Github入门指南/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="学会使用Git/Github的正确姿势">
+<meta property="og:updated_time" content="2018-03-17T14:25:17.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Git&#x2F;Github入门指南">
+<meta name="twitter:description" content="学会使用Git/Github的正确姿势">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,92 +151,93 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Git-Github入门指南" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git/Github入门指南
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
+  
+
+
+        
+        <a href="/2018/03/17/Git-Github入门指南/" class="archive-article-date">
+  	<time datetime="2018-03-17T12:54:38.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-03-17</time>
+</a>
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>学会使用Git/Github的正确姿势<br><a id="more"></a></p>
+<h3 id="什么是版本控制"><a href="#什么是版本控制" class="headerlink" title="什么是版本控制"></a>什么是版本控制</h3><blockquote>
+<p>版本控制（Version control）是能让你了解到一个文件的历史，以及它的发展过程的系统。</p>
+</blockquote>
+<h4 id="常见的版本控制系统"><a href="#常见的版本控制系统" class="headerlink" title="常见的版本控制系统"></a>常见的版本控制系统</h4><ul>
+<li>Git</li>
+<li>SVN</li>
+</ul>
+<h4 id="Git与SVN的区别"><a href="#Git与SVN的区别" class="headerlink" title="Git与SVN的区别"></a>Git与SVN的区别</h4><ul>
+<li>Git是分布式</li>
+<li>SVN是集中式</li>
+<li>Git代码管理更出色，SVN文档管理更好用</li>
+</ul>
+<h4 id="什么是Github"><a href="#什么是Github" class="headerlink" title="什么是Github"></a>什么是Github</h4><blockquote>
+<p>gitHub是一个面向开源及私有软件项目的托管平台，因为只支持git 作为唯一的版本库格式进行托管，故名gitHub。</p>
+</blockquote>
+<h4 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h4><p>Debian系列<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="builtin-name">get</span> install -y git</div></pre></td></tr></table></figure></p>
+<p>Redhat系列<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum <span class="keyword">install</span> -y git</div></pre></td></tr></table></figure></p>
+<p>Windows/Mac OS<br>下载安装包<a href="https://git-scm.com/download/" target="_blank" rel="external">https://git-scm.com/download/</a></p>
+<h4 id="配置Git"><a href="#配置Git" class="headerlink" title="配置Git"></a>配置Git</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git<span class="built_in"> config </span>--global user.name <span class="string">"Your Name"</span></div><div class="line">$ git<span class="built_in"> config </span>--global user.email <span class="string">"email@example.com"</span></div></pre></td></tr></table></figure>
+<h4 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git init</span></div></pre></td></tr></table></figure>
+<h4 id="提交文件到缓冲区"><a href="#提交文件到缓冲区" class="headerlink" title="提交文件到缓冲区"></a>提交文件到缓冲区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> touch README.md</span></div><div class="line"><span class="meta">$</span><span class="bash"> git add .</span></div></pre></td></tr></table></figure>
+<h4 id="提交文件到版本库"><a href="#提交文件到版本库" class="headerlink" title="提交文件到版本库"></a>提交文件到版本库</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">"your commit"</span></span></div></pre></td></tr></table></figure>
+<h4 id="查看版本库状态"><a href="#查看版本库状态" class="headerlink" title="查看版本库状态"></a>查看版本库状态</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git status</span></div></pre></td></tr></table></figure>
+<h4 id="比较文件差异"><a href="#比较文件差异" class="headerlink" title="比较文件差异"></a>比较文件差异</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git diff</span></div></pre></td></tr></table></figure>
+<h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> git reset --hard HEAD^</span></div></pre></td></tr></table></figure>
+<h4 id="排除不需要的文档"><a href="#排除不需要的文档" class="headerlink" title="排除不需要的文档"></a>排除不需要的文档</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> touch .gitignore</span></div></pre></td></tr></table></figure>
+<p>在 .gitignore文件中写入不需要的文件名</p>
+<h4 id="同步到Github远程仓库"><a href="#同步到Github远程仓库" class="headerlink" title="同步到Github远程仓库"></a>同步到Github远程仓库</h4><p>你需要有一个Github账号</p>
+<h5 id="创建SSH-Key"><a href="#创建SSH-Key" class="headerlink" title="创建SSH Key"></a>创建SSH Key</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -t rsa -C <span class="string">"youremail@example.com"</span></span></div></pre></td></tr></table></figure>
+<p>一路回车使用默认值即可<br>然后登录GitHub网站，打开“Account settings”，“SSH Keys”页面,然后点“Add SSH Key”，填上任意Title，在Key文本框里粘贴id_rsa.pub文件的内容。</p>
+<h5 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h5><p>在Github新建一个远程仓库<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote <span class="keyword">add</span><span class="bash"> origin git@github.com:repo/repo_name.git(更改为你的远程仓库链接)</span></div></pre></td></tr></table></figure></p>
+<h4 id="提交代码"><a href="#提交代码" class="headerlink" title="提交代码"></a>提交代码</h4><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">push</span> -u <span class="built_in">origin</span> master</div></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" class="archive-article-date">
-  	<time datetime="2017-08-02T06:55:00.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">将一个整形数组奇数排列在前偶数排列在后</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/29/字符数组初始化需要注意的问题/" class="archive-article-date">
-  	<time datetime="2017-07-29T07:37:23.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/29/字符数组初始化需要注意的问题/">字符数组初始化需要注意的问题</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -247,457 +250,103 @@
 		
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/03/17/Git-Github入门指南/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/28/linux进程状态/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux进程状态</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/29/求一个数的二进制从左到右翻转后的值/">求一个数的二进制从左到右翻转后的值</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/用位运算实现加法和减法/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:49:33.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/用位运算实现加法和减法/">用位运算实现加法和减法</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/c语言sizeof关键字/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:48:26.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/c语言sizeof关键字/">c语言sizeof关键字</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/字符串翻转/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:46:28.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/字符串翻转/">字符串翻转</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/c语言static关键字/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:45:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/c语言static关键字/">c语言static关键字</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/三字母词/" class="archive-article-date">
-  	<time datetime="2017-07-24T15:24:40.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/三字母词/">三字母词</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/跳水比赛名次问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:40.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/跳水比赛名次问题/">跳水比赛名次问题</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/谋杀案问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:22.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/谋杀案问题/">谋杀案问题</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -747,8 +396,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
