@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>Linux进程控制之进程创建 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/index.html">
+  <meta name="description" content="学习使用fork,vfork函数创建进程">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程控制之进程创建">
+<meta property="og:url" content="https://www.suntangji.me/2018/03/18/Linux进程控制之进程创建/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="学习使用fork,vfork函数创建进程">
+<meta property="og:updated_time" content="2018-03-18T08:27:27.363Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Linux进程控制之进程创建">
+<meta name="twitter:description" content="学习使用fork,vfork函数创建进程">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,17 +151,18 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Linux进程控制之进程创建" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Linux进程控制之进程创建" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/18/Linux进程控制之进程创建/">Linux进程控制之进程创建</a>
+    <h1 class="article-title" itemprop="name">
+      Linux进程控制之进程创建
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
@@ -174,12 +177,77 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>学习使用fork,vfork函数创建进程<br>
-        
-          <a class="article-more-a" href="/2018/03/18/Linux进程控制之进程创建/#more">more >></a>
-        
+        <p>学习使用fork,vfork函数创建进程<br><a id="more"></a></p>
+<h3 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h3><p>使用fork函数创建进程，操作系统需要执行以下功能</p>
+<ul>
+<li>为新进程在进程表中分配一个空项</li>
+<li>为子进程赋一个唯一的进程标识号</li>
+<li>做一个父进程上下文的逻辑副本，不包括共享内存区</li>
+<li>增加父进程所拥有的所有文件的计数器，以表示有一个另外的进程现在也拥有这些文件</li>
+<li>把子进程设置为就绪态</li>
+<li>向父进程返回子进程的进程号，对子进程返回零</li>
+</ul>
+<p>使用fork创建进程并获取进程id<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;                                                                                                </span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">pid_t</span> pid = fork();</div><div class="line">  <span class="keyword">if</span> (pid &gt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="comment">//father</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"father:pid = %d,ppid = %d\n"</span>,getpid(),getppid());</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</div><div class="line">    <span class="comment">//child</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"child:pid = %d,ppid = %d\n"</span>,getpid(),getppid());</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    perror(<span class="string">"fork"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果</p>
+<blockquote>
+<p>father:pid = 20720,ppid = 18506<br>child:pid = 20721,ppid = 20720</p>
+</blockquote>
+<p>fork函数的特点</p>
+<ul>
+<li>调用一次有两个返回值，父进程返回子进程pid,子进程返回0</li>
+<li>父子进程都有自己的虚拟地址空间，子进程会进行写时拷贝</li>
+<li>父子进程的执行顺序不确定，取决于操作系统的调度</li>
+</ul>
+<p>fork函数创建进程失败的原因</p>
+<ul>
+<li>内存不够无法分配内存给新进程</li>
+<li>进程太多无法创建新进程</li>
+</ul>
+<p>使用vfork函数创建新进程<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> g_val = <span class="number">2018</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">int</span> val = <span class="number">2018</span>;</div><div class="line">	<span class="keyword">pid_t</span> pid = vfork();</div><div class="line">	<span class="keyword">if</span>(pid &gt; <span class="number">0</span>) &#123;</div><div class="line">		<span class="comment">//father</span></div><div class="line">		<span class="built_in">printf</span>(<span class="string">"farher:g_val = %d,val = %d\n"</span>,g_val,val);		</div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(pid == <span class="number">0</span>) &#123;</div><div class="line">	  <span class="comment">//child</span></div><div class="line">		g_val = <span class="number">2017</span>;</div><div class="line">		val = <span class="number">2017</span>;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"child:g_val = %d,val = %d\n"</span>,g_val,val);		</div><div class="line">		_exit(<span class="number">0</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		perror(<span class="string">"vfork"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;	</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果</p>
+<blockquote>
+<p>child:g_val = 2017,val = 2017<br>farher:g_val = 2017,val = 2017</p>
+</blockquote>
+<p>vfork函数的特点</p>
+<ul>
+<li>保证子进程先执行</li>
+<li>父子进程共享虚拟地址空间</li>
+<li>子进程必须调用exec/_exit/exit函数</li>
+<li>若子进程依赖父进程的进一步动作会导致死锁</li>
+</ul>
+<p>vfork函数没有调用exit/_exit/exec函数的后果</p>
+<hr>
+<p>如果vfork创建子进程后，子进程没有调用以上函数会发生不可预期行为，对用CentOS就是段错误。这是由于子进程先执行，子进程执行完毕退出会销毁函数栈帧，由于vfork创建的进程共享虚拟地址空间，父进程的函数栈帧也被销毁，此时再去执行父进程就会发生段错误。</p>
+<h4 id="其他创建进程的方式"><a href="#其他创建进程的方式" class="headerlink" title="其他创建进程的方式"></a>其他创建进程的方式</h4><ul>
+<li>clone函数</li>
+<li>system函数</li>
+<li>popen函数</li>
+</ul>
+<p>clone函数允许子进程共享一部分父进程的数据。<br>system和popen是对fork的封装。二者主要区别是popen函数同时会打开一个管道用于进程间通信,system在等待命令终止时将忽略SIGINT 和SIGQUIT 信号，同时阻塞SIGCHLD 信号。如果这会导致应用程序错过一个终止它的信号，则应用程序应检查system的返回值；如果由于收到某个信号而终止了命令，应用程序应采取一切适当的措施。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -211,16 +279,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/18/Linux进程控制之进程创建/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/03/18/Linux进程控制之进程创建/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/17/Git-Github入门指南/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Git/Github入门指南</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -240,820 +367,12 @@
 
 
 
-
-  
-    <article id="post-Git-Github入门指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/17/Git-Github入门指南/">Git/Github入门指南</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/03/17/Git-Github入门指南/" class="archive-article-date">
-  	<time datetime="2018-03-17T12:54:38.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-17</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>学会使用Git/Github的正确姿势<br>
-        
-          <a class="article-more-a" href="/2018/03/17/Git-Github入门指南/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/17/Git-Github入门指南/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-linux进程状态" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/28/linux进程状态/">linux进程状态</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/28/linux进程状态/" class="archive-article-date">
-  	<time datetime="2017-12-28T14:15:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-28</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。<br>
-        
-          <a class="article-more-a" href="/2017/12/28/linux进程状态/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/28/linux进程状态/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-linux的进程控制块task-struct" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/linux的进程控制块task-struct/">linux的进程控制块task_struct</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/18/linux的进程控制块task-struct/" class="archive-article-date">
-  	<time datetime="2017-12-18T15:06:21.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。<br>
-        
-          <a class="article-more-a" href="/2017/12/18/linux的进程控制块task-struct/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/18/linux的进程控制块task-struct/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="unix-proc结构体和user结构体" class="article article-type-unix  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/proc结构体和user结构体/">UNIX v6的进程控制块proc结构体和user结构体</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/18/proc结构体和user结构体/" class="archive-article-date">
-  	<time datetime="2017-12-18T09:38:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>进程的状态信息和控制信息等由 proc 结构体和 user 结构体管理。每个进程各自会被分配1 组上述结构体的实例。 proc 结构体常驻内存，而 user 结构体有可能被移至交换空间。<br>
-        
-          <a class="article-more-a" href="/2017/12/18/proc结构体和user结构体/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/18/proc结构体和user结构体/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-cpp继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/13/cpp继承/">c++继承</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/13/cpp继承/" class="archive-article-date">
-  	<time datetime="2017-12-13T10:15:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-13</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局<br>
-        
-          <a class="article-more-a" href="/2017/12/13/cpp继承/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/13/cpp继承/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-cpp学习总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/09/cpp学习总结/">cpp学习总结</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/09/cpp学习总结/" class="archive-article-date">
-  	<time datetime="2017-12-09T11:03:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-09</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c++学习总结思维导图<br>
-        
-          <a class="article-more-a" href="/2017/12/09/cpp学习总结/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/09/cpp学习总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-vim配置及常用插件安装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/21/vim配置及常用插件安装/">vim配置及常见插件安装</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/11/21/vim配置及常用插件安装/" class="archive-article-date">
-  	<time datetime="2017-11-21T13:30:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-11-21</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.<br>
-        
-          <a class="article-more-a" href="/2017/11/21/vim配置及常用插件安装/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/21/vim配置及常用插件安装/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-掀开c-中this指针的神秘面纱" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开c++中this指针的神秘面纱</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。<br>
-        
-          <a class="article-more-a" href="/2017/10/24/掀开c-中this指针的神秘面纱/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/掀开c-中this指针的神秘面纱/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言扫雷游戏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/c语言扫雷游戏/">c语言扫雷游戏</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/c语言扫雷游戏/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:59:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c语言实现简易版扫雷游戏<br>
-        
-          <a class="article-more-a" href="/2017/09/22/c语言扫雷游戏/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/c语言扫雷游戏/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1102,8 +421,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
