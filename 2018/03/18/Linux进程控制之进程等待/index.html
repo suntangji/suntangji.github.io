@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>Linux进程控制之进程等待 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/page/2/index.html">
+  <meta name="description" content="学习进程等待函数wait、waitpid的用法。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程控制之进程等待">
+<meta property="og:url" content="https://www.suntangji.me/2018/03/18/Linux进程控制之进程等待/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="学习进程等待函数wait、waitpid的用法。">
+<meta property="og:updated_time" content="2018-03-18T13:58:14.333Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Linux进程控制之进程等待">
+<meta name="twitter:description" content="学习进程等待函数wait、waitpid的用法。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,24 +151,25 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-c语言扫雷游戏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Linux进程控制之进程等待" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/c语言扫雷游戏/">c语言扫雷游戏</a>
+    <h1 class="article-title" itemprop="name">
+      Linux进程控制之进程等待
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
         
-        <a href="/2017/09/22/c语言扫雷游戏/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:59:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
+        <a href="/2018/03/18/Linux进程控制之进程等待/" class="archive-article-date">
+  	<time datetime="2018-03-18T08:42:55.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-03-18</time>
 </a>
 
         
@@ -174,831 +177,65 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>c语言实现简易版扫雷游戏<br>
-        
-          <a class="article-more-a" href="/2017/09/22/c语言扫雷游戏/#more">more >></a>
-        
+        <p>学习进程等待函数wait、waitpid的用法。<br><a id="more"></a></p>
+<h4 id="进程等待的必要性"><a href="#进程等待的必要性" class="headerlink" title="进程等待的必要性"></a>进程等待的必要性</h4><ul>
+<li>如果父进程不理会子进程的状态，子进程可能变成僵尸进程，造成内存泄漏</li>
+<li>若父进程先退出，子进程会变成孤儿进程</li>
+<li>父进程往往需要知道子进程的运行结果</li>
+</ul>
+<h4 id="进程等待的方法"><a href="#进程等待的方法" class="headerlink" title="进程等待的方法"></a>进程等待的方法</h4><p>wait函数<br><figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></div><div class="line">pid_t wait(<span class="built_in">int</span> *status)<span class="comment">;</span></div></pre></td></tr></table></figure></p>
+<p>返回值：成功返回被等待进程的id,失败返回-1<br>参数： 输出型参数，用于获取子进程退出状态，不关心可设置为NULL<br>waitpid函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></div><div class="line"><span class="keyword">pid_t</span> waitpid(<span class="keyword">pid_t</span> pid, <span class="keyword">int</span> *status, <span class="keyword">int</span> options);</div></pre></td></tr></table></figure></p>
+<p>返回值：正常返回收集到的子进程id<br>如果设置了WNOHANG,而调用waitpid发现没有退出的子进程可收集，则返回0<br>如果调用出错，返回-1，errno会被设置对应的值<br>参数：<br>pid = -1,等待任何一个子进程，与wait等效<br>pid &gt; 0,等待该进程<br>options = WNOHANG，若pid指定的子进程没有结束，函数返回0，不予以等待。若正常结束返回该进程id</p>
+<ul>
+<li>如果子进程已退出，调用wait/waitpid时，函数会立即返回，并且释放资源，获得子进程退出信息</li>
+<li>如果在任意时刻调用wait/waitpid,子进程存在且正常运行，则进程可能阻塞。</li>
+<li>如果不存在该子进程，则立即出错返回</li>
+</ul>
+<h4 id="获取进程退出状态"><a href="#获取进程退出状态" class="headerlink" title="获取进程退出状态"></a>获取进程退出状态</h4><p>wait/waitpid函数的参数status是一个位图，用它的低16位来表示进程状态。当进程正常终止时status的低8位为0，高8位为退出状态。当进程被信号终止时，低7位表示终止信号，第8位为core dump标志，高8为没有使用。</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="built_in">int</span> main()&#123;</div><div class="line">	pid_t pid = fork()<span class="comment">;</span></div><div class="line">	<span class="keyword">if</span>(pid &gt; <span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">int</span> st = <span class="number">0</span><span class="comment">;</span></div><div class="line">		<span class="built_in">int</span> ret = wait(&amp;st)<span class="comment">;</span></div><div class="line">		<span class="keyword">if</span>(ret &gt; <span class="number">0</span> &amp;&amp; (st &amp; <span class="number">0xff</span>) == <span class="number">0</span>)</div><div class="line">			printf(<span class="string">"exit status:%d"</span>,(st&gt;&gt;<span class="number">8</span>) &amp; <span class="number">0xff</span>)<span class="comment">;	</span></div><div class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(ret &gt; <span class="number">0</span> )</div><div class="line">			printf(<span class="string">"sig:%d"</span>,st&amp;<span class="number">0x7f</span>)<span class="comment">;</span></div><div class="line"></div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(pid == <span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">sleep</span>(<span class="number">15</span>)<span class="comment">;</span></div><div class="line">		<span class="keyword">exit</span>(<span class="number">10</span>)<span class="comment">;</span></div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		perror(<span class="string">"fork"</span>)<span class="comment">;</span></div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span><span class="comment">;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>程序正常终止运行结果</p>
+<blockquote>
+<p>exit status:10</p>
+</blockquote>
+<p>子进程被信号杀死运行结果</p>
+<blockquote>
+<p>sig:9</p>
+</blockquote>
+<p>使用宏WIFEXITED 可以方便的获取进程是否正常退出,如果进程正常退出，可以使用宏WEXITSTATUS获取退出状态。</p>
+<h4 id="阻塞式等待"><a href="#阻塞式等待" class="headerlink" title="阻塞式等待"></a>阻塞式等待</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/wait.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">pid_t</span> pid = fork();</div><div class="line">	<span class="keyword">if</span>(pid &gt; <span class="number">0</span>)&#123;</div><div class="line">		<span class="keyword">int</span> st = <span class="number">0</span>;</div><div class="line">		<span class="keyword">pid_t</span> ret = waitpid(<span class="number">-1</span>,&amp;st,<span class="number">0</span>);</div><div class="line">		<span class="keyword">if</span>(WIFEXITED(st) &amp;&amp; ret == pid)&#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"wait success,child return code:%d\n"</span>,WEXITSTATUS(st));</div><div class="line">		&#125; <span class="keyword">else</span> &#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"wait failed!\n"</span>);</div><div class="line">			<span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span>(pid == <span class="number">0</span>)&#123;</div><div class="line">		<span class="built_in">printf</span>(<span class="string">"child is run!\n"</span>);</div><div class="line">		sleep(<span class="number">5</span>);</div><div class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		perror(<span class="string">"fork"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<blockquote>
+<p>child is run!<br>wait success,child return code:0</p>
+</blockquote>
+<h4 id="非阻塞式等待"><a href="#非阻塞式等待" class="headerlink" title="非阻塞式等待"></a>非阻塞式等待</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">pid_t</span> pid = fork();</div><div class="line">  <span class="keyword">if</span>(pid &gt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">int</span> st = <span class="number">0</span>;</div><div class="line">    <span class="keyword">pid_t</span> ret;</div><div class="line">    <span class="keyword">do</span> &#123;</div><div class="line">      ret = waitpid(<span class="number">-1</span>,&amp;st,WNOHANG);</div><div class="line">			<span class="keyword">if</span>(ret == <span class="number">0</span>)</div><div class="line">				<span class="built_in">printf</span>(<span class="string">"child is running,wait\n"</span>);</div><div class="line">			sleep(<span class="number">1</span>);</div><div class="line"></div><div class="line">    &#125; <span class="keyword">while</span>(ret == <span class="number">0</span>);</div><div class="line">		<span class="keyword">if</span>(WIFEXITED(st) &amp;&amp; ret == pid)&#123;</div><div class="line">			<span class="built_in">printf</span>(<span class="string">"wait end,child return code:%d\n"</span>,WEXITSTATUS(st));</div><div class="line">		&#125;</div><div class="line"></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span>(pid == <span class="number">0</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"child is run!\n"</span>);</div><div class="line">    sleep(<span class="number">5</span>);</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    perror(<span class="string">"fork"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<blockquote>
+<p>child is running,wait<br>child is run!<br>child is running,wait<br>child is running,wait<br>child is running,wait<br>child is running,wait<br>wait end,child return code:0</p>
+</blockquote>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/c语言扫雷游戏/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言实现动态顺序表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/c语言实现动态顺序表/">c语言实现动态顺序表</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/c语言实现动态顺序表/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:54:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c语言实现动态内存开辟的顺序表<br>
-        
-          <a class="article-more-a" href="/2017/09/22/c语言实现动态顺序表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/c语言实现动态顺序表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言实现文件拷贝命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/c语言实现文件拷贝命令/">c语言实现文件拷贝命令</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/c语言实现文件拷贝命令/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:47:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>主要知识：main函数参数、文件读写<br>
-        
-          <a class="article-more-a" href="/2017/09/22/c语言实现文件拷贝命令/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/c语言实现文件拷贝命令/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-把c语言注释转换为cpp注释" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/把c语言注释转换为cpp注释/">把c语言注释转换为cpp注释</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/把c语言注释转换为cpp注释/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:15:48.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 主要知识点：有限状态机、文件读写<br>
-        
-          <a class="article-more-a" href="/2017/09/22/把c语言注释转换为cpp注释/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/把c语言注释转换为cpp注释/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-通讯录c语言实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/通讯录c语言实现/">通讯录c语言实现</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/通讯录c语言实现/" class="archive-article-date">
-  	<time datetime="2017-09-22T08:48:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>数据结构顺序表，动态内存开辟，文件读写<br>
-        
-          <a class="article-more-a" href="/2017/09/22/通讯录c语言实现/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/通讯录c语言实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言动态内存开辟" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/02/c语言动态内存开辟/">c语言动态内存开辟</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/02/c语言动态内存开辟/" class="archive-article-date">
-  	<time datetime="2017-09-02T11:49:37.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;所谓动态内存分配(Dynamic Memory Allocation)就是指在程序执行的过程中动态地分配或者回收存储空间的分配内存的方法。动态内存分配不象数组等静态内存分配方法那样需要预先分配存储空间，而是由系统根据程序的需要即时分配，且分配的大小就是程序要求的大小。<br>
-        
-          <a class="article-more-a" href="/2017/09/02/c语言动态内存开辟/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/02/c语言动态内存开辟/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言中的整形提升" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/02/c语言中的整形提升/">c语言中的整形提升</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/02/c语言中的整形提升/" class="archive-article-date">
-  	<time datetime="2017-09-02T02:40:52.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;整型提升是C程序设计语言中的一项规定：在表达式计算时，各种整形首先要提升为int类型，如果int类型不足以表示则要提升为unsigned int类型，然后执行表达式的运算。<br>
-        
-          <a class="article-more-a" href="/2017/09/02/c语言中的整形提升/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/02/c语言中的整形提升/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言可变参数列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/08/c语言可变参数列表/">c语言可变参数列表</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/08/c语言可变参数列表/" class="archive-article-date">
-  	<time datetime="2017-08-08T12:17:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-08</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。<br>
-        
-          <a class="article-more-a" href="/2017/08/08/c语言可变参数列表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/08/c语言可变参数列表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-运行时堆栈" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/05/运行时堆栈/">栈帧</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/05/运行时堆栈/" class="archive-article-date">
-  	<time datetime="2017-08-05T12:13:34.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。<br>
-        
-          <a class="article-more-a" href="/2017/08/05/运行时堆栈/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/05/运行时堆栈/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-模拟实现库函数strcpy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/模拟实现库函数strcpy/">模拟实现库函数strcpy</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/02/模拟实现库函数strcpy/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:53:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>自己动手实现库函数strcpy的功能<br>
-        
-          <a class="article-more-a" href="/2017/08/02/模拟实现库函数strcpy/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -1017,29 +254,77 @@
 	</div>
 
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/模拟实现库函数strcpy/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/03/18/Linux进程控制之进程等待/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/18/Linux进程控制之进程创建/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux进程控制之进程创建</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -1059,12 +344,12 @@
 
 
 
+  
+  
+  
 
   
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
-    </nav>
+
   
 
 
@@ -1113,8 +398,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
