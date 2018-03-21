@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>Linux系统级IO | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/page/5/index.html">
+  <meta name="description" content="输入/输出(I/O)是在主存和外部设备之间拷贝数据的过程，所有语言都提供了较高级别的I/O函数，有时我们也需要使用系统级I/O.">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统级IO">
+<meta property="og:url" content="https://www.suntangji.me/2018/03/21/Linux系统级IO/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="输入/输出(I/O)是在主存和外部设备之间拷贝数据的过程，所有语言都提供了较高级别的I/O函数，有时我们也需要使用系统级I/O.">
+<meta property="og:updated_time" content="2018-03-21T08:53:50.813Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Linux系统级IO">
+<meta name="twitter:description" content="输入/输出(I/O)是在主存和外部设备之间拷贝数据的过程，所有语言都提供了较高级别的I/O函数，有时我们也需要使用系统级I/O.">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,24 +151,25 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-99乘法表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Linux系统级IO" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/23/99乘法表/">99乘法表</a>
+    <h1 class="article-title" itemprop="name">
+      Linux系统级IO
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
         
-        <a href="/2017/07/23/99乘法表/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:57:10.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
+        <a href="/2018/03/21/Linux系统级IO/" class="archive-article-date">
+  	<time datetime="2018-03-21T05:27:17.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-03-21</time>
 </a>
 
         
@@ -174,12 +177,63 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>分别使用双层循环，单层循环，goto语句输出99乘法表<br>
-        
-          <a class="article-more-a" href="/2017/07/23/99乘法表/#more">more >></a>
-        
+        <p>输入/输出(I/O)是在主存和外部设备之间拷贝数据的过程，所有语言都提供了较高级别的I/O函数，有时我们也需要使用系统级I/O.<br><a id="more"></a></p>
+<h4 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h4><p>Linux下一切皆文件，操作系统把所有设备都抽象成文件，当进程打开或创建一个文件，在进程的PCB结构中都会有对应的文件描述符，所有文件相关操作都需要该文件描述符。<br>PCB中的file_struct结构体<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">files_struct</span> &#123;</span></div><div class="line">  <span class="keyword">atomic_t</span> count; <span class="comment">/* 共享该表的进程数 */</span></div><div class="line">  <span class="keyword">rwlock_t</span> file_lock; <span class="comment">/* 保护以下的所有域,以免在tsk-&gt;alloc_lock中的嵌套*/</span></div><div class="line">  <span class="keyword">int</span> max_fds; <span class="comment">/*当前文件对象的最大数*/</span></div><div class="line">  <span class="keyword">int</span> max_fdset; <span class="comment">/*当前文件描述符的最大数*/</span></div><div class="line">  <span class="keyword">int</span> next_fd; ／*已分配的文件描述符加<span class="number">1</span>*/</div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">file</span> ** <span class="title">fd</span>;</span> <span class="comment">/* 指向文件对象指针数组的指针 */</span></div><div class="line">  fd_set *close_on_exec; <span class="comment">/*指向执行exec( )时需要关闭的文件描述符*/</span></div><div class="line">  fd_set *open_fds; <span class="comment">/*指向打开文件描述符的指针*/</span></div><div class="line">  fd_set close_on_exec_init;<span class="comment">/* 执行exec( )时需要关闭的文件描述符的初 值集合*/</span></div><div class="line">  fd_set open_fds_init; <span class="comment">/*文件描述符的初值集合*/</span></div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">file</span> * <span class="title">fd_array</span>[32];</span><span class="comment">/* 文件对象指针的初始化数组*/</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h4 id="I-O相关系统调用"><a href="#I-O相关系统调用" class="headerlink" title="I/O相关系统调用"></a>I/O相关系统调用</h4><p>open/creat函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> flags)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> flags, <span class="keyword">mode_t</span> mode)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">creat</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">mode_t</span> mode)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>pathname是要打开或创建的文件路径，flags是打开方式</p>
+<ul>
+<li>O_RDONLY:只读</li>
+<li>O_WRONLY:只写</li>
+<li>O_RDWR:可读可写</li>
+</ul>
+<p>打开一个文件时必须从以上参数中选择一个，以下是可选参数</p>
+<ul>
+<li>O_CREAT:如果文件不存在创建一个新的空文件</li>
+<li>O_TRUNC:如果文件已存，以只写或读写方式打开就截断它的长度为0</li>
+<li>O_APPEND:每次写操作前，设置文件位置到结尾处</li>
+<li>O_EXCL: 如果同时指定了O_CREAT,而文件已存在则出错</li>
+<li>O_NOCTTY:如果pathname是终端设备，则不将该设备设置为控制终端</li>
+<li>O_NONBLOCK:特殊文件设置为非阻塞模式</li>
+</ul>
+<p>以下的参数也是可选的</p>
+<ul>
+<li>O_DSYNC</li>
+<li>O_RSYNC</li>
+<li>O_SYNC</li>
+</ul>
+<p>mode是设置该文件的权限，文件的权限为mode&amp;(~umask),可以使用umask函数设置umask的值。<br>open/creat函数的返回值是当前没有使用的文件描述符的最小值，出错返回-1<br>close函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">close</span><span class="params">(<span class="keyword">int</span> fd)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>close函数用来关闭一个文件描述符，成功返回0，失败返回-1。关闭一个已经关闭的文件描述符会失败。<br>lseek函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">off_t</span> lseek(<span class="keyword">int</span> fd, <span class="keyword">off_t</span> offset, <span class="keyword">int</span> whence);</div></pre></td></tr></table></figure></p>
+<p>lseek显示的为一个打开的文件设置其偏移量<br>read/write函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">ssize_t</span> read(<span class="keyword">int</span> fd, <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count);</div></pre></td></tr></table></figure></p>
+<p>fd是文件描述符，buf是接收数据的缓冲区，count是一次读的数据大小<br>read函数成功返回读到的数据大小，0表示读到了文件结尾，出错返回-1。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="keyword">ssize_t</span> write(<span class="keyword">int</span> fd, <span class="keyword">const</span> <span class="keyword">void</span> *buf, <span class="keyword">size_t</span> count);</div></pre></td></tr></table></figure></p>
+<p>fd是文件描述符，buf是要写的数据，count是一次写的大小.<br>write函数的返回值成功返回写的数据大小，0表示什么也没写，-1表示出错</p>
+<p>使用read/write读写文件<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">/*umask(0);*/</span></div><div class="line">	<span class="keyword">int</span> fd = open(<span class="string">"text.txt"</span>,O_RDWR|O_CREAT,<span class="number">0644</span>);</div><div class="line">	<span class="keyword">char</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* write_buf = <span class="string">"hello write!"</span>;</div><div class="line">	<span class="keyword">ssize_t</span> write_size = write(fd,write_buf,<span class="built_in">strlen</span>(write_buf));</div><div class="line">	<span class="keyword">if</span>(write_size &lt; <span class="number">0</span>)</div><div class="line">		perror(<span class="string">"write"</span>);</div><div class="line">	lseek(fd,<span class="number">0</span>,SEEK_SET);</div><div class="line">	<span class="keyword">ssize_t</span> read_size = read(fd,buf,<span class="keyword">sizeof</span>(buf)<span class="number">-1</span>);</div><div class="line">	<span class="keyword">if</span>(read_size &lt; <span class="number">0</span>)</div><div class="line">		perror(<span class="string">"read"</span>);</div><div class="line">	buf[read_size] = <span class="string">'\0'</span>;</div><div class="line">	write(<span class="number">1</span>,buf,<span class="built_in">strlen</span>(buf));</div><div class="line">	close(fd);</div><div class="line">		</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><p>重定向函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dup</span><span class="params">(<span class="keyword">int</span> oldfd)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dup2</span><span class="params">(<span class="keyword">int</span> oldfd, <span class="keyword">int</span> newfd)</span></span>;</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;              /* Obtain O_* constant definitions */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">dup3</span><span class="params">(<span class="keyword">int</span> oldfd, <span class="keyword">int</span> newfd, <span class="keyword">int</span> flags)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>dup函数会关闭oldfd,打开当前最小的文件描述符<br>使用dup重定向标准输出<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> main()&#123;</div><div class="line">	<span class="keyword">int</span> fd = <span class="built_in">open</span>(<span class="string">"text.txt"</span>,O_WRONLY,<span class="number">0644</span>);</div><div class="line">	<span class="built_in">close</span>(<span class="number">1</span>);</div><div class="line">	<span class="keyword">int</span> new_fd = 	dup(fd);</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* buf = <span class="string">"hello stdout!"</span>;</div><div class="line">	<span class="built_in">write</span>(<span class="number">1</span>,buf,strlen(buf));</div><div class="line">	<span class="comment">/*printf("hello stdout!");*/</span></div><div class="line">	<span class="built_in">close</span>(new_fd);</div><div class="line">		</div><div class="line">	<span class="built_in">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>dup2函数拷贝描述符表表项oldfd到newfd,覆盖oldfd以前的内容，如果newfd已经打开，dup2会在拷贝oldfd之前关闭newfd。<br>使用dup2函数进行标准输出重定向<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> fd = open(<span class="string">"text.txt"</span>,O_WRONLY,<span class="number">0644</span>);</div><div class="line">	<span class="keyword">int</span> new_fd = 	dup2(fd,<span class="number">1</span>);</div><div class="line">	<span class="keyword">const</span> <span class="keyword">char</span>* buf = <span class="string">"hello stdout!"</span>;</div><div class="line">	write(<span class="number">1</span>,buf,<span class="built_in">strlen</span>(buf));</div><div class="line">	close(new_fd);</div><div class="line">		</div><div class="line">	<span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -203,7 +257,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
+        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -211,16 +265,75 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/23/99乘法表/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/03/21/Linux系统级IO/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/19/Linux进程控制之进程替换/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux进程控制之进程替换</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -240,103 +353,12 @@
 
 
 
-
-  
-    <article id="post-输出100-200之间的素数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/21/输出100-200之间的素数/">输出100~200之间的素数</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/07/21/输出100-200之间的素数/" class="archive-article-date">
-  	<time datetime="2017-07-21T13:33:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-21</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> &emsp;&emsp;所谓素数是指除了1和它本身以外，不能被任何整数整除的数，例如17就是素数，因为它不能被2~16的任一整数整除。因此判断一个整数m是否是素数，只需把m被2~m-1之间的每一个整数去除，如果都不能被整除，那么m就是一个素数.<br>
-        
-          <a class="article-more-a" href="/2017/07/21/输出100-200之间的素数/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/07/21/输出100-200之间的素数/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
-    </nav>
+  
+
+  
+
   
 
 
@@ -385,8 +407,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
