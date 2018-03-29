@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Tag: 学习笔记 | 孙堂吉的博客</title>
+  <title>Linux进程间通信之消息队列 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/tags/学习笔记/page/2/index.html">
+  <meta name="description" content="消息队列时操作系统内核为我们提供的一个链表，用于进程间通信。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程间通信之消息队列">
+<meta property="og:url" content="https://www.suntangji.me/2018/03/28/Linux进程间通信之消息队列/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="消息队列时操作系统内核为我们提供的一个链表，用于进程间通信。">
+<meta property="og:updated_time" content="2018-03-29T01:42:40.485Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Linux进程间通信之消息队列">
+<meta name="twitter:description" content="消息队列时操作系统内核为我们提供的一个链表，用于进程间通信。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,39 +151,149 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Linux进程间通信之消息队列" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux进程间通信之消息队列
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
+  
+
+
+        
+        <a href="/2018/03/28/Linux进程间通信之消息队列/" class="archive-article-date">
+  	<time datetime="2018-03-28T05:35:20.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-03-28</time>
+</a>
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>消息队列时操作系统内核为我们提供的一个链表，用于进程间通信。<br><a id="more"></a><br>消息队列的结构/usr/include/linux/msg.h<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msqid_ds</span> &#123;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> <span class="title">msg_perm</span>;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msg</span> *<span class="title">msg_first</span>;</span> <span class="comment">/* first message on queue,unused */</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msg</span> *<span class="title">msg_last</span>;</span> <span class="comment">/* last message in queue,unused */</span></div><div class="line"><span class="keyword">__kernel_time_t</span> msg_stime; <span class="comment">/* last msgsnd time */</span></div><div class="line"><span class="keyword">__kernel_time_t</span> msg_rtime; <span class="comment">/* last msgrcv time */</span></div><div class="line"><span class="keyword">__kernel_time_t</span> msg_ctime; <span class="comment">/* last change time */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> msg_lcbytes; <span class="comment">/* Reuse junk fields for 32 bit */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> msg_lqbytes; <span class="comment">/* ditto */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> msg_cbytes; <span class="comment">/* current number of bytes on queue */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> msg_qnum; <span class="comment">/* number of messages in queue */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> msg_qbytes; <span class="comment">/* max number of bytes on queue */</span></div><div class="line"><span class="keyword">__kernel_ipc_pid_t</span> msg_lspid; <span class="comment">/* pid of last msgsnd */</span></div><div class="line"><span class="keyword">__kernel_ipc_pid_t</span> msg_lrpid; <span class="comment">/* last receive pid */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>内核为IPC对象维护的数据结构/usr/include/linux/ipc.h<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> &#123;</span></div><div class="line"><span class="keyword">key_t</span> __key; <span class="comment">/* Key supplied to xxxget(2) */</span></div><div class="line"><span class="keyword">uid_t</span> uid; <span class="comment">/* Effective UID of owner */</span></div><div class="line"><span class="keyword">gid_t</span> gid; <span class="comment">/* Effective GID of owner */</span></div><div class="line"><span class="keyword">uid_t</span> cuid; <span class="comment">/* Effective UID of creator */</span></div><div class="line"><span class="keyword">gid_t</span> cgid; <span class="comment">/* Effective GID of creator */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> mode; <span class="comment">/* Permissions */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> __seq; <span class="comment">/* Sequence number */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>msgget系统调用<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/msg.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">msgget</span><span class="params">(<span class="keyword">key_t</span> key, <span class="keyword">int</span> msgflg)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>msgget创建一个消息队列或者获取一个已经存在的消息队列，key是一个键值，用来标识唯一的消息队列，msgflg用来表示权限，成功返回消息队列的标识码，失败返回-1.<br>可以使用ftok函数创建一个key<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="keyword">key_t</span> ftok(<span class="keyword">const</span> <span class="keyword">char</span> *pathname, <span class="keyword">int</span> proj_id);</div></pre></td></tr></table></figure></p>
+<p>pathname为路径名，proj_id为项目id<br>msgctl系统调用<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/msg.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">msgctl</span><span class="params">(<span class="keyword">int</span> msqid, <span class="keyword">int</span> cmd, struct msqid_ds *buf)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>msgid:msgget返回的标识码<br>cmd:表示要执行的命令</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+<th>成功时返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPC_STAT</td>
+<td>将消息队列关联的数据结构复制到buf</td>
+<td>0</td>
+</tr>
+<tr>
+<td>IPC_SET</td>
+<td>将buf中的部分成员复制到消息队列关联的数据结构</td>
+<td>0</td>
+</tr>
+<tr>
+<td>IPC_RMID</td>
+<td>立即移除消息队列，唤醒所有等待读消息和写消息的进程</td>
+<td>0</td>
+</tr>
+<tr>
+<td>IPC_INFO</td>
+<td>获取系统消息队列资源配置信息存储到buf中</td>
+<td>内核中消息队列数组中已经被使用项的最大索引值</td>
+</tr>
+<tr>
+<td>MSG_INFO</td>
+<td>与IPC_INFO类似，返回已经分配的消息队列占用资源信息</td>
+<td>同IPC_INFO</td>
+</tr>
+<tr>
+<td>MSG_STAT</td>
+<td>与IPC_STAT类似，msqid不再表示消息队列标识符，表示消息队列数组索引</td>
+<td>索引为msqid的消息队列标识符</td>
+</tr>
+</tbody>
+</table>
+<p>msgsnd/msgrcv系统调用<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/msg.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">msgsnd</span><span class="params">(<span class="keyword">int</span> msqid, <span class="keyword">const</span> <span class="keyword">void</span> *msgp, <span class="keyword">size_t</span> msgsz, <span class="keyword">int</span> msgflg)</span></span>;</div><div class="line"><span class="keyword">ssize_t</span> msgrcv(<span class="keyword">int</span> msqid, <span class="keyword">void</span> *msgp, <span class="keyword">size_t</span> msgsz, <span class="keyword">long</span> msgtyp,<span class="keyword">int</span> msgflg);</div></pre></td></tr></table></figure></p>
+<p>msgid:由msgget返回的消息队列标识符<br>msgp: 指向准备发送信息的指针<br>要发送的信息必须是如下类型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msgbuf</span> &#123;</span></div><div class="line">              <span class="keyword">long</span> mtype;       <span class="comment">/* message type, must be &gt; 0 */</span></div><div class="line">              <span class="keyword">char</span> mtext[<span class="number">1</span>];    <span class="comment">/* message data */</span></div><div class="line">          &#125;;</div></pre></td></tr></table></figure></p>
+<p>mtype是消息类型，mtext是消息数据<br>msgsz:消息的长度<br>msgtyp:指定接收哪种消息类型</p>
+<blockquote>
+<p>msgtype等于0：读取消息队列中的第一个消息<br>msgtype大于0：读取消息队列中第一个类型为msgtype的消息<br>msgtype小于0：读取消息队列中第一个类型小于msgtype绝对值的消息</p>
+</blockquote>
+<p>msgflg:</p>
+<ul>
+<li>msgsnd</li>
+</ul>
+<blockquote>
+<p>通常仅支持IPC_NOWAIT标志，即以非阻塞的方式发送消息</p>
+</blockquote>
+<ul>
+<li>msgrcv</li>
+</ul>
+<blockquote>
+<p>IPC_NOWAIT,如果消息队列中没有消息，则msgrcv调用立即返回并设置errno<br>MSG_EXCEPT,如果msgtype大于0，则接收消息队列中第一个非msgtype类型的消息<br>MSG_NOERROR,如果消息队列的长度超过了msgsz就将它截断</p>
+</blockquote>
+<p>成功返回0，失败返回-1，成功时也会修改内核数据结构msgid_ds的部分字段</p>
+<blockquote>
+<p>msgsnd</p>
+<ul>
+<li>msgsnd将msg_qnum加1</li>
+<li>将msg_lspid设置为调用进程的PId</li>
+<li>将msg_stime设置为当前时间</li>
+</ul>
+<p>msgrcv</p>
+<ul>
+<li>将msg_qnum减1</li>
+<li>将msg_lrpid设置为调用进程的pid</li>
+<li>将msg_rtime设置为当前的时间</li>
+</ul>
+</blockquote>
+<p>IPC命令</p>
+<blockquote>
+<p>ipcs命令可以查看当前的消息队列、共享内存、信号量<br>ipcrm -q/m/s命令可以按id删除消息队列/共享内存/信号量<br>ipcrm -Q/M/S命令可以按键值删除消息队列/共享内存/信号量</p>
+</blockquote>
+<p>实例<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//commen.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __COMMEN_H__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __COMMEN_H__</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/msg.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PROJ_ID 0x1234</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PATHNAME <span class="meta-string">"."</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SERVER_TYPE 1</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> CLIENT_TYPE 2</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Msgbuf</span> &#123;</span></div><div class="line">  <span class="keyword">long</span> mtype;</div><div class="line">  <span class="keyword">char</span> mtext[<span class="number">1024</span>];</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateMsg</span><span class="params">()</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetMsg</span><span class="params">()</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">DestoryMsg</span><span class="params">(<span class="keyword">int</span> msgid)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">SendMsg</span><span class="params">(<span class="keyword">int</span> msgid,<span class="keyword">long</span> type,<span class="keyword">char</span>* msg)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">RecvMsg</span><span class="params">(<span class="keyword">int</span> msgid,<span class="keyword">int</span> type,<span class="keyword">char</span> out[])</span> </span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// __COMMEN_H__</span></span></div></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//commen.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"commen.h"</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Commen</span><span class="params">(<span class="keyword">int</span> flag)</span> </span>&#123;</div><div class="line">  <span class="keyword">key_t</span> key = ftok(PATHNAME,PROJ_ID);</div><div class="line">  <span class="keyword">if</span>(key &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"ftok"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> msgid = msgget(key,flag);</div><div class="line">  <span class="keyword">if</span>(msgid &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"msgget"</span>);</div><div class="line">    <span class="comment">/*return -1;*/</span></div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> msgid;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateMsg</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> ret =  Commen(IPC_CREAT | IPC_EXCL | <span class="number">0666</span>) ;</div><div class="line">  <span class="keyword">if</span>(<span class="number">-1</span> == ret) &#123;</div><div class="line">    <span class="keyword">return</span> Commen(IPC_CREAT);</div><div class="line">  &#125; <span class="keyword">else</span></div><div class="line">    <span class="keyword">return</span> ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetMsg</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> Commen(IPC_CREAT | <span class="number">0666</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">DestoryMsg</span><span class="params">(<span class="keyword">int</span> msgid)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(msgctl(msgid,IPC_RMID,<span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"msgctl_ipcrmid"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">SendMsg</span><span class="params">(<span class="keyword">int</span> msgid,<span class="keyword">long</span> type,<span class="keyword">char</span>* msg)</span> </span>&#123;</div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Msgbuf</span> <span class="title">buf</span>;</span></div><div class="line">  buf.mtype = type;</div><div class="line">  <span class="built_in">strcpy</span>(buf.mtext,msg);</div><div class="line">  <span class="keyword">int</span> ret = msgsnd(msgid,&amp;buf,<span class="keyword">sizeof</span>(buf.mtext),<span class="number">0</span>);</div><div class="line">  <span class="keyword">if</span>(ret &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"msgsnd"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">RecvMsg</span><span class="params">(<span class="keyword">int</span> msgid,<span class="keyword">int</span> type,<span class="keyword">char</span> out[])</span> </span>&#123;</div><div class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">Msgbuf</span> <span class="title">buf</span>[1];</span></div><div class="line">  <span class="keyword">int</span> ret = msgrcv(msgid,&amp;buf,<span class="keyword">sizeof</span>(buf[<span class="number">0</span>].mtext),type,<span class="number">0</span>);</div><div class="line">  <span class="keyword">if</span>(ret &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"msgrcv"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">strcpy</span>(out,buf[<span class="number">0</span>].mtext);</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//server.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"commen.h"</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> msgid = CreateMsg();</div><div class="line">  <span class="keyword">if</span>(msgid &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"CreateMsg"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">char</span> buf[<span class="number">1024</span>];</div><div class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">    RecvMsg(msgid,CLIENT_TYPE,buf);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"client: %s\n"</span>,buf);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"server enter#"</span>);</div><div class="line">    fflush(<span class="built_in">stdout</span>);</div><div class="line">    <span class="keyword">ssize_t</span> read_sz = read(<span class="number">0</span>,buf,<span class="keyword">sizeof</span>(buf));</div><div class="line">    <span class="keyword">if</span>(read_sz &gt; <span class="number">0</span>) &#123;</div><div class="line">      buf[read_sz <span class="number">-1</span>] = <span class="number">0</span>;</div><div class="line">      SendMsg(msgid,SERVER_TYPE,buf);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//client.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"commen.h"</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> msgid = GetMsg();</div><div class="line">  <span class="keyword">if</span>(msgid &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"msgget"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">char</span> buf[<span class="number">1024</span>];</div><div class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"clent enter#"</span>);</div><div class="line">    fflush(<span class="built_in">stdout</span>);</div><div class="line">    <span class="keyword">ssize_t</span> read_sz = read(<span class="number">0</span>,buf,<span class="keyword">sizeof</span>(buf));</div><div class="line">    <span class="keyword">if</span>(read_sz &gt; <span class="number">0</span>) &#123;</div><div class="line">      buf[read_sz - <span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">      SendMsg(msgid,CLIENT_TYPE,buf);</div><div class="line">    &#125;</div><div class="line">    RecvMsg(msgid,SERVER_TYPE,buf);</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"server: %s\n"</span>,buf);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开c++中this指针的神秘面纱</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,510 +306,114 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
+        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/03/28/Linux进程间通信之消息队列/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/模拟实现库函数strcpy/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:53:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/22/Linux进程间通信之管道/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux进程间通信之管道</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/模拟实现库函数strcpy/">模拟实现库函数strcpy</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:31:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/">判断一个字符串是否是另一个字符串翻转后的结果</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:12:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/">在杨氏矩阵中判断一个数是否存在</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" class="archive-article-date">
-  	<time datetime="2017-08-02T06:55:00.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">将一个整形数组奇数排列在前偶数排列在后</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/29/求一个数的二进制从左到右翻转后的值/" class="archive-article-date">
-  	<time datetime="2017-07-29T04:03:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/29/求一个数的二进制从左到右翻转后的值/">求一个数的二进制从左到右翻转后的值</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/用位运算实现加法和减法/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:49:33.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/用位运算实现加法和减法/">用位运算实现加法和减法</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/字符串翻转/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:46:28.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/字符串翻转/">字符串翻转</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/跳水比赛名次问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:40.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/跳水比赛名次问题/">跳水比赛名次问题</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/24/谋杀案问题/" class="archive-article-date">
-  	<time datetime="2017-07-24T08:37:22.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/24/谋杀案问题/">谋杀案问题</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/tags/学习笔记/">&laquo; Prev</a><a class="page-number" href="/tags/学习笔记/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/学习笔记/page/3/">3</a><a class="extend next" rel="next" href="/tags/学习笔记/page/3/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -747,9 +463,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
