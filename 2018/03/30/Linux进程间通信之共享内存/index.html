@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>Linux进程间通信之共享内存 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/page/3/index.html">
+  <meta name="description" content="共享内存是最高效的IPC机制，因为它不涉及进程之间的任何的数据传输。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程间通信之共享内存">
+<meta property="og:url" content="https://www.suntangji.me/2018/03/30/Linux进程间通信之共享内存/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="共享内存是最高效的IPC机制，因为它不涉及进程之间的任何的数据传输。">
+<meta property="og:updated_time" content="2018-04-02T14:48:54.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Linux进程间通信之共享内存">
+<meta name="twitter:description" content="共享内存是最高效的IPC机制，因为它不涉及进程之间的任何的数据传输。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,24 +151,25 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-把c语言注释转换为cpp注释" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-Linux进程间通信之共享内存" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/把c语言注释转换为cpp注释/">把c语言注释转换为cpp注释</a>
+    <h1 class="article-title" itemprop="name">
+      Linux进程间通信之共享内存
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
         
-        <a href="/2017/09/22/把c语言注释转换为cpp注释/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:15:48.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
+        <a href="/2018/03/30/Linux进程间通信之共享内存/" class="archive-article-date">
+  	<time datetime="2018-03-30T13:31:56.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-03-30</time>
 </a>
 
         
@@ -174,558 +177,105 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p> 主要知识点：有限状态机、文件读写<br>
-        
-          <a class="article-more-a" href="/2017/09/22/把c语言注释转换为cpp注释/#more">more >></a>
-        
+        <p>共享内存是最高效的IPC机制，因为它不涉及进程之间的任何的数据传输。<br><a id="more"></a><br>共享内存把一块内存映射到多个进程的虚拟地址空间，这些数据之间的传递将不用在涉及到内核。<br>共享内存的数据结构<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">shmid_ds</span> &#123;</span></div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ipc_perm</span> <span class="title">shm_perm</span>;</span> <span class="comment">/* operation perms */</span></div><div class="line"><span class="keyword">int</span> shm_segsz; <span class="comment">/* size of segment (bytes) */</span></div><div class="line"><span class="keyword">__kernel_time_t</span> shm_atime; <span class="comment">/* last attach time */</span></div><div class="line"><span class="keyword">__kernel_time_t</span> shm_dtime; <span class="comment">/* last detach time */</span></div><div class="line"><span class="keyword">__kernel_time_t</span> shm_ctime; <span class="comment">/* last change time */</span></div><div class="line"><span class="keyword">__kernel_ipc_pid_t</span> shm_cpid; <span class="comment">/* pid of creator */</span></div><div class="line"><span class="keyword">__kernel_ipc_pid_t</span> shm_lpid; <span class="comment">/* pid of last operator */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> shm_nattch; <span class="comment">/* no. of current attaches */</span></div><div class="line"><span class="keyword">unsigned</span> <span class="keyword">short</span> shm_unused; <span class="comment">/* compatibility */</span></div><div class="line"><span class="keyword">void</span> *shm_unused2; <span class="comment">/* ditto - used by DIPC */</span></div><div class="line"><span class="keyword">void</span> *shm_unused3; <span class="comment">/* unused */</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>shmget系统调用，用来创建共享内存<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">shmget</span><span class="params">(<span class="keyword">key_t</span> key, <span class="keyword">size_t</span> size, <span class="keyword">int</span> shmflg)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>key和semget的参数相同是一个键值，用来标识唯一的共享内存，size表示共享内存的大小，shmflg除了支持semflag的参数，还支持两个额外的参数</p>
+<ul>
+<li>SHM_HUGETLB 系统使用大页面分配空间 </li>
+<li>SHM_NORESERVE 不为共享内存保留交换分区，物理内存不足将触发SIGSEGV信号</li>
+</ul>
+<p>shmat和shmdt系统调用<br>这两个函数分别把共享内存关联到进程和把共享内存从进程中分离。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">void</span> *<span class="title">shmat</span><span class="params">(<span class="keyword">int</span> shmid, <span class="keyword">const</span> <span class="keyword">void</span> *shmaddr, <span class="keyword">int</span> shmflg)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>shmid:共享内存标识<br>shmaddr:共享内存关联到进程的哪块地址空间</p>
+<ul>
+<li>如果shmaddr为NULL，操作系统选择进程关联的地址</li>
+<li>如果shmaddr非NULL，SHM_RND未被设置，共享内存映射到shmaddr</li>
+<li>如果shmaddr非NULL，shmflg设置为了SHM_RND,被关联的地址为shmaddr-shmaddr%SHMLBA(段低端边界地址倍数) </li>
+</ul>
+<p>shmflg: </p>
+<ul>
+<li>SHM_RND表示圆整，将共享内存关联到离shmaddr最近的SHMLBA(段低端边界地址倍数)的整数倍处</li>
+<li>SHM_RDONLY 进程只能读取共享内存中的数据</li>
+<li>SHM_REMAP 如果shmaddr已经被关联到一段共享内存则重新关联</li>
+<li>SHM_EXEC 对共享内存的执行权限相当于读权限</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">shmdt</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *shmaddr)</span></span>;</div></pre></td></tr></table></figure>
+<p>shmaddr需要取消关联的进程地址<br>shmctl系统调用<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">shmctl</span><span class="params">(<span class="keyword">int</span> shmid, <span class="keyword">int</span> cmd, struct shmid_ds *buf)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>shmid：shmget返回的标识<br>cmd: 将要采取的动作</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">命令</th>
+<th style="text-align:center">含义</th>
+<th style="text-align:center">成功时返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">IPC_STAT</td>
+<td style="text-align:center">将共享内存相关数据结构复制到buf</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">IPC_SET</td>
+<td style="text-align:center">将buf中部分数据复制到共享内存相关的数据结构中，更新shmid_ds.shm_ctime</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">IPC_RMID</td>
+<td style="text-align:center">将共享内存打上删除标记，没有关联的进程就删除共享内存</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">SHM_INFO</td>
+<td style="text-align:center">获取共享内存资源配置信息存储到buf</td>
+<td style="text-align:center">共享内存信息数组已被使用的最大索引值</td>
+</tr>
+<tr>
+<td style="text-align:center">SHM_STAT</td>
+<td style="text-align:center">与IPC_STAT类似，shm_id此时表示共享内存信息数组索引</td>
+<td style="text-align:center">共享内存信息数组索引值为shm_id的标识符</td>
+</tr>
+<tr>
+<td style="text-align:center">SHM_LOCK</td>
+<td style="text-align:center">禁止共享内存被移至交换分区</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">SHN_UNLOCK</td>
+<td style="text-align:center">允许共享内存被移至交换分区</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p>POSIX方法<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;        /* For mode constants */</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;           /* For O_* constants */</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">shm_open</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name, <span class="keyword">int</span> oflag, <span class="keyword">mode_t</span> mode)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">shm_unlink</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> *name)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>实例，利用共享内存进行客户端服务器通信<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//commen.h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __COMMEN_H__</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __COMMEN_H__</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PATHNAME <span class="meta-string">"."</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PROJ_ID 0x666</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateShm</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">DestoryShm</span><span class="params">(<span class="keyword">int</span> shmid)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetShm</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* end of include guard: __COMMEN_H__ */</span></span></div></pre></td></tr></table></figure></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//commen.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __COMMEN_H__</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __COMMEN_H__</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/ipc.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/shm.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PATHNAME <span class="meta-string">"."</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PROJ_ID 0x666</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateShm</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">DestoryShm</span><span class="params">(<span class="keyword">int</span> shmid)</span></span>;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetShm</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">/* end of include guard: __COMMEN_H__ */</span></span></div><div class="line">[stj@localhost shm]$ cat commen.c</div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"commen.h"</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CommenShm</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> flags)</span> </span>&#123;</div><div class="line">  <span class="keyword">key_t</span> key = ftok(PATHNAME,PROJ_ID);</div><div class="line">  <span class="keyword">if</span> (key &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"ftok"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> shmid = shmget(key,size,flags);</div><div class="line">  <span class="keyword">if</span> (shmid &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"shmget"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-2</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> shmid;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">CreateShm</span><span class="params">(<span class="keyword">int</span> size)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> CommenShm(size,IPC_CREAT | IPC_EXCL | <span class="number">0666</span>);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">DestoryShm</span><span class="params">(<span class="keyword">int</span> shmid)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> ret = shmctl(shmid,IPC_RMID,<span class="literal">NULL</span>);</div><div class="line">  <span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</div><div class="line">    perror(<span class="string">"shmctl"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetShm</span><span class="params">(<span class="keyword">int</span> size)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> CommenShm(size,IPC_CREAT);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//server.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"commen.h"</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> shmid = CreateShm(<span class="number">1024</span>);</div><div class="line">  <span class="keyword">if</span> (shmid &lt; <span class="number">0</span>) &#123;</div><div class="line">    shmid = GetShm(<span class="number">1024</span>);</div><div class="line">    <span class="keyword">if</span> (shmid &lt; <span class="number">0</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">char</span> *addr = (<span class="keyword">char</span>*)shmat(shmid,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">  <span class="keyword">if</span> (addr == (<span class="keyword">void</span>*)<span class="number">-1</span>) &#123;</div><div class="line">    perror(<span class="string">"shmat"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">/*char *addr =(char*)shmat(shmid,NULL,0);*/</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"client: %s\n"</span>,addr);</div><div class="line">    sleep(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  shmdt(addr);</div><div class="line">  sleep(<span class="number">1</span>);</div><div class="line">  DestoryShm(shmid);</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//client.c</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"commen.h"</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> shmid = GetShm(<span class="number">1024</span>);</div><div class="line">  <span class="keyword">if</span> (shmid &lt; <span class="number">0</span>) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">char</span> *addr = (<span class="keyword">char</span>*)shmat(shmid,<span class="literal">NULL</span>,<span class="number">0</span>);</div><div class="line">  <span class="keyword">if</span> (<span class="literal">NULL</span> == addr) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">    addr[i] = <span class="string">'A'</span> + i;</div><div class="line">    addr[i+<span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,addr);</div><div class="line">    sleep(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  shmdt(addr);</div><div class="line">  sleep(<span class="number">1</span>);</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/把c语言注释转换为cpp注释/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-通讯录c语言实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/通讯录c语言实现/">通讯录c语言实现</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/通讯录c语言实现/" class="archive-article-date">
-  	<time datetime="2017-09-22T08:48:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>数据结构顺序表，动态内存开辟，文件读写<br>
-        
-          <a class="article-more-a" href="/2017/09/22/通讯录c语言实现/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/通讯录c语言实现/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言动态内存开辟" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/02/c语言动态内存开辟/">c语言动态内存开辟</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/02/c语言动态内存开辟/" class="archive-article-date">
-  	<time datetime="2017-09-02T11:49:37.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;所谓动态内存分配(Dynamic Memory Allocation)就是指在程序执行的过程中动态地分配或者回收存储空间的分配内存的方法。动态内存分配不象数组等静态内存分配方法那样需要预先分配存储空间，而是由系统根据程序的需要即时分配，且分配的大小就是程序要求的大小。<br>
-        
-          <a class="article-more-a" href="/2017/09/02/c语言动态内存开辟/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/02/c语言动态内存开辟/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言中的整形提升" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/02/c语言中的整形提升/">c语言中的整形提升</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/02/c语言中的整形提升/" class="archive-article-date">
-  	<time datetime="2017-09-02T02:40:52.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&emsp;&emsp;整型提升是C程序设计语言中的一项规定：在表达式计算时，各种整形首先要提升为int类型，如果int类型不足以表示则要提升为unsigned int类型，然后执行表达式的运算。<br>
-        
-          <a class="article-more-a" href="/2017/09/02/c语言中的整形提升/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/02/c语言中的整形提升/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言可变参数列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/08/c语言可变参数列表/">c语言可变参数列表</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/08/c语言可变参数列表/" class="archive-article-date">
-  	<time datetime="2017-08-08T12:17:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-08</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在计算机程序设计，一个可变参数函数是指一个函数拥有不定引数，即是它接受一个可变数目的参数。<br>
-        
-          <a class="article-more-a" href="/2017/08/08/c语言可变参数列表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/08/c语言可变参数列表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-运行时堆栈" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/05/运行时堆栈/">栈帧</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/05/运行时堆栈/" class="archive-article-date">
-  	<time datetime="2017-08-05T12:13:34.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-05</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每次调用一个函数，都要为该次调用的函数实例分配栈空间。为单个函数分配的那部分栈空间就叫做栈帧（Stack Frame）。<br>
-        
-          <a class="article-more-a" href="/2017/08/05/运行时堆栈/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/05/运行时堆栈/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-模拟实现库函数strcpy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/模拟实现库函数strcpy/">模拟实现库函数strcpy</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/02/模拟实现库函数strcpy/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:53:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>自己动手实现库函数strcpy的功能<br>
-        
-          <a class="article-more-a" href="/2017/08/02/模拟实现库函数strcpy/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -749,7 +299,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
+        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
         		</li>
       		
 		</ul>
@@ -757,16 +307,84 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/模拟实现库函数strcpy/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/03/30/Linux进程间通信之共享内存/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/03/30/Linux进程间通信之信号量/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Linux进程间通信之信号量
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/28/Linux进程间通信之消息队列/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux进程间通信之消息队列</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -786,285 +404,12 @@
 
 
 
-
-  
-    <article id="post-判断一个字符串是否是另一个字符串翻转后的结果" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/">判断一个字符串是否是另一个字符串翻转后的结果</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:31:44.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>字符串abcdef向左翻转一位的结果为fabcde,向右翻转翻转一位的结果为bcdefa.向左翻转两位的结果为efabcd,向右翻转两位的结果为cdefab。<br>
-        
-          <a class="article-more-a" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/判断一个字符串是否是另一个字符串翻转后的结果/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-在杨氏矩阵中判断一个数是否存在" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/">在杨氏矩阵中判断一个数是否存在</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/" class="archive-article-date">
-  	<time datetime="2017-08-02T07:12:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>杨氏矩阵是一个二位数组，这个数组无论横向纵向都是递增的。<br>
-        
-          <a class="article-more-a" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/在杨氏矩阵中判断一个数是否存在/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-将一个整形数组奇数排列在前偶数排列在后" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">将一个整形数组奇数排列在前偶数排列在后</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/" class="archive-article-date">
-  	<time datetime="2017-08-02T06:55:00.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-08-02</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个整形数组，把奇数排列在前，偶数排列在后，例如 arr[]={1,2,3,4,5,6},排列后arr={1,3,5,2,4,6}.<br>
-        
-          <a class="article-more-a" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c/" class="article-tag-list-link color2">c</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/02/将一个整形数组奇数排列在前偶数排列在后/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1113,8 +458,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
