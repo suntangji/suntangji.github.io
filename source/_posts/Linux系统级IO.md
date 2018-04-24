@@ -123,7 +123,7 @@ int dup3(int oldfd, int newfd, int flags);
 ```
 dup函数会关闭oldfd,打开当前最小的文件描述符
 使用dup重定向标准输出
-```
+``` c
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>

@@ -40,7 +40,7 @@ options = WNOHANG，若pid指定的子进程没有结束，函数返回0，不�
 #### 获取进程退出状态
 wait/waitpid函数的参数status是一个位图，用它的低16位来表示进程状态。当进程正常终止时status的低8位为0，高8位为退出状态。当进程被信号终止时，低7位表示终止信号，第8位为core dump标志，高8为没有使用。
 
-```
+``` c
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -75,7 +75,7 @@ int main(){
 
 使用宏WIFEXITED 可以方便的获取进程是否正常退出,如果进程正常退出，可以使用宏WEXITSTATUS获取退出状态。
 #### 阻塞式等待
-```
+``` c
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -111,7 +111,7 @@ int main(){
 wait success,child return code:0
 
 #### 非阻塞式等待
-```
+``` c 
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>

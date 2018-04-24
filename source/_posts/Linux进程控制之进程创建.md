@@ -16,10 +16,9 @@ category: linux
 - 向父进程返回子进程的进程号，对子进程返回零
 
 使用fork创建进程并获取进程id
-```
+``` c
  #include <stdio.h>                                                                                                
  #include <unistd.h>
- 
  int main() {
  
    pid_t pid = fork();
@@ -50,7 +49,7 @@ fork函数创建进程失败的原因
 - 进程太多无法创建新进程
 
 使用vfork函数创建新进程
-```
+``` c
 #include <stdio.h>
 #include <unistd.h>
 

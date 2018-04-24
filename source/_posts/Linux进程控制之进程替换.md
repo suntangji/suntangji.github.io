@@ -10,7 +10,7 @@ category: linux
 当进程调用一种exec函数时，该进程执行的程序完全被新进程替换，exec并不创建新进程，所以进程id并没有改变，只替换了当前进程的正文、数据段、堆栈。
 
 进程替换函数
-```
+``` c
 #include <unistd.h>
 extern char **environ;
 int execl(const char *path, const char *arg, ...);
@@ -27,7 +27,7 @@ e(env):自定义环境变量
 
 只有execve是系统调用，其他函数是对它的封装
 实例
-```
+``` c
 #include <stdio.h>
 #include <unistd.h>
 
@@ -53,7 +53,7 @@ int main(){
 }
 ```
 模拟shell
-```
+``` c
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/wait.h>

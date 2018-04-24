@@ -20,12 +20,12 @@ category: linux
 - 进程收到终止信号
 
 exit函数
-```
+``` c
 #include <stdlib.h>
 void _exit(int status);
 ```
 _exit函数
-```
+``` c
 #include <unistd.h>
 void _exit(int status);
 ```
@@ -38,18 +38,18 @@ exit和_exit的区别
 - exit会关闭所有打开的流，刷新缓冲区
 
 atexit和on_exit函数的区别
-```
+``` c
 #include <stdlib.h>
 int atexit(void (*function)(void));
 ```
-```
+``` c
 #include <stdlib.h>
 int on_exit(void (*function)(int , void *), void *arg);
 ```
 atexit和on_exit都是清理函数，atexit函数没有参数，on_exit函数第一个参数是清理函数，第二个参数用于传给清理函数。清理函数第一个参数用来传给exit函数用于退出状态，第二个参数用于接收arg。
 
 下面的代码用于展示exit和_exit的区别
-```
+``` c
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -66,7 +66,7 @@ int main(){
 
 ```
 运行结果：没有任何输出
-```
+``` c
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -85,7 +85,7 @@ int main(){
 > before _exitClean Function 
 
 on_exit函数的用法
-```
+``` c
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
