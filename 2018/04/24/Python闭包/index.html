@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://www.suntangji.me/2018/04/24/Python闭包/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
 <meta property="og:description" content="在计算机科学中，闭包（英语：Closure），又称词法闭包（Lexical Closure）或函数闭包（function closures），是引用了自由变量的函数。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。[维基百科::闭包（计算机科学）]">
-<meta property="og:updated_time" content="2018-04-25T14:20:16.110Z">
+<meta property="og:updated_time" content="2018-05-02T12:45:12.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python闭包">
 <meta name="twitter:description" content="在计算机科学中，闭包（英语：Closure），又称词法闭包（Lexical Closure）或函数闭包（function closures），是引用了自由变量的函数。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。[维基百科::闭包（计算机科学）]">
@@ -187,7 +187,10 @@
 <ol>
 <li>local namespace: 作用范围为当前函数，包含所有局部变量</li>
 <li>global namespace: 作用范围当前模块，包含全局变量</li>
-<li>build-in namespace: 作用范围为所有模块<br>如果存在内嵌函数，搜索范围是</li>
+<li>build-in namespace: 作用范围为所有模块</li>
+</ol>
+<p>如果存在内嵌函数，搜索范围是</p>
+<ol>
 <li>local</li>
 <li>encloseing locals</li>
 <li>global</li>
@@ -313,6 +316,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/05/02/Python迭代器和生成器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Python迭代器和生成器
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/24/Python函数参数/" id="article-nav-older" class="article-nav-link-wrap">
