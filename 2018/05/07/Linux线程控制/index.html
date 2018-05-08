@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives: 2018/5 | 孙堂吉的博客</title>
+  <title>Linux线程控制 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/2018/05/index.html">
+  <meta name="description" content="在Linux下，程序或可执行文件是一个静态的实体，它只是一组指令的集合，进程是程序运行后的实例，是一个动态的实体。进程是资源竞争的基本单位，而线程是一种轻量级进程，是操作系统进行调度的最小单元。一个进程可能包含多个线程。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux线程控制">
+<meta property="og:url" content="https://www.suntangji.me/2018/05/07/Linux线程控制/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="在Linux下，程序或可执行文件是一个静态的实体，它只是一组指令的集合，进程是程序运行后的实例，是一个动态的实体。进程是资源竞争的基本单位，而线程是一种轻量级进程，是操作系统进行调度的最小单元。一个进程可能包含多个线程。">
+<meta property="og:updated_time" content="2018-05-08T01:34:02.035Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Linux线程控制">
+<meta name="twitter:description" content="在Linux下，程序或可执行文件是一个静态的实体，它只是一组指令的集合，进程是程序运行后的实例，是一个动态的实体。进程是资源竞争的基本单位，而线程是一种轻量级进程，是操作系统进行调度的最小单元。一个进程可能包含多个线程。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,39 +151,136 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Linux线程控制" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Linux线程控制
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/07/Linux线程控制/" class="archive-article-date">
+
+
+        
+        <a href="/2018/05/07/Linux线程控制/" class="archive-article-date">
   	<time datetime="2018-05-07T02:41:39.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2018-05-07</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在Linux下，程序或可执行文件是一个静态的实体，它只是一组指令的集合，进程是程序运行后的实例，是一个动态的实体。进程是资源竞争的基本单位，而线程是一种轻量级进程，是操作系统进行调度的最小单元。一个进程可能包含多个线程。<br><a id="more"></a></p>
+<h4 id="已经有进程了为什么还需要线程"><a href="#已经有进程了为什么还需要线程" class="headerlink" title="已经有进程了为什么还需要线程"></a>已经有进程了为什么还需要线程</h4><p>有人说线程没有必要，线程的应用场景多进程也可以做到。Unix原本的设计是没有线程的，更倾向于使用进程。线程的引入反而给Unix家族带来了一系列的麻烦，很多函数不是线程安全的，信号机制也因为线程变得更加复杂。在单核CPU时代，多线程需求并不强烈，随着多核时代的到来处理器开始支持超线程和多核架构，为了充分发挥多核处理器的强大功能，使程序性能得到提升，线程开始被大量使用。</p>
+<h4 id="进程和线程的区别"><a href="#进程和线程的区别" class="headerlink" title="进程和线程的区别"></a>进程和线程的区别</h4><p>进程之间的虚拟地址空间是独立的，但线程会共享虚拟地址空间。同一进程下的线程间共享全局内存区域，包括初始化数据段、未初始化数据段、动态分配的堆内存段。这种共享使线程创建、终止、切换、通信的开销更小。</p>
+<h4 id="线程间共享和私有的部分"><a href="#线程间共享和私有的部分" class="headerlink" title="线程间共享和私有的部分"></a>线程间共享和私有的部分</h4><p>共享</p>
+<ul>
+<li>共享同一地址空间，文本段、数据段共享</li>
+<li>文件描述符表</li>
+<li>信号处理方式</li>
+<li>当前工作目录</li>
+<li>用户id、组id</li>
+</ul>
+<p>私有</p>
+<ul>
+<li>线程id</li>
+<li>上下文信息(各种寄存器的值、程序计数器、栈指针)</li>
+<li>栈空间</li>
+<li>errno变量</li>
+<li>信号屏蔽字</li>
+<li>调度优先级</li>
+</ul>
+<h4 id="线程的优缺点"><a href="#线程的优缺点" class="headerlink" title="线程的优缺点"></a>线程的优缺点</h4><p>优点</p>
+<ul>
+<li>创建线程的开销要小于创建进程</li>
+<li>线程调度的开销小于进程调度</li>
+<li>线程占用的资源比进程小</li>
+<li>可以充分利用CPU的多核资源</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>线程之间共享地址空间，让进程变得更加脆弱，一个线程挂掉，该进程下的所有线程都要完蛋。</li>
+<li>易出错、难定位。无法保证各个线程承担的任务相等，还存在死锁、饿死、活锁、竞态条件等问题</li>
+</ul>
+<h4 id="进程id和线程id"><a href="#进程id和线程id" class="headerlink" title="进程id和线程id"></a>进程id和线程id</h4><p>在Linux中目前的线程实现是轻量级进程(Light Weighted Process),每一个用户态的线程，在内核中都对应一个调度实体，也拥有自己的进程描述符(task_struct结构体)。多进程的线程，又被称为线程组，线程组内每一个线程都有一个进程描述符。进程描述符中的pid对应线程id,tgid对应进程id.线程id的本质是内存地址。</p>
+<h4 id="pthread库"><a href="#pthread库" class="headerlink" title="pthread库"></a>pthread库</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">POSIX函数</th>
+<th style="text-align:center">函数功能描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">pthread_create</td>
+<td style="text-align:center">创建一个线程</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_self</td>
+<td style="text-align:center">获取线程id</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_equal</td>
+<td style="text-align:center">判断两个线程id是否相等</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_join</td>
+<td style="text-align:center">阻塞式的等待线程退出</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_detach</td>
+<td style="text-align:center">设置线程分离，结束后自动回收</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_exit</td>
+<td style="text-align:center">终止线程</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_cancel</td>
+<td style="text-align:center">取消线程</td>
+</tr>
+<tr>
+<td style="text-align:center">pthread_cleanup_push pthread_cleanup_pop</td>
+<td style="text-align:center">线程退出后注册和执行清理函数</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/07/Linux线程控制/">Linux线程控制</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,7 +293,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -207,70 +306,102 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://www.suntangji.me/2018/05/07/Linux线程控制/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/02/Python迭代器和生成器/" class="archive-article-date">
-  	<time datetime="2018-05-02T12:37:03.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-05-02</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/02/Python迭代器和生成器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python迭代器和生成器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/02/Python迭代器和生成器/">Python迭代器和生成器</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -319,8 +450,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
