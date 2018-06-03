@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives | 孙堂吉的博客</title>
+  <title>C++中typename的双重意义 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/index.html">
+  <meta name="description" content="了解typename的两种用法。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++中typename的双重意义">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/03/C-中typename的双重意义/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="了解typename的两种用法。">
+<meta property="og:updated_time" content="2018-06-03T06:05:29.584Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="C++中typename的双重意义">
+<meta name="twitter:description" content="了解typename的两种用法。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,39 +151,74 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-C-中typename的双重意义" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      C++中typename的双重意义
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-中typename的双重意义/" class="archive-article-date">
+
+
+        
+        <a href="/2018/06/03/C-中typename的双重意义/" class="archive-article-date">
   	<time datetime="2018-06-03T05:59:12.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2018-06-03</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>了解typename的两种用法。<br><a id="more"></a><br>typename的最多用法就是模板声明中,以下两种声明没有任何区别。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></div><div class="line"><span class="title">class</span> <span class="title">Test</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span>;</span></div></pre></td></tr></table></figure></p>
+<p>typename的另一个作用就是使用嵌套依赖类型(nested depended name)。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> p = <span class="number">10000</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">T</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> iterator;</div><div class="line">&#125;;</div><div class="line"><span class="keyword">int</span> T::iterator = <span class="number">1</span>;</div><div class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></div><div class="line"><span class="title">void</span> <span class="title">Test</span>(<span class="title">const</span> <span class="title">T</span>&amp; <span class="title">t</span>) &#123;</div><div class="line">  (<span class="keyword">void</span>)t;</div><div class="line">  T::iterator *p;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; p &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</div><div class="line">  Test(v);</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这是一段有歧义的代码，模板类型恰好和类类型相同，类类型又有一个静态成员函数，又有一个全局变量和Test函数内部的变量相同。<br>这段代码的本意是类T的静态成员乘以全局变量，但是也可以理解为是定义一个模板类型的迭代器指针。<br>vs2015下可以编译通过，但是运行时把p当作指针，由于p没有初始化，程序崩溃。<br>由于代码有歧义gcc7.3.0/clang5.0.1编译失败,提示我使用typename<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">test.cc:14:15: 错误：依赖名‘T:: iterator’被解析为非类型，但实例化却产生了一个类型</div><div class="line">   T::iterator *p;</div><div class="line">   ~~~~~~~~~~~~^~</div><div class="line">test.cc:14:15: 附注：如果您想指定类型，请使用‘typename T:: iterator’</div></pre></td></tr></table></figure></p>
+<p>于是加上typename，声明T::iterator 是一个类型，把p当作指针变量</p>
+<ul>
+<li>gcc7.3.0 果然输出了一个地址，是我想要的结果</li>
+<li>clang 5.0.1 的结果是0，也是正确的。</li>
+</ul>
+<p>小结</p>
+<ul>
+<li>typename用来声明模板类型</li>
+<li>typename用来指明一个类型，避免歧义</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-中typename的双重意义/">C++中typename的双重意义</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,7 +231,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -207,497 +244,50 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/25/Python装饰器/" class="archive-article-date">
-  	<time datetime="2018-05-25T12:58:16.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-05-25</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/25/Python装饰器/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python装饰器</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/25/Python装饰器/">Python装饰器</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/20/一道题加深了对闭包的理解/" class="archive-article-date">
-  	<time datetime="2018-05-20T04:08:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/20/一道题加深了对闭包的理解/">一道题加深了对闭包的理解</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/07/Linux线程控制/" class="archive-article-date">
-  	<time datetime="2018-05-07T02:41:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-05-07</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/07/Linux线程控制/">Linux线程控制</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/02/Python迭代器和生成器/" class="archive-article-date">
-  	<time datetime="2018-05-02T12:37:03.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-05-02</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/02/Python迭代器和生成器/">Python迭代器和生成器</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/Python闭包/" class="archive-article-date">
-  	<time datetime="2018-04-24T11:50:28.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/Python闭包/">Python闭包</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/Python函数参数/" class="archive-article-date">
-  	<time datetime="2018-04-24T06:25:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/Python函数参数/">Python函数参数</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/Python可变与不可变对象/" class="archive-article-date">
-  	<time datetime="2018-04-24T05:15:17.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/Python可变与不可变对象/">Python可变与不可变对象</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/python/" class="article-tag-list-link color2">python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/16/Linux信号机制/" class="archive-article-date">
-  	<time datetime="2018-04-16T04:54:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-16</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/16/Linux信号机制/">Linux信号机制</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/30/Linux进程间通信之信号量/" class="archive-article-date">
-  	<time datetime="2018-03-30T13:32:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-30</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/30/Linux进程间通信之信号量/">Linux进程间通信之信号量</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -747,8 +337,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
