@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>C++函数重载、重写与隐藏 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/page/3/index.html">
+  <meta name="description" content="深入浅出函数重载、重写与隐藏。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++函数重载、重写与隐藏">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/04/C-函数重载/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="深入浅出函数重载、重写与隐藏。">
+<meta property="og:updated_time" content="2018-06-04T15:45:16.762Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="C++函数重载、重写与隐藏">
+<meta name="twitter:description" content="深入浅出函数重载、重写与隐藏。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,24 +151,25 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Git-Github入门指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-C-函数重载" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/17/Git-Github入门指南/">Git/Github入门指南</a>
+    <h1 class="article-title" itemprop="name">
+      C++函数重载、重写与隐藏
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
         
-        <a href="/2018/03/17/Git-Github入门指南/" class="archive-article-date">
-  	<time datetime="2018-03-17T12:54:38.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-17</time>
+        <a href="/2018/06/04/C-函数重载/" class="archive-article-date">
+  	<time datetime="2018-06-04T12:53:24.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-06-04</time>
 </a>
 
         
@@ -174,365 +177,94 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>学会使用Git/Github的正确姿势<br>
-        
-          <a class="article-more-a" href="/2018/03/17/Git-Github入门指南/#more">more >></a>
-        
+        <p>深入浅出函数重载、重写与隐藏。<br><a id="more"></a></p>
+<h4 id="什么是函数重载"><a href="#什么是函数重载" class="headerlink" title="什么是函数重载"></a>什么是函数重载</h4><p>函数重载是指在同一作用域内，拥有两个或两个以上函数名相同、参数列表不同的函数，根据参数列表不同调用不同的函数。需要注意，函数返回值、关键字不构成重载条件。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> x + y;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">Add</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> x + y;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> x + <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>以上函数构成了函数重载</p>
+<h4 id="为什么需要函数重载"><a href="#为什么需要函数重载" class="headerlink" title="为什么需要函数重载"></a>为什么需要函数重载</h4><p>在C语言中，不存在函数重载，要想设计一个接口可以处理不同类型的参数，必须要每种类型设计一个函数。比如这样。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">add_int_int</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> x + y;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">add_float_float</span><span class="params">(<span class="keyword">float</span> x, <span class="keyword">float</span> y)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> x + y;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">float</span> <span class="title">add_int_float</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> <span class="keyword">float</span>)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> x + y;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>或者使用宏，但是宏有副作用，无法调试，不会检查参数合法性.<br>在C语言中不同参数列表都需要重新定义一个函数，函数命名就是个大问题，同时不同类型需要调用不同名称的函数。函数重载可以减少函数命名的烦恼避免名称污染，同时减小函数调用出错的概率，也大大提高了程序的可读性。</p>
+<h4 id="为什么函数可以重载"><a href="#为什么函数可以重载" class="headerlink" title="为什么函数可以重载"></a>为什么函数可以重载</h4><p>在C语言中不支持函数重载，有相同名称的函数会链接出错。在C++中怎么就支持了呢?<br>把刚才的代码用g++编译，使用objdump -d a.out查看汇编代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">0000000000400547 &lt;_Z3Addii&gt;:</div><div class="line">  400547:	55                   	push   %rbp</div><div class="line">  400548:	48 89 e5             	mov    %rsp,%rbp</div><div class="line">  40054b:	89 7d fc             	mov    %edi,-0x4(%rbp)</div><div class="line">  40054e:	89 75 f8             	mov    %esi,-0x8(%rbp)</div><div class="line">  400551:	8b 55 fc             	mov    -0x4(%rbp),%edx</div><div class="line">  400554:	8b 45 f8             	mov    -0x8(%rbp),%eax</div><div class="line">  400557:	01 d0                	add    %edx,%eax</div><div class="line">  400559:	5d                   	pop    %rbp</div><div class="line">  40055a:	c3                   	retq   </div><div class="line"></div><div class="line">000000000040055b &lt;_Z3Addff&gt;:</div><div class="line">  40055b:	55                   	push   %rbp</div><div class="line">  40055c:	48 89 e5             	mov    %rsp,%rbp</div><div class="line">  40055f:	f3 0f 11 45 fc       	movss  %xmm0,-0x4(%rbp)</div><div class="line">  400564:	f3 0f 11 4d f8       	movss  %xmm1,-0x8(%rbp)</div><div class="line">  400569:	f3 0f 10 45 fc       	movss  -0x4(%rbp),%xmm0</div><div class="line">  40056e:	f3 0f 58 45 f8       	addss  -0x8(%rbp),%xmm0</div><div class="line">  400573:	5d                   	pop    %rbp</div><div class="line">  400574:	c3                   	retq</div></pre></td></tr></table></figure></p>
+<p>可以看出函数int Add(int x, int y)的函数签名变为了_Z3Addii,flaot(float x, float y)的函数签名变为了_Z3Addff。其本质上还是函数每个不同的名字，只是编译器帮助我们改变了函数签名，函数名中包含了参数的类型而已。这种技术叫命名修饰。不同编译器的命名修饰规则略有区别！g++和clang++基本相同，msvs和g++区别较大。</p>
+<h4 id="extern-“C”的作用"><a href="#extern-“C”的作用" class="headerlink" title="extern “C”的作用"></a>extern “C”的作用</h4><p>在C++中函数是需要进行命名修饰的，如果我们想在C++中使用C语言的库,就有链接错误，我们声明printf函数，然后在C++中使用。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">printf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> * format,...)</span></span>;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Hello world!"</span>);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">In file included from test2.cc:3:</div><div class="line">/usr/include/stdio.h:362:12: error: declaration of <span class="string">'printf'</span> has a different language linkage</div><div class="line">extern int <span class="built_in">printf</span> (const char *__restrict __format, ...);</div><div class="line">           ^</div><div class="line">test2.cc:1:5: note: previous declaration is here</div><div class="line">int <span class="built_in">printf</span>(const char * format,...);</div><div class="line">    ^</div><div class="line">1 error generated.</div></pre></td></tr></table></figure>
+<p>我们没有自己声明printf时可以使用，声明后反而用不了了。这是由于stdio.h内部已经使用extern “C”声明过了，我们重新声明没有使用extern “C”。它的声明类似这样<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">if</span> __cplusplus</span></div><div class="line">define EXTERN <span class="keyword">extern</span> <span class="string">"C"</span></div><div class="line"><span class="meta">#<span class="meta-keyword">else</span></span></div><div class="line">define EXTERN</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
+<p>按照提示使用extern “C”关键字<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</div><div class="line">  <span class="function"><span class="keyword">int</span> <span class="title">printf</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span> * format,...)</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Hello world!"</span>);</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>编译通过。通过以上测试可以得出:extern “C”的作用就是告诉编译器这是一段C语言代码不要进行命名修饰。</p>
+<h4 id="函数重写-覆盖"><a href="#函数重写-覆盖" class="headerlink" title="函数重写(覆盖)"></a>函数重写(覆盖)</h4><p>重写是继承体系中，派生类重新实现基类的方法<br>构成重写的条件</p>
+<ul>
+<li>派生类和基类拥有相同名称的成员函数(不同作用域)</li>
+<li>参数列表相同,返回值相同(协变除外)</li>
+<li>基类必须是虚函数(有virtual关键字)</li>
+</ul>
+<p>协变：在C++中，只要原来的返回类型是指向类的指针或引用，新的返回类型是指向派生类的指针或引用，覆盖的方法就可以改变返回类型。这样的类型称为协变返回类型（Covariant returns type).</p>
+<h4 id="同名隐藏"><a href="#同名隐藏" class="headerlink" title="同名隐藏"></a>同名隐藏</h4><ol>
+<li>如果派生类和基类的函数名相同，参数列表不同，无论基类是否是虚函数，都要被隐藏</li>
+<li>如果派生类和基类函数名相同，参数列表相同，基类不是虚函数，基类的函数要被隐藏</li>
+</ol>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">同一作用域</th>
+<th style="text-align:center">返回值相同</th>
+<th style="text-align:center">参数列表相同</th>
+<th style="text-align:center">是虚函数</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">是</td>
+<td style="text-align:center">是/否</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是/否</td>
+<td style="text-align:center">重载</td>
+</tr>
+<tr>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是/协变</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">基类是</td>
+<td style="text-align:center">重写</td>
+</tr>
+<tr>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是/否</td>
+<td style="text-align:center">是/否</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">隐藏</td>
+</tr>
+<tr>
+<td style="text-align:center">否</td>
+<td style="text-align:center">是/否</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">基类是</td>
+<td style="text-align:center">隐藏</td>
+</tr>
+</tbody>
+</table>
+
       
 
       
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/03/17/Git-Github入门指南/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-linux进程状态" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/28/linux进程状态/">Linux进程状态</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/28/linux进程状态/" class="archive-article-date">
-  	<time datetime="2017-12-28T14:15:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-28</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。<br>
-        
-          <a class="article-more-a" href="/2017/12/28/linux进程状态/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/28/linux进程状态/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-linux的进程控制块task-struct" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/linux的进程控制块task-struct/">Linux的进程控制块task_struct</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/18/linux的进程控制块task-struct/" class="archive-article-date">
-  	<time datetime="2017-12-18T15:06:21.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。<br>
-        
-          <a class="article-more-a" href="/2017/12/18/linux的进程控制块task-struct/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/18/linux的进程控制块task-struct/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="unix-proc结构体和user结构体" class="article article-type-unix  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/proc结构体和user结构体/">UNIX V6的进程控制块proc结构体和user结构体</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/18/proc结构体和user结构体/" class="archive-article-date">
-  	<time datetime="2017-12-18T09:38:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>进程的状态信息和控制信息等由 proc 结构体和 user 结构体管理。每个进程各自会被分配1 组上述结构体的实例。 proc 结构体常驻内存，而 user 结构体有可能被移至交换空间。<br>
-        
-          <a class="article-more-a" href="/2017/12/18/proc结构体和user结构体/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/18/proc结构体和user结构体/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-cpp继承" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/13/cpp继承/">C++继承</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/13/cpp继承/" class="archive-article-date">
-  	<time datetime="2017-12-13T10:15:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-13</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>浅析c++中继承，以及菱形继承，虚拟继承，继承的内存布局<br>
-        
-          <a class="article-more-a" href="/2017/12/13/cpp继承/#more">more >></a>
-        
-      
-
       
     </div>
     <div class="article-info article-info-index">
@@ -564,16 +296,24 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/13/cpp继承/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/03/C-对象模型之内存布局/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++对象模型之内存布局</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -593,467 +333,12 @@
 
 
 
-
-  
-    <article id="post-cpp学习总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/09/cpp学习总结/">Cpp学习总结</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/12/09/cpp学习总结/" class="archive-article-date">
-  	<time datetime="2017-12-09T11:03:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-09</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c++学习总结思维导图<br>
-        
-          <a class="article-more-a" href="/2017/12/09/cpp学习总结/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/12/09/cpp学习总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-vim配置及常用插件安装" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/21/vim配置及常用插件安装/">Vim配置及常见插件安装</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/11/21/vim配置及常用插件安装/" class="archive-article-date">
-  	<time datetime="2017-11-21T13:30:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-11-21</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.<br>
-        
-          <a class="article-more-a" href="/2017/11/21/vim配置及常用插件安装/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/21/vim配置及常用插件安装/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-掀开c-中this指针的神秘面纱" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开C++中this指针的神秘面纱</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们都知道类的不同实例都可以调用成员函数，那么成员函数如何知道哪个实例要被操作呢，原因在于每个对象都拥有一个指针：this指针，通过this指针来访问自己的地址。<br>
-        
-          <a class="article-more-a" href="/2017/10/24/掀开c-中this指针的神秘面纱/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/10/24/掀开c-中this指针的神秘面纱/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言扫雷游戏" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/c语言扫雷游戏/">C语言扫雷游戏</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/c语言扫雷游戏/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:59:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c语言实现简易版扫雷游戏<br>
-        
-          <a class="article-more-a" href="/2017/09/22/c语言扫雷游戏/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/c语言扫雷游戏/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-c语言实现动态顺序表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/22/c语言实现动态顺序表/">C语言实现动态顺序表</a>
-    </h1>
-  
-
-
-        
-        <a href="/2017/09/22/c语言实现动态顺序表/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:54:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>c语言实现动态内存开辟的顺序表<br>
-        
-          <a class="article-more-a" href="/2017/09/22/c语言实现动态顺序表/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/09/22/c语言实现动态顺序表/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1102,8 +387,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
