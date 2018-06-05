@@ -89,8 +89,6 @@ struct sigaction {
 ```
 sa_handler，sa_sigaction指定信号处理函数，sa_mask增加信号掩码，sa_flag设置程序收到信号的行为。
 
-##### 信号捕捉的流程
-
 #### pause
 ``` c
 #include <unistd.h>
@@ -98,7 +96,7 @@ int pause(void);
 ```
 pause函数使调用进程挂起直到有信号递达，如果信号的处理动作是终止程序，则进程终止，pause函数没有机会返回，如果信号的处理动作是忽略，则进程继续处于挂起状态，pause不返回。如果信号处理动作是捕捉，则调用信号处理函数后pause返回-1.
 
-
+``` c
 #include <stdio.h
 #include <signal.h>
 #include <unistd.h>

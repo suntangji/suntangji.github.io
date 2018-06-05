@@ -6,4 +6,4 @@ category: cpp
 ---
 c++学习总结思维导图
 <!--more-->
-[链接地址](c++树状.html)
+[链接地址](https://www.suntangji.me/hexo/pages/c++树状.html)
