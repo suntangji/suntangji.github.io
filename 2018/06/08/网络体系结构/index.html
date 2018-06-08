@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives: 2018/6 | 孙堂吉的博客</title>
+  <title>网络体系结构 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/2018/06/index.html">
+  <meta name="description" content="相互通信的两个计算机系统必须高度协调才能工作，而这种协调是非常复杂的，分层可以将这个庞大而复杂的问题变得简单。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络体系结构">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/08/网络体系结构/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="相互通信的两个计算机系统必须高度协调才能工作，而这种协调是非常复杂的，分层可以将这个庞大而复杂的问题变得简单。">
+<meta property="og:updated_time" content="2018-06-08T11:33:14.226Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="网络体系结构">
+<meta name="twitter:description" content="相互通信的两个计算机系统必须高度协调才能工作，而这种协调是非常复杂的，分层可以将这个庞大而复杂的问题变得简单。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,39 +169,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-网络体系结构" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      网络体系结构
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/网络体系结构/" class="archive-article-date">
+
+
+        
+        <a href="/2018/06/08/网络体系结构/" class="archive-article-date">
   	<time datetime="2018-06-08T10:02:50.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2018-06-08</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>相互通信的两个计算机系统必须高度协调才能工作，而这种协调是非常复杂的，分层可以将这个庞大而复杂的问题变得简单。<br><a id="more"></a><br>为了解决不同体系的计算机之间通信的问题，国际标准化组织ISO提出了开放系统互连基本参考模型OSI/RM,简称为OSI。OSI把网络体系分为7层，每一层需要遵守一定的协议。</p>
+<h3 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h3><ol>
+<li>物理层<br>功能: 负责为数据端设备透明地传输原始比特流，并且定义了数据终端设备和数据通信设备的物理和逻辑链接方法。传输单位是比特。<br>协议: RJ45、IEEE802.3<br>设备: 中继器、集线器</li>
+<li>数据链路层<br>功能: 将网络层传下来的IP数据报组装成帧，并检测和矫正物理层产生的传输差错，使得链路对网络层显示一条无差错、可靠的数据传输线路。功能可以概括为成帧，差错控制、流量控制和传输管理。传输单位是帧。<br>协议: HDLC(高级数据链路控制协议),PPP,STP,SDLC,CSMA(载波监听多路访问)<br>设备: 网桥、交换机</li>
+<li>网络层<br>功能: 负载在网络层上将数据封装成数据报，将数据报从源端传到目的端，同时进行路由选择，为分组交换网上的不同主机提供通信服务。关键问题是对分组进行选择，并实现流量控制、拥塞控制、差错控制和网际互联等功能。传输单位数据报。<br>协议: IP,ICMP(因特网控制报文协议),IGMP(因特网组管理协议),ARP,RARP,OSPF(开放最短路径优先),IPX<br>设备: 路由器</li>
+<li>传输层<br>功能: 负责主机中两个进程之间的通信，为端到端连接提供可靠的传输服务。为端到端连接提供流量控制、差错控制、服务质量、数据传输管理等服务。<br>协议: TCP、UDP</li>
+<li>会话层<br>功能: 会话层允许不同主机上各个进程之间的会话，会话层利用传输层提供的端到端的服务，向表示层提供它的增值服务。这种服务主要是为表示层实体或用户进程建立连接并在连接上提供有序地传输数据。<br>协议: SQL、RPC(远程调用协议)</li>
+<li>表示层<br>功能: 用于处理两个通信系统中交换信息的表示方式。如数据压缩，加密和解密等。<br>协议: JPEG、MPEG、ASII</li>
+<li>应用层<br>功能: 它是直接为应用进程服务的一层。当不同的应用进程数据通信或数据交换时，就去调用应用层的不同协议实体，让这些实体去调用TCP或者UDP层服务来进行网络传输。<br>协议: FTP(21) TELNET(23) SMTP(25) DNS(53) TFTP(69) HTTP(80) SNMP(161),DHCP(动态主机配置协议)</li>
+</ol>
+<p>OSI只获得了一些理论研究的成果，因特网并未使用OSI标准，OSI失败的原因可归纳为：</p>
+<ul>
+<li>OSI的专家们缺少实际经验，它们==他们在完成OSI标准时缺乏商业驱动力</li>
+<li>OSI协议实现起来太过复杂，而且运行效率很低</li>
+<li>OSI标准的制定周期太长</li>
+<li>OSI的层次划分不太合理，有些功能在多个层次中重复出现</li>
+</ul>
+<p>因特网使用的是TCP/IP体系结构，TCP/IP体系结构可以分为四层或五层</p>
+<h4 id="TCP-IP四层模型"><a href="#TCP-IP四层模型" class="headerlink" title="TCP/IP四层模型"></a>TCP/IP四层模型</h4><ol>
+<li>网络接口层(接收和发送数据报):负责将数据报发送到网络介质上，以及从网络上接收TCP/IP数据报，相当于OSI的物理层和数据层。</li>
+<li>网际层(数据报封装和路由寻址功能):主要负责寻址和对数据报的封装以及重要的路由选择功能。</li>
+<li>传输层:负责在应用进程之间的“端到端”的通信，即从某个应用进程传输到另一个应用进程。</li>
+<li>应用层:是TCP/IP的最高层，它是直接为应用进程服务的一层。当不同的应用进程数据通信或数据交换时，就去调用应用层的不同协议实体，让这些实体去调用TCP或者UDP层服务来进行网络传输。</li>
+</ol>
+<h4 id="TCP-IP五层模型"><a href="#TCP-IP五层模型" class="headerlink" title="TCP/IP五层模型"></a>TCP/IP五层模型</h4><ol>
+<li>物理层:考虑的是怎样在传输媒体上传输数据比特流，而不是指具体的传输媒体。物理层的作用是尽可能屏蔽传输媒体和通信手段的差异，使数据链路层感觉不到这些差异。</li>
+<li>数据链路层:网络层针对的还是主机之间的数据传输服务，而主机之间可以有很多链路，链路层协议就是为同一链路的结点提供服务。数据链路层把网络层传来的分组封装成帧。</li>
+<li>网络层:为主机之间提供数据传输服务，而运输层协议是为主机中的进程提供服务。网络层把运输层传递下来的报文段或者用户数据报封装成分组。</li>
+<li>运输层:提供的是进程间的通用数据传输服务。由于应用层协议很多，定义通用的运输层协议就可以支持不断增多的应用层协议。运输层包括两种协议：传输控制协议 TCP，提供面向连接、可靠的数据传输服务，数据单位为报文段；用户数据报协议 UDP，提供无连接、尽最大努力的数据传输服务，数据单位为用户数据报。TCP 主要提供完整性服务，UDP 主要提供及时性服务。</li>
+<li>应用层:为特定应用程序提供数据传输服务，例如 HTTP、DNS 等。数据单位为报文。</li>
+</ol>
+<h4 id="OSI-和TCP-IP的区别"><a href="#OSI-和TCP-IP的区别" class="headerlink" title="OSI 和TCP/IP的区别"></a>OSI 和TCP/IP的区别</h4><ol>
+<li>OSI精确定义了服务、协议和接口，符合面向对象程序设计思想。而TCP/IP在这些概念上没有明确区分。</li>
+<li>OSI在产生协议之前没有偏向任何特定的协议，通用性良好，但如果设计没有太多经验就不知道将哪些功能放到哪一层。TCP/IP,首先出现协议，模型实际上是对已有协议的描述。因此不会出现协议不能匹配的模式。</li>
+<li>TCP/IP考虑了异构网的互联问题，而OSI只考虑用一种标准的公用数据网将各种不同系统互连。</li>
+<li>OSI在网络层支持无连接和面向连接的通信，但在传输层仅有面向连接通信。而TCP/IP则相反，在网际层仅有无连接服务，在传输层支持无连接和面向连接两种模式。</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/网络体系结构/">网络体系结构</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,7 +273,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -225,229 +286,51 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/HTTP状态码详解/" class="archive-article-date">
-  	<time datetime="2018-06-08T00:36:58.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/08/HTTP状态码详解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HTTP状态码详解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/HTTP状态码详解/">HTTP状态码详解</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/04/C-函数重载/" class="archive-article-date">
-  	<time datetime="2018-06-04T12:53:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/04/C-函数重载/">C++函数重载、重写与隐藏</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-对象模型之内存布局/" class="archive-article-date">
-  	<time datetime="2018-06-03T06:11:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-对象模型之内存布局/">C++对象模型之内存布局</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-中typename的双重意义/" class="archive-article-date">
-  	<time datetime="2018-06-03T05:59:12.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-中typename的双重意义/">C++中typename的双重意义</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -496,8 +379,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
