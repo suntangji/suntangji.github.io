@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives | 孙堂吉的博客</title>
+  <title>HTTP状态码详解 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/page/3/index.html">
+  <meta name="description" content="状态码用于告知服务器返回的结果。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP状态码详解">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/08/HTTP状态码详解/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="状态码用于告知服务器返回的结果。">
+<meta property="og:updated_time" content="2018-06-08T04:34:13.988Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="HTTP状态码详解">
+<meta name="twitter:description" content="状态码用于告知服务器返回的结果。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -149,39 +151,126 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-HTTP状态码详解" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      HTTP状态码详解
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/18/Linux进程控制之进程创建/" class="archive-article-date">
-  	<time datetime="2018-03-18T06:47:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-18</time>
+
+
+        
+        <a href="/2018/06/08/HTTP状态码详解/" class="archive-article-date">
+  	<time datetime="2018-06-08T00:36:58.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-06-08</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>状态码用于告知服务器返回的结果。<br><a id="more"></a></p>
+<h4 id="1XX-信息性状态码"><a href="#1XX-信息性状态码" class="headerlink" title="1XX(信息性状态码)"></a>1XX(信息性状态码)</h4><p>表示接收的请求正在处理。</p>
+<ul>
+<li>100(继续) 服务器返回此状态码表示已收到了第一部分，正在等待其他部分，请求者应当继续提出请求。</li>
+<li>101(切换协议) 请求者已要求服务器切换协议，服务器已确认并准备切换。</li>
+</ul>
+<h4 id="2XX-成功状态码"><a href="#2XX-成功状态码" class="headerlink" title="2XX(成功状态码)"></a>2XX(成功状态码)</h4><p>表示请求正常处理完毕</p>
+<ul>
+<li>200(成功) 服务器已成功处理了请求</li>
+<li>201(已创建) 请求成功并且服务器创建了新的资源</li>
+<li>202(已接受) 服务器已接受请求但尚未处理</li>
+<li>203(非授权信息) 服务器已成功处理了请求，但返回的信息可能来自另一个源</li>
+<li>204(无内容) 服务器已成功处理了请求，但没有返回任何内容</li>
+<li>205(重置内容) 服务器成功处理了请求， 没有返回任何内容，但需要重置页面，方便下次输入</li>
+<li>206(部分内容) 服务器成功处理了部分GET请求</li>
+</ul>
+<h4 id="3XX-重定向状态码"><a href="#3XX-重定向状态码" class="headerlink" title="3XX(重定向状态码)"></a>3XX(重定向状态码)</h4><p>表示需要进行附加操作以完成请求。</p>
+<ul>
+<li>300(多种选择) 针对请求服务器可执行多种操作。</li>
+<li>301(永久移动) 请求的资源已被分配新的URI，以后使用现在的URI访问资源</li>
+<li>302(临时移动) 请求的资源已被分配新的URI,本次访问使用新的URI</li>
+<li>303(查看其他位置) 请求的资源已被分配新的URI，本次访问使用GET方法请求新的URI</li>
+<li>304(未修改) 自从上次请求后，请求的网页未修改过，服务器不会返回网页内容。</li>
+<li>305(使用代理) 请求者只能使用代理访问请求的网页。</li>
+<li>307(临时重定向) 服务器目前从不同的位置响应请求，但请求者应继续使用原有位置进行以后的请求。</li>
+</ul>
+<blockquote>
+<p>302和307都表示临时重定向。302是HTTP1.0的状态码，HTTP1.1把302细分为303和307。303会在重定向时把POST方法变为GET，而307却不会。对于307状态码，如果这不是一个GET或者HEAD请求，那么浏览器禁止自动进行重定向，除非得到用户的确认，因为请求的条件可能因此发生变化。</p>
+<p>301 302 标准是禁止将POST方法更改为GET的，但实际使用上大家都这么做。当301、302、303状态码返回时，几乎所有的浏览器都会把POST改为GET。并删除请求报文内的主体，之后请求会自动发送。大多数浏览器把302响应为303.</p>
+</blockquote>
+<h4 id="4XX-客户端错误状态码"><a href="#4XX-客户端错误状态码" class="headerlink" title="4XX(客户端错误状态码)"></a>4XX(客户端错误状态码)</h4><p>表示服务器无法处理请求</p>
+<ul>
+<li>400(错误请求) 请求报文中存在语法错误，浏览器会像200一样对待该状态码</li>
+<li>401(未授权) 请求需要身份验证，对于需要登录的网页服务器可能返回此响应</li>
+<li>403(禁止) 服务器拒绝请求</li>
+<li>404(未找到) 服务器找不到请求的网页</li>
+<li>405(方法不允许) 请求的方法不被允许</li>
+<li>406(不接受) 无法使用请求的内容特性响应请求的网页</li>
+<li>407(需要代理授权) 指定请求者应当授权使用代理</li>
+<li>408(请求超时) 服务器等待请求时发生超时</li>
+<li>409(冲突) 服务器在完成请求时发生冲突</li>
+<li>410(已删除) 请求的资源已永久删除</li>
+<li>411(需要有限长度) 服务器不接受不含有效内容长度标头字段的请求</li>
+<li>412(未满足前提条件) 服务器未满足请求者在请求中设置的前提条件</li>
+<li>413(请求实体过大) 服务器无法处理请求，因为请求实体过大</li>
+<li>414(请求的URI过长)</li>
+<li>415(不支持的媒体类型)</li>
+<li>416(请求的范围不符合要求)</li>
+<li>417(未满足期望值)</li>
+</ul>
+<h4 id="5XX-服务器错误状态码"><a href="#5XX-服务器错误状态码" class="headerlink" title="5XX(服务器错误状态码)"></a>5XX(服务器错误状态码)</h4><p>表示服务器处理请求出错</p>
+<ul>
+<li>500(服务器内部错误) 服务器在执行请求时发生了错误</li>
+<li>501(尚未实施) 服务器不具备完成请求的功能</li>
+<li>502(错误网关) 服务器作为网关或代理，从上游服务器收到无效响应</li>
+<li>503(服务器不可用) 服务器目前无法使用</li>
+<li>504(网关超时) 服务器作为网关或代理，但是没有及时收到上游服务器的响应</li>
+<li>505(HTTP版本不受支持) 服务器不支持请求中所用的HTTP协议版本</li>
+</ul>
+<h4 id="RFC-6585新增的4个状态码"><a href="#RFC-6585新增的4个状态码" class="headerlink" title="RFC 6585新增的4个状态码"></a>RFC 6585新增的4个状态码</h4><ul>
+<li>428(要求先决条件)</li>
+<li>429(太多请求)</li>
+<li>431(请求头字段太长)</li>
+<li>511(要求网络认证)</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/18/Linux进程控制之进程创建/">Linux进程控制之进程创建</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,509 +283,63 @@
 		
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/17/Git-Github入门指南/" class="archive-article-date">
-  	<time datetime="2018-03-17T12:54:38.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/17/Git-Github入门指南/">Git/Github入门指南</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
       
-        </div></section>
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/network/" class="article-tag-list-link color3">network</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
       
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/28/linux进程状态/" class="archive-article-date">
-  	<time datetime="2017-12-28T14:15:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/28/linux进程状态/">linux进程状态</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/18/linux的进程控制块task-struct/" class="archive-article-date">
-  	<time datetime="2017-12-18T15:06:21.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/04/C-函数重载/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">C++函数重载、重写与隐藏</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/18/linux的进程控制块task-struct/">linux的进程控制块task_struct</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-unix">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/18/proc结构体和user结构体/" class="archive-article-date">
-  	<time datetime="2017-12-18T09:38:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-18</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/18/proc结构体和user结构体/">UNIX v6的进程控制块proc结构体和user结构体</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/13/cpp继承/" class="archive-article-date">
-  	<time datetime="2017-12-13T10:15:19.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-13</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/13/cpp继承/">c++继承</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/09/cpp学习总结/" class="archive-article-date">
-  	<time datetime="2017-12-09T11:03:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-12-09</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/09/cpp学习总结/">cpp学习总结</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/11/21/vim配置及常用插件安装/" class="archive-article-date">
-  	<time datetime="2017-11-21T13:30:04.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-11-21</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/11/21/vim配置及常用插件安装/">vim配置及常见插件安装</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/linux/" class="article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/10/24/掀开c-中this指针的神秘面纱/" class="archive-article-date">
-  	<time datetime="2017-10-24T12:27:55.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/10/24/掀开c-中this指针的神秘面纱/">掀开c++中this指针的神秘面纱</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/cpp/" class="article-tag-list-link color4">cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/09/22/c语言扫雷游戏/" class="archive-article-date">
-  	<time datetime="2017-09-22T09:59:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-09-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/22/c语言扫雷游戏/">c语言扫雷游戏</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/c语言/" class="article-tag-list-link color4">c语言</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/4/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -746,8 +389,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
