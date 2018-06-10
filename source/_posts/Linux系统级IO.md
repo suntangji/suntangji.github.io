@@ -2,7 +2,7 @@
 title: Linux系统级IO
 date: 2018-03-21 13:27:17
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 输入/输出(I/O)是在主存和外部设备之间拷贝数据的过程，所有语言都提供了较高级别的I/O函数，有时我们也需要使用系统级I/O.
 <!--more-->

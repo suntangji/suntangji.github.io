@@ -2,7 +2,7 @@
 title: Python可变与不可变对象
 date: 2018-04-24 13:15:17
 tags: 学习笔记
-category: python
+category: Python
 ---
 Python的变量实际上对内存值(内存上存放的数据)的引用，根据内存值是否可变，把对象分为可变和不可变对象。
 <!--more-->

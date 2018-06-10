@@ -2,7 +2,7 @@
 title: C++对象模型之内存布局
 date: 2018-06-03 14:11:30
 tags: 学习笔记
-category: cpp
+category: Cpp
 ---
 
 探讨单继承、多继承、虚拟继承、以及多态下的内存模型。

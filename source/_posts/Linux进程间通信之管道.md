@@ -2,7 +2,7 @@
 title: Linux进程间通信之管道
 date: 2018-03-22 11:09:02
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 管道是UNIX系统IPC的最古老形式，并且所有UNIX系统都提供此通信机制.
 <!--more-->

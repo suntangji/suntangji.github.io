@@ -2,7 +2,7 @@
 title: C++函数重载、重写与隐藏
 date: 2018-06-04 20:53:24
 tags: 学习笔记
-category: cpp
+category: Cpp
 ---
 深入浅出函数重载、重写与隐藏。
 <!--more-->

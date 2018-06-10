@@ -1,8 +1,8 @@
 ---
 title: Git/Github入门指南
 date: 2018-03-17 20:54:38
-tags: 随笔
-category: 
+tags: 学习笔记
+category: Other
 ---
 学会使用Git/Github的正确姿势
 <!--more-->

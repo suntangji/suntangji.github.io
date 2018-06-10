@@ -2,7 +2,7 @@
 title: Linux进程控制之进程替换
 date: 2018-03-19 09:09:35
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 当父进程fork一个子进程之后往往需要执行exec函数去执行另一个程序。
 <!--more-->

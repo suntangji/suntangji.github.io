@@ -2,7 +2,7 @@
 title: Linux进程间通信之消息队列
 date: 2018-03-28 13:35:20
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 消息队列时操作系统内核为我们提供的一个链表，用于进程间通信。
 <!--more-->

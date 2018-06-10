@@ -2,8 +2,8 @@
 layout: unix
 title: UNIX v6的进程控制块proc结构体和user结构体
 date: 2017-12-18 17:38:39
-tags: 随笔
-category: linux
+tags: 学习笔记
+category: Linux
 ---
 进程的状态信息和控制信息等由 proc 结构体和 user 结构体管理。每个进程各自会被分配1 组上述结构体的实例。 proc 结构体常驻内存，而 user 结构体有可能被移至交换空间。
 <!--more-->

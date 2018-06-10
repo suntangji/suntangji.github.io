@@ -1,8 +1,8 @@
 ---
-title: c语言static关键字
+title: C语言static关键字
 date: 2017-07-28 16:45:36
-tags: 随笔
-category: c
+tags: 学习笔记
+category: C
 ---
 c语言static关键字的用法
 <!--more-->

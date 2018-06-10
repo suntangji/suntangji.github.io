@@ -1,8 +1,8 @@
 ---
-title: c语言中的整形提升
+title: C语言中的整形提升
 date: 2017-09-02 10:40:52
-tags: 随笔
-category: c
+tags: 学习笔记
+category: C
 ---
 &emsp;&emsp;整型提升是C程序设计语言中的一项规定：在表达式计算时，各种整形首先要提升为int类型，如果int类型不足以表示则要提升为unsigned int类型，然后执行表达式的运算。
 <!--more-->

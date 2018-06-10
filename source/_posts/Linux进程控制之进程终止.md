@@ -2,7 +2,7 @@
 title: Linux进程控制之进程终止
 date: 2018-03-19 07:46:22
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 进程终止的情景
 - 代码执行完毕，进程正常终止

@@ -2,7 +2,7 @@
 title: Linux进程间通信之共享内存
 date: 2018-03-30 21:31:56
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 共享内存是最高效的IPC机制，因为它不涉及进程之间的任何的数据传输。
 <!--more-->

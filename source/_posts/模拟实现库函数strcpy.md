@@ -2,7 +2,7 @@
 title: 模拟实现库函数strcpy
 date: 2017-08-02 15:53:46
 tags: 学习笔记
-category: c 
+category: C 
 ---
 自己动手实现库函数strcpy的功能
 <!--more-->

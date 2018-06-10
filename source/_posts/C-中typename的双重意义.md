@@ -2,7 +2,7 @@
 title: C++中typename的双重意义
 date: 2018-06-03 13:59:12
 tags: 学习笔记
-category: cpp
+category: Cpp
 ---
 了解typename的两种用法。
 <!--more-->

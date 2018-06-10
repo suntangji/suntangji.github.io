@@ -2,7 +2,7 @@
 title: Linux进程控制之进程创建
 date: 2018-03-18 14:47:24
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 学习使用fork,vfork函数创建进程
 <!--more-->

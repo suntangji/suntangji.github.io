@@ -1,8 +1,8 @@
 ---
 title: vim配置及常见插件安装
 date: 2017-11-21 21:30:04
-tags: 随笔
-category: linux
+tags: 学习笔记
+category: Other
 ---
 
 作为一个程序员，一个常用的工具就是编辑器，常用的编辑器有Sublime Text、Emacs、Vim、Source Insight、Atom、TextMate.

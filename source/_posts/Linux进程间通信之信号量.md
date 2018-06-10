@@ -2,7 +2,7 @@
 title: Linux进程间通信之信号量
 date: 2018-03-30 21:32:06
 tag: 学习笔记
-category: linux
+category: Linux
 ---
 信号量是另一种IPC机制，它只要用于进程之间的同步互斥。
 <!--more-->

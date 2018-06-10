@@ -2,7 +2,7 @@
 title: Python闭包
 date: 2018-04-24 19:50:28
 tags: 学习笔记
-category: python
+category: Python
 ---
 在计算机科学中，闭包（英语：Closure），又称词法闭包（Lexical Closure）或函数闭包（function closures），是引用了自由变量的函数。这个被引用的自由变量将和这个函数一同存在，即使已经离开了创造它的环境也不例外。
 [维基百科::闭包（计算机科学）]

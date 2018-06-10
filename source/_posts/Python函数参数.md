@@ -2,7 +2,7 @@
 title: Python函数参数
 date: 2018-04-24 14:25:09
 tags: 学习笔记
-category: python
+category: Python
 ---
 Python的函数参数分为，位置参数、默认参数、可变参数、关键字参数
 <!--more-->

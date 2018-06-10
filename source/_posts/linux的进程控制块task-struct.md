@@ -1,8 +1,8 @@
 ---
 title: linux的进程控制块task_struct
 date: 2017-12-18 23:06:21
-tags: 随笔
-category: linux
+tags: 学习笔记
+category: Linux
 ---
 Linux 中的每个进程由一个task_struct 数据结构来描述，在Linux 中，任务（Task）和进程（Process）是两个相同的术语，task_struct 其实就是通常所说的“进程控制块”即PCB。task_struct 容纳了一个进程的所有信息，是系统对进程进行控制的唯一手段，也是最有效的手段。
 <!--more-->

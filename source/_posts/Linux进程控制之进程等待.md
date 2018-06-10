@@ -2,7 +2,7 @@
 title: Linux进程控制之进程等待
 date: 2018-03-18 16:42:55
 tags: 学习笔记
-categor: linux
+categor: Linux
 ---
 学习进程等待函数wait、waitpid的用法。
 <!--more-->

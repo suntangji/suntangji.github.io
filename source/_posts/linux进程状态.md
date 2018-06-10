@@ -2,7 +2,7 @@
 title: linux进程状态
 date: 2017-12-28 22:15:09
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 进程执行时，它会根据具体情况改变状态。进程状态是调度和对换的依据。
 <!--more-->

@@ -2,7 +2,7 @@
 title: Python装饰器
 date: 2018-05-25 20:58:16
 tags: 学习笔记
-category: python
+category: Python
 ---
 装饰器是修改其他函数功能的函数，通过返回包装对象实现间接调用，以此来插入额外的逻辑。
 <!--more-->

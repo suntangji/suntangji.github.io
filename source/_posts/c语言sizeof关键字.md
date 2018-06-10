@@ -1,8 +1,8 @@
 ---
-title: c语言sizeof关键字
+title: C语言sizeof关键字
 date: 2017-07-28 16:48:26
-tags: 随笔
-category: c 
+tags: 学习笔记
+category: C 
 ---
 The sizeof keyword gives the amount of storage, in bytes,associated with a variable or a type (including aggregate types). This keyword returns a value of type size_t.
 <!--more-->

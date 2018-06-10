@@ -2,7 +2,7 @@
 title: Python迭代器和生成器
 date: 2018-05-02 20:37:03
 tags: 学习笔记
-category: python
+category: Python
 ---
 首先我们要理解迭代器(iterators)。根据维基百科，迭代器是一个让程序员可以遍历一个容器
 的对象。

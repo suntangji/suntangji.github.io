@@ -2,7 +2,7 @@
 title: Linux信号机制
 date: 2018-04-16 12:54:07
 tags: 学习笔记
-category: linux
+category: Linux
 ---
 信号是由用户、系统或者进程发送给目标进程的信息，以通知目标进程某个状态的改变或系统异常。
 <!--more-->
