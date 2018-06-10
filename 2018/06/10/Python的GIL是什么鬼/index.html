@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives | 孙堂吉的博客</title>
+  <title>Python的GIL是什么鬼 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/page/5/index.html">
+  <meta name="description" content="GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。并不是所有的解释器都有GIL，Cpython、Pypy使用了GIL，Jython就没有GIL机制。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python的GIL是什么鬼">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/10/Python的GIL是什么鬼/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。并不是所有的解释器都有GIL，Cpython、Pypy使用了GIL，Jython就没有GIL机制。">
+<meta property="og:updated_time" content="2018-06-10T04:51:01.517Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Python的GIL是什么鬼">
+<meta name="twitter:description" content="GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。并不是所有的解释器都有GIL，Cpython、Pypy使用了GIL，Jython就没有GIL机制。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,39 +169,102 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Python的GIL是什么鬼" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python的GIL是什么鬼
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
+  
+
+
+        
+        <a href="/2018/06/10/Python的GIL是什么鬼/" class="archive-article-date">
+  	<time datetime="2018-06-10T00:50:46.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-06-10</time>
+</a>
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。并不是所有的解释器都有GIL，Cpython、Pypy使用了GIL，Jython就没有GIL机制。<br><a id="more"></a></p>
+<h3 id="Python多线程伪并行"><a href="#Python多线程伪并行" class="headerlink" title="Python多线程伪并行?"></a>Python多线程伪并行?</h3><p>作为一门优秀的语言，python 为我们提供了操纵线程的库 threading。使用threading，我们可以很方便地进行并行编程。但下面的例子可能会让你对“并行”的真实性产生怀疑。<br>启用n个线程分别计算斐波那契, 我的电脑配置4核，Python解释器Cpython</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Thread</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">spawn_n_threads</span><span class="params">(n, target)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">   启动 n 个线程并行执行 target 函数</div><div class="line">   """</div><div class="line">    threads = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</div><div class="line">        thread = Thread(target=target)</div><div class="line">        thread.start()</div><div class="line">        threads.append(thread)</div><div class="line">    <span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">        thread.join()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">()</span>:</span></div><div class="line">    a = b = <span class="number">1</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>): <span class="comment"># 为了忽略线程调度时间，使用了较大的数</span></div><div class="line">        a, b = b, a + b</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(n=<span class="number">1</span>, target=fib)</span>:</span></div><div class="line">    start_time = time()</div><div class="line">    spawn_n_threads(n, target)</div><div class="line">    end_time = time()</div><div class="line">    print(<span class="string">'Time &#123;:.6f&#125; s'</span>.format(end_time - start_time))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    test()</div></pre></td></tr></table></figure>
+<p>直接结果让我们大吃一惊<br>1个线程</p>
+<blockquote>
+<p>Time 10.831081 s</p>
+</blockquote>
+<p>2个线程</p>
+<blockquote>
+<p>Time 21.491747 s</p>
+</blockquote>
+<p>4个线程</p>
+<blockquote>
+<p>Time 42.506053 s</p>
+</blockquote>
+<p>我们使用多线程就是为了利用CPU的多核资源，但是CPU的多核资源明显没有被充分利用，这就是GIL搞得鬼。</p>
+<h3 id="GIL是什么鬼"><a href="#GIL是什么鬼" class="headerlink" title="GIL是什么鬼"></a>GIL是什么鬼</h3><p>GIL全称Global Interpreter Lock (全局解释锁), 是部分解释器的核心部件，官方的解释</p>
+<blockquote>
+<p>The Python interpreter is not fully thread-safe. In order to support multi-threaded Python programs, there’s a global lock, called the global interpreter lock or GIL, that must be held by the current thread before it can safely access Python objects.</p>
+</blockquote>
+<p>可见，Python解释器不是线程安全的，这是一个用于保护Python对象的全局锁，用于保证解释器的线程安全。</p>
+<h3 id="如何解决GIL"><a href="#如何解决GIL" class="headerlink" title="如何解决GIL"></a>如何解决GIL</h3><p>既然GIL使多线程效率低下，我们可以使用以下方法降低GIL的影响</p>
+<ul>
+<li>使用多进程<br>线程间会竞争资源是因为它们共享同一个进程空间，但进程的内存空间是独立的，自然也就没有必要使用全局解释锁了。但是进程创建、切换的开销比较大，此时可以使用进程池减少创建进程的开销。</li>
+</ul>
+<p>使用多进程进行计算<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</div><div class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">spawn_n_processes</span><span class="params">(n, target)</span>:</span></div><div class="line">    threads = []</div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(n):</div><div class="line">        thread = Process(target=target)</div><div class="line">        thread.start()</div><div class="line">        threads.append(thread)</div><div class="line">    <span class="keyword">for</span> thread <span class="keyword">in</span> threads:</div><div class="line">        thread.join()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">()</span>:</span></div><div class="line">    a = b = <span class="number">1</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000000</span>):</div><div class="line">        a, b = b, a + b</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(n=<span class="number">1</span>, target=fib)</span>:</span></div><div class="line">    start_time = time()</div><div class="line">    spawn_n_processes(n, target)</div><div class="line">    end_time = time()</div><div class="line">    print(<span class="string">'Time &#123;:.6f&#125; s'</span>.format(end_time - start_time))</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    test(<span class="number">4</span>)</div></pre></td></tr></table></figure></p>
+<p>4个进程</p>
+<blockquote>
+<p>Time 22.125205 s</p>
+</blockquote>
+<p>使用多进程才真正实现了并行，与多线程相比时间显著减少。</p>
+<ul>
+<li>使用C扩展<br>GIL 并不是完全的黑箱，CPython 在解释器层提供了控制 GIL 的开关, 这就是 Py_BEGIN_ALLOW_THREADS 和 Py_END_ALLOW_THREADS 宏。这一对宏允许你在自定义的 C 扩展中释放 GIL，从而可以重新利用多核的优势。</li>
+</ul>
+<h3 id="GIL的第二种释放时机"><a href="#GIL的第二种释放时机" class="headerlink" title="GIL的第二种释放时机"></a>GIL的第二种释放时机</h3><p>除了调用 Py_BEGIN_ALLOW_THREADS，解释器还会在发生阻塞 IO（如网络、文件）时释放 GIL。发生阻塞 IO 时，调用方线程会被挂起，无法进行任何操作，直至内核返回；IO 函数一般是原子性的，这确保了调用的线程安全性。因此在大多数阻塞 IO 发生时，解释器没有理由加锁。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>GIL其实是功能和性能之间权衡后的产物，它尤其存在的合理性</li>
+<li>由于 GIL 的存在，大多数情况下 Python 多线程无法利用多核优势。</li>
+<li>C 扩展中可以接触到 GIL 的开关，从而规避 GIL，重新获得多核优势。</li>
+<li>IO 阻塞时，GIL 会被释放。</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/28/c语言static关键字/" class="archive-article-date">
-  	<time datetime="2017-07-28T08:45:36.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/28/c语言static关键字/">C语言static关键字</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,192 +277,63 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/C/" class="article-tag-list-link color2">C</a>
+        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/二分查找算法/" class="archive-article-date">
-  	<time datetime="2017-07-23T10:20:54.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/08/网络体系结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">网络体系结构</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/二分查找算法/">二分查找算法</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构与算法/" class="article-tag-list-link color3">数据结构与算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/求一个数2进制中1的个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T06:19:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/求一个数2进制中1的个数/">求一个数2进制中1的个数</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/C/" class="article-tag-list-link color2">C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/23/交换2个数/" class="archive-article-date">
-  	<time datetime="2017-07-23T04:58:52.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2017-07-23</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/23/交换2个数/">交换2个数</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/C/" class="article-tag-list-link color2">C</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/4/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span>
-    </nav>
+  
+
   
 
 
@@ -447,8 +383,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
