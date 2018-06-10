@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives: 2018/6 | 孙堂吉的博客</title>
+  <title>C++类的静态成员 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/2018/06/index.html">
+  <meta name="description" content="关键字static在C++中的作用">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++类的静态成员">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/10/C-类的静态成员/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="关键字static在C++中的作用">
+<meta property="og:updated_time" content="2018-06-10T11:14:43.112Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="C++类的静态成员">
+<meta name="twitter:description" content="关键字static在C++中的作用">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,39 +169,98 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-C-类的静态成员" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      C++类的静态成员
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/C-类的静态成员/" class="archive-article-date">
+
+
+        
+        <a href="/2018/06/10/C-类的静态成员/" class="archive-article-date">
   	<time datetime="2018-06-10T09:38:09.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2018-06-10</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关键字static在C++中的作用<br><a id="more"></a><br>C++ 是兼容 C 语言的语法的，static 在 C 语言中的作用，在 C++ 中同样适用。static 在 C 语言中的作用可以查看我的另一篇博客 <a href="https://www.suntangji.me/2017/07/28/c%E8%AF%AD%E8%A8%80static%E5%85%B3%E9%94%AE%E5%AD%97/">C语言static关键字</a> 。<br>static 在 C++ 中修饰类的成员函数和类的成员变量还有其他作用。</p>
+<h4 id="类的静态成员变量需要在类外初始化"><a href="#类的静态成员变量需要在类外初始化" class="headerlink" title="类的静态成员变量需要在类外初始化"></a>类的静态成员变量需要在类外初始化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line"></div><div class="line"> <span class="keyword">protected</span>:</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> m_val; <span class="comment">/*!&lt; Member description */</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Test::m_val = <span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="类的静态成员变量可以使用类名访问"><a href="#类的静态成员变量可以使用类名访问" class="headerlink" title="类的静态成员变量可以使用类名访问"></a>类的静态成员变量可以使用类名访问</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> m_val; <span class="comment">/*!&lt; Member description */</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Test::m_val = <span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  Test t;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; t.m_val &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 100</span></div><div class="line">  t.m_val = <span class="number">200</span>;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; Test::m_val &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 200</span></div><div class="line">  Test::m_val = <span class="number">300</span>;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; t.m_val &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 300</span></div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="sizeof-不包括静态成员变量"><a href="#sizeof-不包括静态成员变量" class="headerlink" title="sizeof 不包括静态成员变量"></a>sizeof 不包括静态成员变量</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> m_val; <span class="comment">/*!&lt; Member description */</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Test::m_val = <span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  Test t;</div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(Test) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 1</span></div><div class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(t) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 1</span></div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>int 在64位系统下占4个字节，但是sizeof的结果只是1， 没有把静态成员包括在内。至于为什么是1，C++ 标准规定 “no object shall have the same address in memory as any other variable”，即任何不同的对象不能拥有相同的内存地址，为了保证这点，编译器使用1个字节填充用于标识不同的对象。</p>
+<h4 id="静态成员函数不能访问类的非静态成员"><a href="#静态成员函数不能访问类的非静态成员" class="headerlink" title="静态成员函数不能访问类的非静态成员"></a>静态成员函数不能访问类的非静态成员</h4><p>无法访问类的成员变量和类的成员函数</p>
+<h4 id="静态成员函数没有-this-指针"><a href="#静态成员函数没有-this-指针" class="headerlink" title="静态成员函数没有 this 指针"></a>静态成员函数没有 this 指针</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="keyword">static</span> <span class="keyword">int</span> m_val; <span class="comment">/*!&lt; Member description */</span></div><div class="line">  <span class="keyword">int</span> m_val2;</div><div class="line">  <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">//this-&gt;m_val = 4; 出错</span></div><div class="line">    <span class="comment">//this-&gt;m_val2 = 5; 出错</span></div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>-&gt;m_val2 = <span class="number">2</span>;</div><div class="line">    <span class="keyword">this</span>-&gt;m_val = <span class="number">3</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">int</span> Test::m_val = <span class="number">100</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">普通成员变量</th>
+<th style="text-align:center">静态成员变量</th>
+<th style="text-align:center">普通成员函数</th>
+<th style="text-align:center">静态成员函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">每个对象都有一份</td>
+<td style="text-align:center">所有对象共享</td>
+<td style="text-align:center">隐藏的 this 指针</td>
+<td style="text-align:center">没有 this 指针</td>
+</tr>
+<tr>
+<td style="text-align:center">sizeof 包括在内</td>
+<td style="text-align:center">sizeof 不包括在内</td>
+<td style="text-align:center">可以访问静态成员</td>
+<td style="text-align:center">只能访问静态成员</td>
+</tr>
+<tr>
+<td style="text-align:center">在类内初始化</td>
+<td style="text-align:center">在类外初始化</td>
+<td style="text-align:center">使用对象调用</td>
+<td style="text-align:center">使用对象/类名调用</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/C-类的静态成员/">C++类的静态成员</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,7 +273,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -225,335 +286,51 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/Python的GIL是什么鬼/" class="archive-article-date">
-  	<time datetime="2018-06-10T00:50:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/10/Python的GIL是什么鬼/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python的GIL是什么鬼</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/Python的GIL是什么鬼/">Python的GIL是什么鬼</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/网络体系结构/" class="archive-article-date">
-  	<time datetime="2018-06-08T10:02:50.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/网络体系结构/">网络体系结构</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/HTTP状态码详解/" class="archive-article-date">
-  	<time datetime="2018-06-08T00:36:58.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/HTTP状态码详解/">HTTP状态码详解</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/04/C-函数重载/" class="archive-article-date">
-  	<time datetime="2018-06-04T12:53:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/04/C-函数重载/">C++函数重载、重写与隐藏</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-对象模型之内存布局/" class="archive-article-date">
-  	<time datetime="2018-06-03T06:11:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-对象模型之内存布局/">C++对象模型之内存布局</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-中typename的双重意义/" class="archive-article-date">
-  	<time datetime="2018-06-03T05:59:12.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-中typename的双重意义/">C++中typename的双重意义</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -602,8 +379,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
