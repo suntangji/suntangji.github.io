@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives | 孙堂吉的博客</title>
+  <title>Python中的实例方法、类方法和静态方法 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/index.html">
+  <meta name="description" content="浅谈Python实例变量、类变量、实例方法、类方法和静态方法。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python中的实例方法、类方法和静态方法">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/12/Python中的实例方法、类方法和静态方法/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="浅谈Python实例变量、类变量、实例方法、类方法和静态方法。">
+<meta property="og:updated_time" content="2018-06-12T09:23:16.895Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="Python中的实例方法、类方法和静态方法">
+<meta name="twitter:description" content="浅谈Python实例变量、类变量、实例方法、类方法和静态方法。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,39 +169,105 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Python中的实例方法、类方法和静态方法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Python中的实例方法、类方法和静态方法
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/12/Python中的实例方法、类方法和静态方法/" class="archive-article-date">
+
+
+        
+        <a href="/2018/06/12/Python中的实例方法、类方法和静态方法/" class="archive-article-date">
   	<time datetime="2018-06-12T08:04:24.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2018-06-12</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>浅谈Python实例变量、类变量、实例方法、类方法和静态方法。<br><a id="more"></a><br>在说说实例方法和类方法之前， 先说一下实例变量和类变量。</p>
+<h4 id="实例变量"><a href="#实例变量" class="headerlink" title="实例变量"></a>实例变量</h4><blockquote>
+<p>实例化后，每个实例单独拥有的变量</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></div><div class="line">    name = <span class="string">"aaa"</span></div><div class="line"></div><div class="line"></div><div class="line">p1 = Person()</div><div class="line">p2 = Person()</div><div class="line">p1.name = <span class="string">"bbb"</span></div><div class="line">print(p1.name)  <span class="comment"># bbb</span></div><div class="line">print(p2.name)  <span class="comment"># aaa</span></div><div class="line">print(Person.name)  <span class="comment"># aaa</span></div></pre></td></tr></table></figure>
+<h4 id="类变量"><a href="#类变量" class="headerlink" title="类变量"></a>类变量</h4><blockquote>
+<p>是可在类的所有实例之间共享的值(也就是说，它们不是单独分配给每个实例的)。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span><span class="params">(object)</span>:</span></div><div class="line">    num_of_instance = <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">        self.name = name</div><div class="line">        Test.num_of_instance += <span class="number">1</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    print(Test.num_of_instance)  <span class="comment"># 0</span></div><div class="line">    t1 = Test(<span class="string">'jack'</span>)</div><div class="line">    print(Test.num_of_instance)  <span class="comment"># 1</span></div><div class="line">    t2 = Test(<span class="string">'lucy'</span>)</div><div class="line">    print(t1.name, t1.num_of_instance)  <span class="comment"># jack 2</span></div><div class="line">    print(t2.name, t2.num_of_instance)  <span class="comment"># lucy 2</span></div></pre></td></tr></table></figure>
+<h4 id="实例方法"><a href="#实例方法" class="headerlink" title="实例方法"></a>实例方法</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">In [1]: class User(object):</div><div class="line">   ...:         def get_id(self):</div><div class="line">   ...:                     print(id(self))</div><div class="line">   ...:                     </div><div class="line"></div><div class="line">In [2]: u = User()</div><div class="line"></div><div class="line">In [3]: u.get_id</div><div class="line">Out[3]: &lt;bound method User.get_id of &lt;__main__.User object at 0x7f7b7470e860&gt;&gt;</div><div class="line"></div><div class="line">In [4]: u.get_id()</div><div class="line">140168211261536</div><div class="line"></div><div class="line">In [5]: User.get_id</div><div class="line">Out[5]: &lt;function __main__.User.get_id(self)&gt;</div><div class="line"></div><div class="line">In [6]: User.get_id()</div><div class="line">---------------------------------------------------------------------------</div><div class="line">TypeError                                 Traceback (most recent call last)</div><div class="line">&lt;ipython-input-6-66e488fc8feb&gt; in &lt;module&gt;()</div><div class="line">----&gt; 1 User.get_id()</div><div class="line"></div><div class="line">TypeError: get_id() missing 1 required positional argument: 'self'</div><div class="line"></div><div class="line">In [7]: User.get_id(u)</div><div class="line">140168211261536</div></pre></td></tr></table></figure>
+<p>从上⾯的代码可以看出实例方法的特殊性。当⽤实例调用时，它是个 bound method，动态绑定到对象实例。而当⽤类型调用时，是 function，必须显式传递 self 参数</p>
+<h4 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(object)</span>:</span></div><div class="line">   ...:     @staticmethod</div><div class="line">   ...:     <span class="function"><span class="keyword">def</span> <span class="title">get_id</span><span class="params">()</span>:</span></div><div class="line">   ...:         <span class="keyword">pass</span></div><div class="line">   ...:     </div><div class="line"></div><div class="line">In [<span class="number">2</span>]: u = User()</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: u.get_id</div><div class="line">Out[<span class="number">3</span>]: &lt;function __main__.User.get_id()&gt;</div><div class="line"></div><div class="line">In [<span class="number">4</span>]: u.get_id()</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: User.get_id</div><div class="line">Out[<span class="number">5</span>]: &lt;function __main__.User.get_id()&gt;</div><div class="line"></div><div class="line">In [<span class="number">6</span>]: User.get_id()</div></pre></td></tr></table></figure>
+<p>静态方法没有了隐含的参数 self,可以使用实例去调用，同时也可以使用类去调用。</p>
+<h4 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">In [1]: class User(object):</div><div class="line">   ...:     @classmethod</div><div class="line">   ...:     def get_id(cls):</div><div class="line">   ...:         pass</div><div class="line">   ...:     </div><div class="line"></div><div class="line">In [2]: u = User()</div><div class="line"></div><div class="line">In [3]: u.get_id</div><div class="line">Out[3]: &lt;bound method User.get_id of &lt;class '__main__.User'&gt;&gt;</div><div class="line"></div><div class="line">In [4]: u.get_id()</div><div class="line"></div><div class="line">In [5]: User.get_id</div><div class="line">Out[5]: &lt;bound method User.get_id of &lt;class '__main__.User'&gt;&gt;</div><div class="line"></div><div class="line">In [6]: User.get_id()</div><div class="line"></div><div class="line">In [7]: u.get_id(User)</div></pre></td></tr></table></figure>
+<p>我们声明类方法的本意是使用类去调用，但是也可以使用实例去调用。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>实例方法有一个隐含的 self 参数，作用是和实例绑定</li>
+<li>类方法有一个隐含的 cls 参数，作用是和类绑定 </li>
+<li>静态方法没有隐含的参数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">\</th>
+<th style="text-align:center">实例方法</th>
+<th style="text-align:center">类方法</th>
+<th style="text-align:center">静态方法 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> a = A()</td>
+<td style="text-align:center">a.foo()</td>
+<td style="text-align:center">a.class_foo()</td>
+<td style="text-align:center">a.static_foo()</td>
+</tr>
+<tr>
+<td style="text-align:center"> A</td>
+<td style="text-align:center">不可用</td>
+<td style="text-align:center">A.class_foo()</td>
+<td style="text-align:center">A.static_foof()</td>
+</tr>
+</tbody>
+</table>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/12/Python中的实例方法、类方法和静态方法/">Python中的实例方法、类方法和静态方法</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,7 +280,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -225,497 +293,50 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/11/二叉搜索树/" class="archive-article-date">
-  	<time datetime="2018-06-11T08:33:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/11/二叉搜索树/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">二叉搜索树</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/11/二叉搜索树/">二叉搜索树</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构与算法/" class="article-tag-list-link color3">数据结构与算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/11/什么是DDos攻击/" class="archive-article-date">
-  	<time datetime="2018-06-11T02:42:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/11/什么是DDos攻击/">什么是DDos攻击</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/C-类的静态成员/" class="archive-article-date">
-  	<time datetime="2018-06-10T09:38:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/C-类的静态成员/">C++类的静态成员</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/Python的GIL是什么鬼/" class="archive-article-date">
-  	<time datetime="2018-06-10T00:50:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/Python的GIL是什么鬼/">Python的GIL是什么鬼</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/网络体系结构/" class="archive-article-date">
-  	<time datetime="2018-06-08T10:02:50.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/网络体系结构/">网络体系结构</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/HTTP状态码详解/" class="archive-article-date">
-  	<time datetime="2018-06-08T00:36:58.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/HTTP状态码详解/">HTTP状态码详解</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/04/C-函数重载/" class="archive-article-date">
-  	<time datetime="2018-06-04T12:53:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/04/C-函数重载/">C++函数重载、重写与隐藏</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-对象模型之内存布局/" class="archive-article-date">
-  	<time datetime="2018-06-03T06:11:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-对象模型之内存布局/">C++对象模型之内存布局</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-中typename的双重意义/" class="archive-article-date">
-  	<time datetime="2018-06-03T05:59:12.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-中typename的双重意义/">C++中typename的双重意义</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -765,8 +386,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
