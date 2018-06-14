@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Tag: 学习笔记 | 孙堂吉的博客</title>
+  <title>C++类型转换 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/tags/学习笔记/index.html">
+  <meta name="description" content="所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++类型转换">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/13/C-类型转换/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。">
+<meta property="og:updated_time" content="2018-06-14T02:48:04.596Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="C++类型转换">
+<meta name="twitter:description" content="所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,39 +169,85 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-C-类型转换" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      C++类型转换
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/13/C-类型转换/" class="archive-article-date">
+
+
+        
+        <a href="/2018/06/13/C-类型转换/" class="archive-article-date">
   	<time datetime="2018-06-13T06:28:17.000Z" itemprop="datePublished">
 	<i class="icon-calendar icon"></i>2018-06-13</time>
 </a>
 
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。<br><a id="more"></a></p>
+<h3 id="C风格类型转换"><a href="#C风格类型转换" class="headerlink" title="C风格类型转换"></a>C风格类型转换</h3><p>C++ 是兼容 C 语言的，自然也支持 C 语言的强制类型转换、和隐式类型转换<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> a1, a2;</div><div class="line">  <span class="keyword">double</span> b = <span class="number">1.2</span>;</div><div class="line">  a1 = b;</div><div class="line">  a2 = (<span class="keyword">int</span>)b;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, a1, a2);  <span class="comment">// 1 1</span></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="C-新式类型转换"><a href="#C-新式类型转换" class="headerlink" title="C++新式类型转换"></a>C++新式类型转换</h3><p>标准C++为了加强类型转换的可视性，引入了四种命名的强制类型转换操作符：</p>
+<ul>
+<li>static_cast</li>
+<li>reinterpret_cast</li>
+<li>const_cast</li>
+<li>dynamic_cast</li>
+</ul>
+<h4 id="static-cast"><a href="#static-cast" class="headerlink" title="static_cast"></a>static_cast</h4><p>static_cast 允许执行任意的隐式转换和相反转换的动作(即使它是不允许隐式的)。也就是说它允许子类类型的指针转换为父类类型的指针(这是一个有效的隐式转换)，同时也允许父类类型的指针转换为子类的指针。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span></div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base &#123;</div><div class="line">&#125;;</div><div class="line">Base* b = <span class="keyword">new</span> Base();</div><div class="line">Derived* d = <span class="keyword">new</span>  Derived();</div><div class="line"><span class="comment">//Derived* d_b2 = new Base();  // 编译出错</span></div><div class="line">Base* b2 = <span class="keyword">new</span> Derived();</div><div class="line">Base* b3 = <span class="keyword">static_cast</span>&lt;Base*&gt;(d);</div><div class="line">Derived* d2 = <span class="keyword">static_cast</span>&lt;Derived*&gt;(b);</div></pre></td></tr></table></figure>
+<p>static_cast 除了操作类型指针，也能用于执行类型定义的显示转换，以及基础类型之间的标准转换。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">double</span> d = <span class="number">3.14</span>;</div><div class="line"><span class="keyword">int</span> i = <span class="keyword">static_cast</span>&lt;<span class="keyword">int</span>&gt;(d);</div></pre></td></tr></table></figure>
+<p>static_cast不能用于两个不相关类型之间的转换。</p>
+<h4 id="dynamic-cast"><a href="#dynamic-cast" class="headerlink" title="dynamic_cast"></a>dynamic_cast</h4><p>dynamic_cast 用于将一个父类对象的指针或引用转换为子类对象的指针或引用.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base &#123;</div><div class="line">&#125;;</div><div class="line">Base* b = <span class="keyword">new</span> Base();</div><div class="line">Derived* d = <span class="keyword">new</span>  Derived();</div><div class="line">Base* b2 = <span class="keyword">dynamic_cast</span>&lt;Base*&gt;(d);</div><div class="line">Derived* d2 = <span class="keyword">dynamic_cast</span>&lt;Derived*&gt;(b);</div></pre></td></tr></table></figure>
+<p>dynamic_cast 只能用于含有虚函数的类<br>dynamic_cast 会先检查是否能转换成功，能成功则转换，不能成功则返回0</p>
+<h4 id="const-cast"><a href="#const-cast" class="headerlink" title="const_cast"></a>const_cast</h4><p>const_cast 最常用的用途就是删除变量的 const 属性，方便赋值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">const</span> <span class="keyword">int</span> a = <span class="number">10</span>;</div><div class="line">  <span class="comment">//int* p = &amp;a;  // 编译错误</span></div><div class="line">  <span class="keyword">int</span>* p = <span class="keyword">const_cast</span>&lt;<span class="keyword">int</span>*&gt;(&amp;a);</div><div class="line">  *p = <span class="number">20</span>;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="reinterpret-cast"><a href="#reinterpret-cast" class="headerlink" title="reinterpret_cast"></a>reinterpret_cast</h4><p>reinterpret_cast 是一种高度危险的转换，这种转换仅仅是对二进制位的重新解释。这个操作符能够在非相关的类型之间转换。操作结果只是简单的从一个指针到别的指针的值的二进制拷贝，在类型之间指向的内容不做任何类型的检查和转换。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span>&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> &#123;</span>&#125;;</div><div class="line">A*a = <span class="keyword">new</span> A;</div><div class="line">B* b = <span class="keyword">reinterpret_cast</span>&lt;B*&gt;(a);</div></pre></td></tr></table></figure>
+<h4 id="explicit-关键字"><a href="#explicit-关键字" class="headerlink" title="explicit 关键字"></a>explicit 关键字</h4><p>explicit 关键字阻止单参构造函数进行隐式类型转换</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  A(<span class="keyword">int</span> a) : m_a(a) &#123;</div><div class="line">  &#125;</div><div class="line"> <span class="keyword">private</span>:</div><div class="line">  <span class="keyword">int</span> m_a;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  A a = <span class="number">10</span>;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>A a = 10 会进行隐式转换，转换为 A a(10) 然后调用构造函数。使用 explicit 可以阻止这种转换。<br>使用 explicit 修饰构造函数之后，不再支持 A a = 10 的用法，避免了构造函数的隐式转换。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/13/C-类型转换/">C++类型转换</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,7 +260,7 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -225,497 +273,50 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/12/Python中的实例方法、类方法和静态方法/" class="archive-article-date">
-  	<time datetime="2018-06-12T08:04:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-12</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/12/Python中的实例方法、类方法和静态方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Python中的实例方法、类方法和静态方法</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/12/Python中的实例方法、类方法和静态方法/">Python中的实例方法、类方法和静态方法</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/11/二叉搜索树/" class="archive-article-date">
-  	<time datetime="2018-06-11T08:33:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/11/二叉搜索树/">二叉搜索树</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构与算法/" class="article-tag-list-link color3">数据结构与算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/11/什么是DDos攻击/" class="archive-article-date">
-  	<time datetime="2018-06-11T02:42:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/11/什么是DDos攻击/">什么是DDos攻击</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/C-类的静态成员/" class="archive-article-date">
-  	<time datetime="2018-06-10T09:38:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/C-类的静态成员/">C++类的静态成员</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/Python的GIL是什么鬼/" class="archive-article-date">
-  	<time datetime="2018-06-10T00:50:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/Python的GIL是什么鬼/">Python的GIL是什么鬼</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/网络体系结构/" class="archive-article-date">
-  	<time datetime="2018-06-08T10:02:50.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/网络体系结构/">网络体系结构</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/08/HTTP状态码详解/" class="archive-article-date">
-  	<time datetime="2018-06-08T00:36:58.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/08/HTTP状态码详解/">HTTP状态码详解</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/04/C-函数重载/" class="archive-article-date">
-  	<time datetime="2018-06-04T12:53:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-04</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/04/C-函数重载/">C++函数重载、重写与隐藏</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/03/C-对象模型之内存布局/" class="archive-article-date">
-  	<time datetime="2018-06-03T06:11:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-03</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/03/C-对象模型之内存布局/">C++对象模型之内存布局</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/tags/学习笔记/page/2/">2</a><a class="page-number" href="/tags/学习笔记/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/tags/学习笔记/page/5/">5</a><a class="extend next" rel="next" href="/tags/学习笔记/page/2/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -765,9 +366,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
