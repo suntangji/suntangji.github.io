@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://www.suntangji.me/2018/06/13/C-类型转换/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
 <meta property="og:description" content="所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。">
-<meta property="og:updated_time" content="2018-06-14T02:48:04.596Z">
+<meta property="og:updated_time" content="2018-06-14T03:01:38.848Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++类型转换">
 <meta name="twitter:description" content="所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。">
@@ -196,7 +196,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。<br><a id="more"></a></p>
-<h3 id="C风格类型转换"><a href="#C风格类型转换" class="headerlink" title="C风格类型转换"></a>C风格类型转换</h3><p>C++ 是兼容 C 语言的，自然也支持 C 语言的强制类型转换、和隐式类型转换<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> a1, a2;</div><div class="line">  <span class="keyword">double</span> b = <span class="number">1.2</span>;</div><div class="line">  a1 = b;</div><div class="line">  a2 = (<span class="keyword">int</span>)b;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, a1, a2);  <span class="comment">// 1 1</span></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="C风格类型转换"><a href="#C风格类型转换" class="headerlink" title="C风格类型转换"></a>C风格类型转换</h3><p>C++ 是兼容 C 语言的，自然也支持 C 语言的强制类型转换、和隐式类型转换</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> a1, a2;</div><div class="line">  <span class="keyword">double</span> b = <span class="number">1.2</span>;</div><div class="line">  a1 = b;</div><div class="line">  a2 = (<span class="keyword">int</span>)b;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, a1, a2);  <span class="comment">// 1 1</span></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="C-新式类型转换"><a href="#C-新式类型转换" class="headerlink" title="C++新式类型转换"></a>C++新式类型转换</h3><p>标准C++为了加强类型转换的可视性，引入了四种命名的强制类型转换操作符：</p>
 <ul>
 <li>static_cast</li>
@@ -283,6 +284,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/06/14/https和SSL-TSL协议/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          HTTPS和SSL/TSL协议
+        
+      </div>
+    </a>
   
   
     <a href="/2018/06/12/Python中的实例方法、类方法和静态方法/" id="article-nav-older" class="article-nav-link-wrap">
