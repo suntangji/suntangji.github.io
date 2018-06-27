@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>孙堂吉的博客</title>
+  <title>C++构造函数和析构函数的执行顺序 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/index.html">
+  <meta name="description" content="分析多继承、虚拟继承、组合情况下构造函数和析构函数的执行顺序。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++构造函数和析构函数的执行顺序">
+<meta property="og:url" content="https://www.suntangji.me/2018/06/27/C-构造函数和析构函数的执行顺序/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="分析多继承、虚拟继承、组合情况下构造函数和析构函数的执行顺序。">
+<meta property="og:updated_time" content="2018-06-27T07:24:39.167Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="C++构造函数和析构函数的执行顺序">
+<meta name="twitter:description" content="分析多继承、虚拟继承、组合情况下构造函数和析构函数的执行顺序。">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,17 +169,18 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-C-构造函数和析构函数的执行顺序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-C-构造函数和析构函数的执行顺序" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/27/C-构造函数和析构函数的执行顺序/">C++构造函数和析构函数的执行顺序</a>
+    <h1 class="article-title" itemprop="name">
+      C++构造函数和析构函数的执行顺序
     </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
   
 
 
@@ -192,12 +195,51 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>分析多继承、虚拟继承、组合情况下构造函数和析构函数的执行顺序。<br>
-        
-          <a class="article-more-a" href="/2018/06/27/C-构造函数和析构函数的执行顺序/#more">more >></a>
-        
+        <p>分析多继承、虚拟继承、组合情况下构造函数和析构函数的执行顺序。<br><a id="more"></a></p>
+<h3 id="单继承"><a href="#单继承" class="headerlink" title="单继承"></a>单继承</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A &#123;</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  B b;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">A()</div><div class="line">B()</div><div class="line">~B()</div><div class="line">~A()</div></pre></td></tr></table></figure>
+<p>先执行父类的构造函数，在执行自身的构造函数。析构的顺序正好相反。</p>
+<h3 id="多继承"><a href="#多继承" class="headerlink" title="多继承"></a>多继承</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A, <span class="keyword">public</span> C &#123;</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  B b;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">A()</div><div class="line">C()</div><div class="line">B()</div><div class="line">~B()</div><div class="line">~C()</div><div class="line">~A()</div></pre></td></tr></table></figure>
+<p>同样也是先执行父类的构造函数，父类的构造函数按照继承顺序执行，然后在执行自身的构造函数。析构函数相反。</p>
+<h3 id="虚拟继承"><a href="#虚拟继承" class="headerlink" title="虚拟继承"></a>虚拟继承</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> A, <span class="keyword">virtual</span> <span class="keyword">public</span> C &#123;</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  B b;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">C()</div><div class="line">A()</div><div class="line">B()</div><div class="line">~B()</div><div class="line">~A()</div><div class="line">~C()</div></pre></td></tr></table></figure>
+<p>当存在虚拟继承时，先执行虚拟继承父类的构造函数，多个虚拟继承按照继承顺序先后执行，然后执行不是虚拟继承的父类构造函数，最后执行子类自身的构造函数。构造函数相反。</p>
+<h3 id="组合下的调用顺序"><a href="#组合下的调用顺序" class="headerlink" title="组合下的调用顺序"></a>组合下的调用顺序</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  A a;</div><div class="line">  C c;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  B b;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">A()</div><div class="line">C()</div><div class="line">B()</div><div class="line">~B()</div><div class="line">~C()</div><div class="line">~A()</div></pre></td></tr></table></figure>
+<p>当一个类包含其他类的对象时， 先调用成员对象所属类的构造函数，如果有多个类成员对象，按照声明顺序调用构造函数，再调用自身的构造函数。析构顺序和构造顺序相反。</p>
+<h3 id="组合和继承"><a href="#组合和继承" class="headerlink" title="组合和继承"></a>组合和继承</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~A() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~A()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> &#123;</span></div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~C() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~C()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> :</span> <span class="keyword">public</span> C &#123;</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line">  ~B() &#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"~B()"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  A a;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">  B b;</div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">C()</div><div class="line">A()</div><div class="line">B()</div><div class="line">~B()</div><div class="line">~A()</div><div class="line">~C()</div></pre></td></tr></table></figure>
+<p>先执行父类的构造函数，再执行类成员对象所属类的构造函数，最后执行自身的构造函数。析构顺序相反。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -229,16 +271,24 @@
 
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/27/C-构造函数和析构函数的执行顺序/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/06/16/Linux下C-静态库和动态库/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux下C++静态库和动态库</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -258,831 +308,12 @@
 
 
 
-
-  
-    <article id="post-Linux下C-静态库和动态库" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/16/Linux下C-静态库和动态库/">Linux下C++静态库和动态库</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/16/Linux下C-静态库和动态库/" class="archive-article-date">
-  	<time datetime="2018-06-16T03:04:49.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-16</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我们在开发时，有一个基本原则：不要重复造轮子。<br>
-        
-          <a class="article-more-a" href="/2018/06/16/Linux下C-静态库和动态库/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/16/Linux下C-静态库和动态库/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-https和SSL-TSL协议" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/14/https和SSL-TSL协议/">HTTPS和SSL/TSL协议</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/14/https和SSL-TSL协议/" class="archive-article-date">
-  	<time datetime="2018-06-14T03:20:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-14</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>HTTPS(全称：Hyper Text Transfer Protocol over Secure Socket Layer)，是以安全为目标的HTTP通道，简单讲是HTTP的安全版。<br>
-        
-          <a class="article-more-a" href="/2018/06/14/https和SSL-TSL协议/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/14/https和SSL-TSL协议/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-C-类型转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/13/C-类型转换/">C++类型转换</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/13/C-类型转换/" class="archive-article-date">
-  	<time datetime="2018-06-13T06:28:17.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-13</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>所谓类型转换，其含义是改变一个变量的类型为别的类型从而改变该变量的表示方法。<br>
-        
-          <a class="article-more-a" href="/2018/06/13/C-类型转换/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/13/C-类型转换/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python中的实例方法、类方法和静态方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/12/Python中的实例方法、类方法和静态方法/">Python中的实例方法、类方法和静态方法</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/12/Python中的实例方法、类方法和静态方法/" class="archive-article-date">
-  	<time datetime="2018-06-12T08:04:24.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-12</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>浅谈Python实例变量、类变量、实例方法、类方法和静态方法。<br>
-        
-          <a class="article-more-a" href="/2018/06/12/Python中的实例方法、类方法和静态方法/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/12/Python中的实例方法、类方法和静态方法/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-二叉搜索树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/11/二叉搜索树/">二叉搜索树</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/11/二叉搜索树/" class="archive-article-date">
-  	<time datetime="2018-06-11T08:33:30.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>简单介绍树、二叉树、二叉搜索树的概念和性质。<br>
-        
-          <a class="article-more-a" href="/2018/06/11/二叉搜索树/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构与算法/" class="article-tag-list-link color3">数据结构与算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/11/二叉搜索树/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-什么是DDos攻击" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/11/什么是DDos攻击/">什么是DDos攻击</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/11/什么是DDos攻击/" class="archive-article-date">
-  	<time datetime="2018-06-11T02:42:39.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-11</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>全球最大同性交友网，没错，就是GitHub！美国东部时间 2 月 28 日，GitHub 在一瞬间遭到高达 1.35Tbps 的带宽攻击。这次 DDoS 攻击几乎可以堪称是互联网有史以来规模最大、威力最大的 DDoS 攻击了。<br>
-        
-          <a class="article-more-a" href="/2018/06/11/什么是DDos攻击/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/11/什么是DDos攻击/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-C-类的静态成员" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/10/C-类的静态成员/">C++类的静态成员</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/10/C-类的静态成员/" class="archive-article-date">
-  	<time datetime="2018-06-10T09:38:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关键字static在C++中的作用<br>
-        
-          <a class="article-more-a" href="/2018/06/10/C-类的静态成员/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Cpp/" class="article-tag-list-link color4">Cpp</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/10/C-类的静态成员/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python的GIL是什么鬼" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/10/Python的GIL是什么鬼/">Python的GIL是什么鬼</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/10/Python的GIL是什么鬼/" class="archive-article-date">
-  	<time datetime="2018-06-10T00:50:46.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>GIL并不是Python的特性，它是在实现Python解析器(CPython)时所引入的一个概念。并不是所有的解释器都有GIL，Cpython、Pypy使用了GIL，Jython就没有GIL机制。<br>
-        
-          <a class="article-more-a" href="/2018/06/10/Python的GIL是什么鬼/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/10/Python的GIL是什么鬼/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-网络体系结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/08/网络体系结构/">网络体系结构</a>
-    </h1>
-  
-
-
-        
-        <a href="/2018/06/08/网络体系结构/" class="archive-article-date">
-  	<time datetime="2018-06-08T10:02:50.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-06-08</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相互通信的两个计算机系统必须高度协调才能工作，而这种协调是非常复杂的，分层可以将这个庞大而复杂的问题变得简单。<br>
-        
-          <a class="article-more-a" href="/2018/06/08/网络体系结构/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/06/08/网络体系结构/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
   
 
 
@@ -1131,8 +362,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
