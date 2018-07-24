@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://www.suntangji.me">
-  <title>Archives: 2018 | 孙堂吉的博客</title>
+  <title>TCP三次握手和四次挥手 | 孙堂吉的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="suntangji">
-<meta property="og:type" content="website">
-<meta property="og:title" content="孙堂吉的博客">
-<meta property="og:url" content="https://www.suntangji.me/archives/2018/page/3/index.html">
+  <meta name="description" content="分析TCP 三次握手和四次挥手过程，各个状态名称及含义。">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TCP三次握手和四次挥手">
+<meta property="og:url" content="https://www.suntangji.me/2018/07/24/TCP三次握手和四次挥手/index.html">
 <meta property="og:site_name" content="孙堂吉的博客">
-<meta property="og:description" content="suntangji">
+<meta property="og:description" content="分析TCP 三次握手和四次挥手过程，各个状态名称及含义。">
+<meta property="og:image" content="https://www.suntangji.me/hexo/image/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg">
+<meta property="og:image" content="https://www.suntangji.me/hexo/image/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
+<meta property="og:updated_time" content="2018-07-24T14:04:42.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="孙堂吉的博客">
-<meta name="twitter:description" content="suntangji">
+<meta name="twitter:title" content="TCP三次握手和四次挥手">
+<meta name="twitter:description" content="分析TCP 三次握手和四次挥手过程，各个状态名称及含义。">
+<meta name="twitter:image" content="https://www.suntangji.me/hexo/image/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg">
   
     <link rel="alternative" href="/atom.xml" title="孙堂吉的博客" type="application/atom+xml">
   
@@ -167,39 +172,86 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-TCP三次握手和四次挥手" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TCP三次握手和四次挥手
+    </h1>
+<!--	//<span id="busuanzi_container_page_pv">
+	//	本文总阅读量<span id="busuanzi_value_page_pv"></span>次	
+	//	</span> -->
+  
+
+
+        
+        <a href="/2018/07/24/TCP三次握手和四次挥手/" class="archive-article-date">
+  	<time datetime="2018-07-24T12:52:41.000Z" itemprop="datePublished">
+	<i class="icon-calendar icon"></i>2018-07-24</time>
+</a>
+
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>分析TCP 三次握手和四次挥手过程，各个状态名称及含义。<br><a id="more"></a></p>
+<h3 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h3><p><img src="https://www.suntangji.me/hexo/image/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" alt="三次握手"></p>
+<p>在进行握手之前服务器需要准备好，也就是经过创建 socket,调用 bind 绑定 IP 地址和端口号， 调用 listen 使服务器处于被动状态。</p>
+<ul>
+<li><p>第一次握手<br>客户端通过调用 connect 发起连接，这导致客户端发送一个 SYN 为 1 同步报文段，它告诉服务器在接下来的连接中发送的数据的初始序列号</p>
+</li>
+<li><p>第二次握手<br>服务器确认客户端的 SYN， 同时自己也发送一个 SYN 为 1 的报文，它含有服务器将在本次连接中发送数据的初始序列号以及确认号</p>
+</li>
+<li><p>第三次握手<br>客户端确认服务器的 SYN</p>
+</li>
+</ul>
+<h3 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h3><p>断开连接需要四次挥手，可以是客户端先断开，也可以是服务器先断开。</p>
+<ul>
+<li><p>第一次挥手<br>某个进程调用了 close，那这一端就执行主动关闭，发送一个 FIN 被置为 1 的报文， 表示数据发送完毕。</p>
+</li>
+<li><p>第二次挥手<br>接收到这个 FIN 的对端执行被动关闭，对端确认这个 FIN,此时对端处于 CLOSE-WAIT(半关闭状态)</p>
+</li>
+<li><p>第三次挥手<br>一段时间后， 对端的进程接收到文件结束符时，调用 close 关闭它的套接字，这会导致它发送一个 FIN 被置为 1 的报文</p>
+</li>
+<li><p>第四次挥手<br>主动关闭的一方接收到最后的 FIN 后，确认这个 FIN.此时主动关闭的一方处于 TIME-WAIT 状态，需要等待 2MSL(最大报文生存时间)后才能彻底断开连接。<br><img src="https://www.suntangji.me/hexo/image/%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="四次挥手"></p>
+</li>
+</ul>
+<h3 id="为什么会采用三次握手，若采用二次握手可以吗"><a href="#为什么会采用三次握手，若采用二次握手可以吗" class="headerlink" title="为什么会采用三次握手，若采用二次握手可以吗 ?"></a>为什么会采用三次握手，若采用二次握手可以吗 ?</h3><p>采用三次握手是为了防止失效的连接请求报文段再次传到服务器，因而产生错误。如果由于网络不稳定，虽然客户端以前发送的连接请求以到达服务方，但服务方的同意连接的应答未能到达客户端。则客户方要重新发送连接请求，若采用二次握手，服务方收到客服端重传的请求连接后，会以为是新的请求，就会发送同意连接报文，并新开进程提供服务，这样会造成服务方资源的无谓浪费。</p>
+<p>如果只采用一次的话，客户端不知道服务端是否已经收到自己发送的数据，则会不断地发送数据。为了保证服务端能收接受到客户端的信息并能做出正确的应答而进行前两次(第一次和第二次)握手，为了保证客户端能够接收到服务端的信息并能做出正确的应答而进行后两次(第二次和第三次)握手</p>
+<h3 id="为什么四次挥手，主动方要等待２MSL后才关闭连接"><a href="#为什么四次挥手，主动方要等待２MSL后才关闭连接" class="headerlink" title="为什么四次挥手，主动方要等待２MSL后才关闭连接"></a>为什么四次挥手，主动方要等待２MSL后才关闭连接</h3><p>为了确保被动关闭的一方可以收到最后一个 ACK,如果 2MSL 时间内没有收到被动关闭的一方重传的 FIN,说明对方已经收到了 ACK 并断开了连接，此时主动关闭的一方就可以断开连接了。 </p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/Python闭包/" class="archive-article-date">
-  	<time datetime="2018-04-24T11:50:28.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/Python闭包/">Python闭包</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -212,510 +264,63 @@
 		
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
+        			<a href="/categories/网络/" class="article-tag-list-link color3">网络</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/Python函数参数/" class="archive-article-date">
-  	<time datetime="2018-04-24T06:25:09.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
 
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/22/使用Nginx进行端口转发/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用Nginx进行端口转发</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/Python函数参数/">Python函数参数</a>
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/24/Python可变与不可变对象/" class="archive-article-date">
-  	<time datetime="2018-04-24T05:15:17.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-24</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/24/Python可变与不可变对象/">Python可变与不可变对象</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Python/" class="article-tag-list-link color2">Python</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/16/Linux信号机制/" class="archive-article-date">
-  	<time datetime="2018-04-16T04:54:07.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-04-16</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/16/Linux信号机制/">Linux信号机制</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/30/Linux进程间通信之信号量/" class="archive-article-date">
-  	<time datetime="2018-03-30T13:32:06.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-30</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/30/Linux进程间通信之信号量/">Linux进程间通信之信号量</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/30/Linux进程间通信之共享内存/" class="archive-article-date">
-  	<time datetime="2018-03-30T13:31:56.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-30</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/30/Linux进程间通信之共享内存/">Linux进程间通信之共享内存</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/28/Linux进程间通信之消息队列/" class="archive-article-date">
-  	<time datetime="2018-03-28T05:35:20.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-28</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/28/Linux进程间通信之消息队列/">Linux进程间通信之消息队列</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/22/Linux进程间通信之管道/" class="archive-article-date">
-  	<time datetime="2018-03-22T03:09:02.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-22</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/22/Linux进程间通信之管道/">Linux进程间通信之管道</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/21/Linux系统级IO/" class="archive-article-date">
-  	<time datetime="2018-03-21T05:27:17.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-21</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/21/Linux系统级IO/">Linux系统级IO</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/19/Linux进程控制之进程替换/" class="archive-article-date">
-  	<time datetime="2018-03-19T01:09:35.000Z" itemprop="datePublished">
-	<i class="icon-calendar icon"></i>2018-03-19</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/19/Linux进程控制之进程替换/">Linux进程控制之进程替换</a>
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">学习笔记</a>
-        		</li>
-      		
-		</ul>
-		
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Linux/" class="article-tag-list-link color1">Linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/2018/page/4/">4</a><a class="extend next" rel="next" href="/archives/2018/page/4/">Next &raquo;</a>
-    </nav>
+  
+
   
 
 
@@ -765,8 +370,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
